@@ -1,0 +1,1 @@
+(function(){var b=Handlebars.template,a=Handlebars.templates=Handlebars.templates||{};a["template-warningmessagesmall"]=b(function(e,k,d,j,i){d=d||e.helpers;var h="",c,g,f="function";h+=' \n    <div class="warningmessagesmall"><strong>';g=d.warning;if(g){c=g.call(k,{hash:{}})}else{c=k.warning;c=typeof c===f?c():c}if(c||c===0){h+=c}h+="</strong></div>";return h})})();

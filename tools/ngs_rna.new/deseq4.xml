@@ -1,0 +1,31 @@
+<tool id="deseq" name="DE Seq">
+	<description>Run Differential Expression analysis from SAM To Count data</description>
+
+	<command interpreter="python">
+		 stderr_wrapper.py Rscript /opt/Bio/galaxy-dist/tools/ngs_rna/deseq4.R $counts $column_types $comparison $top_table $diagnostic_html "$diagnostic_html.files_path" "$counts.name"
+	</command>
+
+	<inputs>
+		<param format="tabular" name="counts" type="data" optional="false" label="Counts file (from sam2counts)"/>
+
+		<param name="column_types" type="text" size="40" optional="false" label="Column Types in counts file" help="A comma separated list (no spaces) of the types of the data columns using the same name for replicates.  I.e.: kidney,kidney,kidney,liver,liver,liver">
+			<validator type="empty_field"/>
+			<validator type="regex" message="Must be a comma-separated list with no spaces">^(\w+,)+\w+$</validator>
+		</param>
+
+		<param name="comparison" type="text" size="30" optional="false" label="Comparison type" help="A comma separated tuple (no spaces) of the comparison you want to do.  Must use the names from the Column Types list.  I.e. comparing kidney to liver: kidney,liver.  Comparing liver to kidney: liver,kidney">
+			<validator type="empty_field"/>
+			<validator type="regex" message="Must be a comma-separated tuple with no spaces">^\w+,\w+$</validator>
+		</param>
+	</inputs>
+
+	<outputs>
+		<data format="tabular" name="top_table" label="Top Table from ${tool.name} on ${on_string}"/>
+		<data format="html" name="diagnostic_html" label="Diagnostic Plots for ${tool.name} on ${on_string}"/>
+	</outputs>
+
+	<help>
+		NOTE: This DEseq Galaxy tool can only be run on counts files that are created from SAM files that have been aligned to a transcriptome.
+	</help>
+
+</tool>

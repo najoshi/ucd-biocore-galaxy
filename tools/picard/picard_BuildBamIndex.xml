@@ -1,0 +1,110 @@
+<tool name="Build BAM Index" id="picard_BuildBamIndex" version="1.56.0">
+  <requirements><requirement type="package">picard</requirement></requirements>
+  <command interpreter="python">
+    picard_wrapper.py
+      --input "$input_file"
+      -o "$outFile"
+      -j "${GALAXY_DATA_INDEX_DIR}/shared/jars/picard/BuildBamIndex.jar"
+  </command>
+  <inputs>
+    <param format="bam" name="input_file" type="data"  label="BAM dataset to build index"
+      help="If empty, upload or import a BAM dataset" />
+  </inputs>
+  <outputs>
+    <data format="bai" name="outFile" label="${tool.name} on ${on_string}.bai" />
+  </outputs>
+  <tests>
+    <test>
+      <!-- Command
+      java -jar BamIndexStats.jar I=test-data/picard_input_tiny_coord.bam > picard_BIS_output1.txt
+      picard_input_tiny_coord.bam can be created from picard_input_tiny_coord.sam
+      -->
+      <param name="input_file" value="picard_input_tiny_coord.bam" ftype="bam" />
+      <output name="htmlfile" file="picard_BIS_output1.txt" ftype="html" compare="contains" lines_diff="12"/>
+    </test>
+    <test>
+      <!-- Command
+      java -jar BamIndexStats.jar I=test-data/picard_BIS_input1.bam > picard_BIS_output2.txt
+      picard_BIS_input1.bam can be created from picard_BIS_input1.sam
+      -->
+      <param name="input_file" value="picard_BIS_input1.bam" ftype="bam" />
+      <output name="htmlfile" file="picard_BIS_output2.txt" ftype="html" compare="contains" lines_diff="12" />
+    </test>
+  </tests>
+  <help>
+
+.. class:: infomark
+
+**Purpose**
+
+Generate Bam Index for a provided BAM file.
+
+**Picard documentation**
+
+This is a Galaxy wrapper for BuildBAMIndex, a part of the external package Picard-tools_.
+
+ .. _Picard-tools: http://www.google.com/search?q=picard+samtools
+
+------
+
+.. class:: infomark
+
+**Inputs and outputs**
+
+The only input is the BAM file you wish to obtain statistics for, which is required.
+Note that it must be coordinate-sorted. Galaxy currently coordinate-sorts all BAM files.
+
+This tool outputs an HTML file that contains links to the actual metrics results, as well
+as a log file with info on the exact command run.
+
+.. class:: warningmark
+
+**Warning on SAM/BAM quality**
+
+Many SAM/BAM files produced externally and uploaded to Galaxy do not fully conform to SAM/BAM specifications. Galaxy deals with this by using the **LENIENT**
+flag when it runs Picard, which allows reads to be discarded if they're empty or don't map. This appears
+to be the only way to deal with SAM/BAM that cannot be parsed.
+
+**Purpose**
+
+USAGE: BuildBamIndex [options]
+
+Generates a BAM index (.bai) file.
+Version: 1.62(1113)
+
+
+Options:
+
+--help
+-h                            Displays options specific to this tool.
+
+--stdhelp
+-H                            Displays options specific to this tool AND options common to all Picard command line·
+tools.
+
+--version                     Displays program version.
+
+INPUT=String
+I=String                      A BAM file or URL to process. Must be sorted in coordinate order.  Required.·
+
+OUTPUT=File
+O=File                        The BAM index file. Defaults to x.bai if INPUT is x.bam, otherwise INPUT.bai.
+If INPUT is a URL and OUTPUT is unspecified, defaults to a file in the current directory.··
+Default value: null.·
+
+
+
+  </help>
+</tool>
+
+
+
+
+
+
+
+
+
+
+
+

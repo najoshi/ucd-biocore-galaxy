@@ -1,0 +1,46 @@
+cargs <- commandArgs()
+cargs <- cargs[(which(cargs == "--args")+1):length(cargs)]
+
+filename = cargs[1]
+datatype = cargs[2]
+reportfile = cargs[3]
+temp.files.path = cargs[4]
+
+sink("/dev/null")
+dir.create(temp.files.path, recursive=TRUE)
+
+qualtype = if (datatype=="fastqsanger") "sanger" else if (datatype=="fastqillumina") "illumina" else if (datatype=="fastqsolexa") "solexa" else "sanger"
+
+filetype = if (datatype=="fastqsanger") "fastq" else if (datatype=="fastqillumina") "fastq" else if (datatype=="fastqsolexa") "fastq" else datatype
+
+library(qrqc)
+
+seqdata = readSeqFile(filename, type=filetype, quality=qualtype)
+makeReport( seqdata, outputDir=temp.files.path )
+
+kl.plot = kmerKLPlot( seqdata )
+path.kl.plot = file.path( temp.files.path, "kl.png" )
+png( path.kl.plot, width=600, height=500 )
+print( kl.plot )
+dev.off()
+
+entropy.plot = kmerEntropyPlot( seqdata )
+path.entropy.plot = file.path( temp.files.path, "entropy.png" )
+png( path.entropy.plot, width=600, height=500 )
+print( entropy.plot )
+dev.off()
+
+# move data around so that Galaxy can see it properly
+#filename.base = basename(filename)
+#report.dir = file.path( temp.files.path, sub(".dat", "-report", filename.base) )
+report.dir = Sys.glob( file.path( temp.files.path, "*-report"))
+file.rename( file.path( report.dir, "report.html" ), reportfile)
+file.rename( file.path( report.dir, "images" ), file.path( temp.files.path, "images" ))
+unlink( report.dir, recursive=TRUE )
+
+file.conn = file( reportfile, open="a")
+writeLines( c("<h2>KL Plot</h2><img src='kl.png'>"), file.conn)
+writeLines( c("<h2>Entropy Plot</h2><img src='entropy.png'>"), file.conn)
+close(file.conn)
+
+sink(NULL)

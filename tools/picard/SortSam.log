@@ -1,0 +1,2 @@
+INFO:root:## executing java -Xmx30000m  -Djava.io.tmpdir='/tmp'  -jar /nfs/software/galaxy/tool-data/shared/jars/picard/SortSam.jar VALIDATION_STRINGENCY=LENIENT I=/scratch/galaxy/files/003/dataset_3333.dat O=/tmp/tmpIkrBEN.sam SORT_ORDER=coordinate returned status 0 and nothing on stderr
+

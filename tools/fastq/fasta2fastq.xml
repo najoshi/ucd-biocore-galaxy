@@ -1,0 +1,19 @@
+<tool id="fasta_to_fastq" name="FASTA to FASTQ" version="1.0.0">
+  <description>Adds fake qualities to FASTA to create FASTQ</description>
+  <command interpreter="perl">fasta2fastq.pl '$input_file' '$output_file' '$qual_value'</command>
+  <inputs>
+    <param name="input_file" type="data" format="fasta" label="FASTA file to convert" />
+
+    <param name="qual_value" type="select" label="Quality level" help="Choose the level of quality you want to fake" >
+      <option value="I" selected="True">High</option>
+      <option value="2">Medium</option>
+      <option value="#">Low</option>
+    </param>    
+  </inputs>
+  <outputs>
+    <data name="output_file" format="fastqsanger" />
+  </outputs>
+  <help>
+This tool fakes FASTQ records from FASTA sequences.  It outputs records in fastqsanger format.
+  </help>
+</tool>

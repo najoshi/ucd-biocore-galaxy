@@ -1,0 +1,23 @@
+<tool id="count_fasta" name="count_fasta">
+	<description>Generate statistics about a fasta file</description>
+
+	<command interpreter="perl">
+		count_fasta.pl -i $binsize $inputfile > $outputfile
+	</command>
+
+	<inputs>
+		<param format="fasta" name="inputfile" type="data" optional="false" label="FastA file" />
+		<param name="binsize" value="100" type="integer" optional="false" label="Bin Size">
+                        <validator type="in_range" min="0" message="Minimum value is 0"/>
+                </param>
+
+	</inputs>
+
+	<outputs>
+		<data format="simple" name="outputfile" label="Count Fasta for ${on_string}"/>
+	</outputs>
+
+	<help>
+	</help>
+
+</tool>

@@ -1,0 +1,33 @@
+<tool id="sam2counts" name="SAM To Counts">
+	<description>Produce count data from SAM files</description>
+
+	<requirements>
+		<requirement type="python-module">sam2counts.py</requirement>
+	</requirements>
+
+	<command interpreter="python">
+		sam2counts.py 
+
+		${first_input}
+		#for $input_file in $input_files:
+		  ${input_file.additional_input}
+		#end for
+
+		-o $counts
+	</command>
+
+	<inputs>
+        	<param format="sam" name="first_input" type="data" label="SAM file" help=""/>
+        	<repeat name="input_files" title="Additional SAM Files">
+            		<param format="sam" name="additional_input" type="data" label="SAM file" help=""/>
+        	</repeat>
+	</inputs>
+
+	<outputs>
+		<data format="tabular" name="counts"/>
+	</outputs>
+
+	<help>
+	</help>
+
+</tool>

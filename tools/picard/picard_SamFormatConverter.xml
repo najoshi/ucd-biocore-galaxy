@@ -1,0 +1,74 @@
+<tool name="Picard SAM Format Converter" id="picard_SFC" version="0.1.0">
+  <requirements><requirement type="package">picard</requirement></requirements>
+  <command interpreter="python">
+    picard_wrapper.py
+      --input="$inputFile"
+      --output-format=$outputFormat
+      --output=$outFile
+      -j "${GALAXY_DATA_INDEX_DIR}/shared/jars/SamFormatConverter.jar"
+  </command>
+  <inputs>
+    <param format="bam,sam" name="inputFile" type="data" label="SAM/BAM"
+      help="If empty, upload or import a SAM/BAM dataset." />
+    <param name="outputFormat" type="boolean" checked="True" truevalue="bam" falsevalue="sam" label="Output bam instead of sam" help="Uncheck for sam output"/> 
+  </inputs>
+  <outputs>
+    <data name="outFile" format="bam" label="${tool.name} on ${on_string}: ${outputFormat} with read groups replaced">
+      <change_format>
+        <when input="outputFormat" value="sam" format="sam" />
+      </change_format>
+    </data>
+  </outputs>
+  <tests>
+    <test>
+      <!-- Command for replacing read groups in bam:
+      java -jar SamFormatConverter.jar VALIDATION_STRINGENCY=LENIENT I=test-data/picard_SFC_input1.sam O=picard_SFC_output1.sam·
+      -->
+      <param name="inputFile" value="picard_ARRG_input1.bam" />
+      <param name="outputFormat" value="False" />
+      <output name="outFile" file="picard_ARRG_output1.sam" ftype="sam" />
+    </test>
+    <test>
+      <!-- Command for replacing read groups in sam:
+      java -jar AddOrReplaceReadGroups.jar VALIDATION_STRINGENCY=LENIENT I=test-data/picard_ARRG_input1.sam O=picard_ARRG_output2.sam RGLB=LIB RGPL=IL RGPU=PL
+      picard_ARRG_input1.bam can be created from picard_ARRG_input1.sam
+      -->
+      <param name="inputFile" value="picard_ARRG_input1.sam" />
+      <output name="outFile" file="picard_ARRG_output2.sam" ftype="sam" />
+    </test>
+  </tests>
+  <help>
+
+.. class:: infomark
+
+**Purpose**
+
+Convert a BAM file to a SAM file, or BAM to SAM.
+
+This is a Galaxy wrapper for SamFormatConverter, a part of the external package Picard-tools_.
+
+ .. _Picard-tools: http://www.google.com/search?q=picard+samtools
+
+------
+
+.. class:: infomark
+
+**Inputs, outputs, and parameters**
+
+Either a sam file or a bam file must be supplied. If a bam file is used, it must
+be coordinate-sorted. Galaxy currently coordinate-sorts all bam files.
+
+The output file is either bam (the default) or sam, according to user selection,
+and contains the same information as the input file except for the appropraite
+additional (or modified) read group tags. Bam is recommended since it is smaller.
+
+**Warning on SAM/BAM quality**
+
+Many SAM/BAM files produced externally and uploaded to Galaxy do not fully conform to SAM/BAM specifications. Galaxy deals with this by using the **LENIENT**
+flag when it runs Picard, which allows reads to be discarded if they're empty or don't map. This appears
+to be the only way to deal with SAM/BAM that cannot be parsed.
+
+
+  </help>
+</tool>
+

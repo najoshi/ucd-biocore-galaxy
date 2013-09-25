@@ -1,0 +1,163 @@
+<tool id="pacbio_to_ca" name="PacBio read correction">
+	<description>Run PacBio read correction using Illumina data</description>
+
+	<command>
+		mkdir -p $pacbio_fq.files_path &amp;&amp;
+		cd $pacbio_fq.files_path &amp;&amp;
+
+		fastqToCA 
+
+		#if $insert_mean:
+                -insertsize $insert_mean
+		#if $insert_stddev:
+		$insert_stddev
+		#else
+		0
+		#end if
+                #end if
+
+		-libraryname readlib
+		-technology $technology
+
+                #if $input_illumina.ext == "fastq":
+                -type sanger
+                #else if $input_illumina.ext == "fastqsanger":
+                -type sanger
+                #else if $input_illumina.ext == "fastqillumina":
+                -type illumina
+                #else if $input_illumina.ext == "fastqsolexa":
+                -type solexa
+                #end if
+
+		#if $paired_end:
+			#if $matepair:
+			-outtie
+			#else
+			-innie
+			#end if
+
+			-mates $input_illumina
+		#else
+			-reads $input_illumina
+		#end if
+
+		&gt; readlib.frg &amp;&amp;
+
+		pacBioToCA
+
+                #if $min_length:
+		-length $min_length
+		#end if
+
+                #if $partitions:
+                -partitions $partitions
+                #end if
+
+		-l pacbio -t $threads
+
+		#if $short_reads:
+		-shortReads
+		#end if
+
+		#if $manual_coverage.auto_or_manual == "manual":
+		-genomeSize $manual_coverage.genome_size
+		-maxCoverage $manual_coverage.max_cov
+		#end if
+
+		#if $cov_cutoff:
+                -coverageCutoff $cov_cutoff
+                #end if
+
+		#if $max_gap:
+                -maxGap $max_gap
+                #end if
+
+		-s ${GALAXY_DATA_INDEX_DIR}/pacbio.spec
+		-fastq $input_pacbio
+		readlib.frg
+
+		2&gt; /dev/null
+
+		&amp;&amp; mv pacbio.frg $frgfile
+		&amp;&amp; mv pacbio.fastq $pacbio_fq
+
+		&amp;&amp; rm -rf $pacbio_fq.files_path
+	</command>
+
+	<inputs>
+		<param format="fastq, fastqsanger, fastqillumina, fastqsolexa" name="input_illumina" type="data" optional="false" label="Illumina FastQ reads"/>
+		<param name="paired_end" type="boolean" label="Are these interleaved paired-end reads?"/>
+		<param format="fastq, fastqsanger" name="input_pacbio" type="data" optional="false" label="PacBio FastQ reads"/>
+
+		<param name="technology" type="select" label="What instrument were these reads generated on?" >
+			<option value="illumina" selected="True">reads from Illumina; GAIIx, MiSeq, HiSeq; shorter than 160bp</option>
+			<option value="illumina-long">reads from Illumina; GAIIx, MiSeq, HiSeq; any length</option>
+			<option value="pacbio">reads from PacBio; Circular Consensus Sequence (CSS)</option>
+			<option value="pacbio-long">reads from PacBio; uncorrected reads</option>
+			<option value="sanger">reads from dideoxy sequencers</option>
+			<option value="454">reads from 454 Life Sciences; FLX, Titanium, FLX+</option>
+		</param>
+
+
+		<param name="matepair" type="boolean" label="Are these Illumina Mate Pair reads? (Not to be confused with Paired-End reads)"/>
+
+		<param name="insert_mean" type="integer" value="" optional="true" label="Insert size mean">
+                        <validator type="in_range" min="1" message="Minimum value is 1"/>
+                </param>
+
+                <param name="insert_stddev" type="integer" value="" optional="true" label="Insert size standard deviation">
+                        <validator type="in_range" min="1" message="Minimum value is 1"/>
+                </param>
+
+                <param name="min_length" type="integer" value="" optional="true" label="Minimum length of PacBio sequences to correct/output">
+                        <validator type="in_range" min="1" message="Minimum value is 1"/>
+                </param>
+
+                <param name="partitions" type="integer" value="" optional="true" label="Number of partitions for consensus">
+                        <validator type="in_range" min="1" message="Minimum value is 1"/>
+                </param>
+
+		<param name="threads" type="integer" value="2" optional="false" label="Number of threads to use for correction">
+                        <validator type="in_range" min="1" message="Minimum value is 1"/>
+                </param>
+
+		<param name="short_reads" type="boolean" label="Are the sequences to be corrected less than 100bp?"/>
+
+                <conditional name="manual_coverage">
+                        <param name="auto_or_manual" type="select" optional="false" label="Automatic or Manual coverage calculation?" help="">
+                                <option value="automatic" selected="true">Automatic</option>
+                                <option value="manual">Manual</option>
+                        </param>
+
+                        <when value="automatic">
+                        </when>
+
+                        <when value="manual">
+                		<param name="genome_size" type="integer" value="" optional="false" label="Specify the approximate genome size" help="This overwrites the coverage parameter and will be used to compute estimated coverage instead of automatically estimating.">
+                        		<validator type="in_range" min="1" message="Minimum value is 1"/>
+                		</param>
+
+                		<param name="max_cov" type="integer" value="" optional="false" label="Maximum coverage of PacBio sequences to correct" help="nly the longest sequences adding up to this coverage will be corrected.">
+                        		<validator type="in_range" min="1" message="Minimum value is 1"/>
+                		</param>
+                        </when>
+                </conditional>
+
+                <param name="cov_cutoff" type="integer" value="" optional="true" label="Specify the pacBio coverage used to separate repeat copies instead of automatically estimating">
+                        <validator type="in_range" min="1" message="Minimum value is 1"/>
+                </param>
+
+                <param name="max_gap" type="integer" value="" optional="true" label="The maximum uncorrected PacBio gap that will be allowed" help="When there is no short-read coverage for a region, by default the pipeline will split a PacBio sequence. This option allows a number of PacBio sequences without short-read coverage to remain. For example, specifying 50, will mean 50bp can have no short-read coverage without splitting the PacBio sequence.">
+                        <validator type="in_range" min="1" message="Minimum value is 1"/>
+                </param>
+	</inputs>
+
+	<outputs>
+		<data format="txt" name="frgfile" label="FRG file for ${tool.name} on ${on_string}" />
+		<data format="fastq" name="pacbio_fq" label="PacBio corrected reads for ${tool.name} on ${on_string}"/>
+	</outputs>
+
+	<help>
+	</help>
+
+</tool>

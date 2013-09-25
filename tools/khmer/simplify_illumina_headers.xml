@@ -1,0 +1,29 @@
+<tool id="simplify_illumina_headers" name="Simplify Illumina headers">
+	<description>Simplifying Illumina headers for downstream applications</description>
+
+	<command>
+		simplify_illumina_headers.pl
+
+		#if $paired_end:
+                paired
+		#else
+		single
+                #end if
+
+		$input_file $outfile
+	</command>
+
+	<inputs>
+		<param format="fastq, fastqsanger, fastqillumina, fastqsolexa" name="input_file" type="data" optional="false" label="FastQ input file (paired-end should be interleaved)"/>
+
+		<param name="paired_end" type="boolean" label="Paired-end data? (must be interleaved)"/>
+	</inputs>
+
+	<outputs>
+		<data format_source="input_file" name="outfile" label="Simplified Illumina headers on ${on_string}"/>
+	</outputs>
+
+	<help>
+	</help>
+
+</tool>

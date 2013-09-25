@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<tool_dependency>
+    <package name="gatk" version="2.3">
+        <repository toolshed="http://testtoolshed.g2.bx.psu.edu" name="gatk_lite_2_3_9" owner="jjohnson" changeset_revision="10c2fe2d3b39" />
+    </package>
+    <package name="samtools" version="0.1.18">
+        <repository toolshed="http://testtoolshed.g2.bx.psu.edu" name="samtools_0_1_18" owner="jjohnson" changeset_revision="e9da9a990458" />
+    </package>
+</tool_dependency>

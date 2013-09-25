@@ -1,0 +1,80 @@
+<tool id="scythe" name="Scythe">
+	<description>Trimming adapters/contaminants using a Naive Bayesian classifier</description>
+
+	<command>
+		scythe --quiet -a $adapter_file
+
+                #if $input_fastq.ext == "fastq":
+                -q sanger
+                #else if $input_fastq.ext == "fastqsanger":
+                -q sanger
+                #else if $input_fastq.ext == "fastqillumina":
+                -q illumina
+                #else if $input_fastq.ext == "fastqsolexa":
+                -q solexa
+                #end if
+
+		#if str($add_tag) == "add_tag_true":
+		-t
+		#end if
+
+		#if str($prior) != "":
+		-p $prior
+		#end if
+
+		#if str($min_match) != "":
+		-n $min_match
+		#end if
+
+		#if str($min_keep) != "":
+                -M $min_keep
+                #end if
+
+		#if str($matches_file) == "matches_file_true":
+		-m $output_matches
+		#end if
+
+		-o $output_trimmed $input_fastq 2> /dev/null
+	</command>
+
+	<inputs>
+		<param format="fastq, fastqsanger, fastqillumina, fastqsolexa" name="input_fastq" type="data" optional="false" label="FastQ Reads" help="Note: Scythe will infer the quality type of the file from its datatype.  I.e., if the datatype is fastqsanger, then the quality type is sanger.  The default is fastqsanger."/>
+
+		<param format="fasta" name="adapter_file" type="data" optional="false" label="Adapter/Contaminant file (in fasta format)"/>
+
+		<param name="add_tag" type="boolean" checked="false" truevalue="add_tag_true" falsevalue="add_tag_false" label="Add a tag to the header indicating that Scythe cut a sequence?"/>
+
+		<param name="matches_file" type="boolean" checked="false" truevalue="matches_file_true" falsevalue="matches_file_false" label="Also output another file with details about adapter/contaminant matches?"/>
+
+		<param name="prior" value="0.3" type="float" optional="true" label="Prior" help="The prior contamination rate">
+			<validator type="in_range" min="0" message="Minimum value is 0"/>
+		</param>
+
+		<param name="min_match" value="5" type="integer" optional="true" label="Smallest length adapter/contaminant to consider">
+			<validator type="in_range" min="0" message="Minimum value is 0"/>
+		</param>
+
+		<param name="min_keep" value="35" type="integer" optional="true" label="Filter sequences less than this length (after trimming)">
+                        <validator type="in_range" min="0" message="Minimum value is 0"/>
+                </param>
+	</inputs>
+
+	<outputs>
+		<data format_source="input_fastq" name="output_trimmed" label="Adapter/Contaminant Trimmed FastQ using ${tool.name} on ${on_string}"/>
+
+		<data format="txt" name="output_matches" label="Matches of Adapters/Contaminants using ${tool.name} on ${on_string}">
+		<filter>(matches_file == True)</filter>
+		</data>
+	</outputs>
+
+	<help>
+Scythe uses a Naive Bayesian approach to classify contaminant substrings in sequence reads. It considers quality information, which can make it robust in picking out 3'-end adapters, which often include poor quality bases.
+
+Most next generation sequencing reads have deteriorating quality towards the 3'-end. It's common for a quality-based trimmer to be employed before mapping, assemblies, and analysis to remove these poor quality bases. However, quality-based trimming could remove bases that are helpful in identifying (and removing) 3'-end adapter contaminants. Thus, it is recommended you run Scythe before quality-based trimming, as part of a read quality control pipeline.
+
+The Bayesian approach Scythe uses compares two likelihood models: the probability of seeing the matches in a sequence given contamination, and not given contamination. Given that the read is contaminated, the probability of seeing a certain number of matches and mistmatches is a function of the quality of the sequence. Given the read is not contaminated (and is thus assumed to be random sequence), the probability of seeing a certain number of matches and mismatches is chance. The posterior is calculated across both these likelihood models, and the class (contaminated or not contaminated) with the maximum posterior probability is the class selected.
+
+Scythe will infer the quality type from the datatype of the file.
+	</help>
+
+</tool>

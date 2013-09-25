@@ -1,0 +1,19 @@
+The gatk2_sorted_picard_index.loc and gatk2_annotations.txt files must be
+copied into the tool-data directory.  The file tool_data_table_conf.xml must
+be edited to include references to these two new files.  
+
+GATK can be installed via tool_dependencies.   
+This will install GenomeAnalysisTKLite.jar from ftp://ftp.broadinstitute.org/pub/gsa/GenomeAnalysisTK/ 
+and create a symbolic link from GenomeAnalysisTK.jar to GenomeAnalysisTKLite.jar
+
+If you have a full licensed copy of GenomeAnalysisTK.jar, change the GenomeAnalysisTK.jar symbolic link 
+in the installation directory to point to your licensed copy.
+
+Two environment variables: GATK2_SITE_OPTIONS and GATK2_THREAD_OPTIONS  are also set in the tool_dependencies env.sh file.
+You can alter the value of those variables for your site.
+$ cat tool_dependencies/gatk/2.2/*/gatk2/*/env.sh
+GATK2_PATH=/Users/jj/gxt/gxt/tool_dependencies/gatk/2.2/jimmy/gatk2/288cdae6bd9c; export GATK2_PATH
+GATK2_SITE_OPTIONS="--phone_home STANDARD"; export GATK2_SITE_OPTIONS
+GATK2_THREAD_OPTIONS="--num_threads 4 --num_cpu_threads_per_data_thread 3"; export GATK2_THREAD_OPTIONS
+
+

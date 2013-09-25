@@ -1,0 +1,22 @@
+<tool id="gffread" name="gffread">
+        <description>Perform various operations on GFF files</description>
+
+        <command>
+                gffread $inputgff -g $ref -w $output_exons
+        </command>
+
+        <inputs>
+                <param name="inputgff" type="data" format="gff3,gff" label="Input GFF file"/>
+
+                <param name="ref" type="data" format="fasta" label="Reference fasta file"/>
+        </inputs>
+
+        <outputs>
+                <data format="fasta" name="output_exons"/>
+        </outputs>
+
+        <help>
+        </help>
+
+</tool>
+

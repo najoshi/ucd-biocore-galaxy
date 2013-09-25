@@ -1,0 +1,46 @@
+<tool id="sga" name="SGA">
+	<description>String Graph Assembler for Bacterial data</description>
+
+	<command interpreter="bash">
+		 sga-ecoli-miseq-galaxy.sh $input_file1 $input_file2 $threads $index_reads $kmer_correct $min_overlap $assemble_overlap $trim_len $min_contig_len $min_pairs $assembly_file.files_path $assembly_file 2> $log_file > $log_file
+	</command>
+
+	<inputs>
+		<param format="fastqsanger,fastqillumina,fastqsolexa,fastq" name="input_file1" type="data" optional="false" label="Forward FastQ file" />
+		<param format="fastqsanger,fastqillumina,fastqsolexa,fastq" name="input_file2" type="data" optional="false" label="Reverse FastQ file" />
+
+		<param name="threads" value="8" type="integer" optional="false" label="Number of threads to use">
+                        <validator type="in_range" min="1" message="Minimum value is 1"/>
+                </param>
+		<param name="index_reads" value="2000000" type="integer" optional="false" label="Index this many reads at a time (to save memory)">
+                        <validator type="in_range" min="1" message="Minimum value is 1"/>
+                </param>
+		<param name="kmer_correct" value="41" type="integer" optional="false" label="K-mer correction">
+                        <validator type="in_range" min="1" message="Minimum value is 1"/>
+                </param>
+		<param name="min_overlap" value="85" type="integer" optional="false" label="Minimum overlap to use when computing the graph">
+                        <validator type="in_range" min="1" message="Minimum value is 1"/>
+                </param>
+		<param name="assemble_overlap" value="111" type="integer" optional="false" label="Overlap value for the final assembly">
+                        <validator type="in_range" min="1" message="Minimum value is 1"/>
+                </param>
+		<param name="trim_len" value="400" type="integer" optional="false" label="Branch trim length">
+                        <validator type="in_range" min="1" message="Minimum value is 1"/>
+                </param>
+		<param name="min_contig_len" value="200" type="integer" optional="false" label="Minimum length of contigs to include in a scaffold">
+                        <validator type="in_range" min="1" message="Minimum value is 1"/>
+                </param>
+		<param name="min_pairs" value="10" type="integer" optional="false" label="Minimum number of reads pairs required to link two contigs">
+                        <validator type="in_range" min="1" message="Minimum value is 1"/>
+                </param>
+	</inputs>
+
+	<outputs>
+		<data format="fasta" name="assembly_file" label="SGA assembly for ${on_string}"/>
+		<data format="txt" name="log_file" label="Log file for SGA on ${on_string}"/>
+	</outputs>
+
+	<help>
+	</help>
+
+</tool>

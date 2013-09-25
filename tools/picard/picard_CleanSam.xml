@@ -1,0 +1,99 @@
+<tool name="Clean Sam" id="picard_CleanSam" version="1.56.0">
+  <requirements><requirement type="package">picard</requirement></requirements>
+  <command interpreter="python">
+    picard_wrapper.py
+      --input "$inputFile"
+      -o $outFile
+      -j "${GALAXY_DATA_INDEX_DIR}/shared/jars/picard/CleanSam.jar"
+  </command>
+  <inputs>
+    <param format="sam" name="inputFile" type="data" label="SAM dataset to be cleaned"
+      help="If empty, upload or import a SAM/BAM dataset." />
+
+  </inputs>
+  <outputs>
+    <data name="outFile" format="sam" label="${tool.name} on ${on_string}.sam"/>
+  </outputs>
+  <tests>
+    <test>
+      <!-- Command:
+      java -jar ReplaceSamHeader.jar VALIDATION_STRINGENCY=LENIENT I=test-data/picard_input_tiny_coord.bam HEADER=test-data/picard_RSH_input1.bam O=picard_RSH_output1.sam
+      picard_RSH_input1.bam can be made from picard_RSH_input1.sam
+      -->
+      <param name="inputFile" value="picard_input_tiny_coord.bam" ftype="bam" />
+      <param name="headerFile" value="picard_RSH_input1.bam" ftype="bam" />
+      <param name="outputFormat" value="False" />
+      <output name="outFile" file="picard_RSH_output1.sam" ftype="sam" />
+    </test>
+    <test>
+      <!-- Command:
+      java -jar ReplaceSamHeader.jar VALIDATION_STRINGENCY=LENIENT I=test-data/picard_input_tiny_coord.sam HEADER=test-data/picard_RSH_input1.bam O=picard_RSH_output2.sam
+      picard_RSH_input1.bam can be made from picard_RSH_input1.sam
+      -->
+      <param name="inputFile" value="picard_input_tiny_coord.sam" ftype="sam" />
+      <param name="headerFile" value="picard_RSH_input1.bam" ftype="bam" />
+      <param name="outputFormat" value="False" />
+      <output name="outFile" file="picard_RSH_output2.sam" ftype="sam" />
+    </test>
+    <test>
+      <!-- Command:
+      java -jar ReplaceSamHeader.jar VALIDATION_STRINGENCY=LENIENT I=test-data/picard_input_tiny_coord.sam HEADER=test-data/picard_RSH_input1.sam O=picard_RSH_output2.bam
+      -->
+      <param name="inputFile" value="picard_input_tiny_coord.sam" ftype="sam" />
+      <param name="headerFile" value="picard_RSH_input1.sam" ftype="sam" />
+      <param name="outputFormat" value="True" />
+      <output name="outFile" file="picard_RSH_output2.bam" ftype="bam" />
+    </test>
+  </tests>
+  <help>
+
+
+.. class:: infomark
+
+**Purpose**
+
+Read SAM and perform various fix-ups. Currently, the only fix-up it to soft-clip an alignment that hangs off the end of its reference sequence.
+
+**Picard documentation**
+
+This is a Galaxy wrapper for CleanSam, a part of the external package Picard-tools_.
+
+ .. _Picard-tools: http://www.google.com/search?q=picard+samtools
+
+------
+
+.. class:: infomark
+
+**Inputs and outputs**
+
+Either a sam file or a bam file is required as the file whose header will be replaced.
+The header file is also required and can also be either sam or bam (it does not have
+to be the same type as the other file). In both cases, if a bam file is used, it must
+be coordinate-sorted. Galaxy currently coordinate-sorts all bam files.
+
+The tool will output either bam (the default) or sam. Bam is recommended since it is smaller.
+
+.. class:: warningmark
+
+**Warning on SAM/BAM quality**
+
+Many SAM/BAM files produced externally and uploaded to Galaxy do not fully conform to SAM/BAM specifications. Galaxy deals with this by using the **LENIENT**
+flag when it runs Picard, which allows reads to be discarded if they're empty or don't map. This appears
+to be the only way to deal with SAM/BAM that cannot be parsed.
+
+
+
+  </help>
+</tool>
+
+
+
+
+
+
+
+
+
+
+
+

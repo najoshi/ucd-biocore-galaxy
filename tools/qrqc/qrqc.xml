@@ -1,0 +1,19 @@
+<tool id="qrqc" name="qrqc">
+	<description>Generate quality assessment plots for FastQ/A</description>
+
+	<command interpreter="python">
+		 stderr_wrapper.py Rscript ${GALAXY_DATA_INDEX_DIR}/qrqc.R $input_file "$input_file.ext" $report_html "$report_html.files_path"
+	</command>
+
+	<inputs>
+		<param format="fastqsanger,fastqillumina,fastqsolexa,fastq,fasta" name="input_file" type="data" optional="false" label="FastQ or FastA file" help="Note that the quality format will be inferred from the datatype. The fastq datatype will default to sanger quality encoding. If you want solexa or illumina encoding, change the datatype of the file to fastqsolexa or fastqillumina."/>
+	</inputs>
+
+	<outputs>
+		<data format="html" name="report_html" label="qrqc report for ${on_string}"/>
+	</outputs>
+
+	<help>
+	</help>
+
+</tool>

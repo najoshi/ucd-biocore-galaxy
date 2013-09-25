@@ -1,0 +1,128 @@
+<tool id="sissrs" name="Sissrs">
+	<description>Find Peaks in Chip-Seq data</description>
+
+	<requirements>
+		<requirement type="perl-module">sissrs.pl</requirement>
+	</requirements>
+
+	<command interpreter="perl">
+		sissrs.pl -i $input -o $output -s $genome_size
+
+		#if str($amp_bias) == "amp_bias_true":
+		-a
+		#end if
+
+		#if str($avglen) != "":
+		-F $avglen
+		#end if
+
+		#if str($fdr) != "":
+		-D $fdr
+		#end if
+
+		#if str($use_bg.use_bg_check) == "use_bg_check_true":
+		-b '$use_bg.background' -e $use_bg.evalue -p $use_bg.pvalue
+		#end if
+
+		#if str($frac_map) != "":
+		-m $frac_map
+		#end if
+
+		#if str($winsize) != "":
+		-w $winsize
+		#end if
+
+		#if str($min_dir_reads) != "":
+		-E $min_dir_reads
+		#end if
+
+		#if str($exclude) != "None":
+		-q '$exclude'
+		#end if
+
+		#if str($trans_report) == "trans_report_true":
+		-t
+		#end if
+
+		#if str($region_report) == "region_report_true":
+		-r
+		#end if
+
+		#if str($cluster_report) == "cluster_report_true":
+		-c
+		#end if
+
+		#if str($strand_report) == "strand_report_true":
+		-u
+		#end if
+	</command>
+	<inputs>
+		<param format="bed" name="input" type="data" optional="false" label="Bed File from Chip-Seq" help="input file containing tags/reads in BED format"/>
+
+		<param name="genome_size" value="" type="integer" optional="false" label="Genome Size (required)" help="genome size (number of bases or nucleotides)">
+			<validator type="in_range" min="1" message="Minimum value is 1"/>
+		</param>
+
+		<param name="amp_bias" type="boolean" truevalue="amp_bias_true" falsevalue="amp_bias_false" checked="false" label="Only keep one read if multiple align to same coordinate" help="only one read is kept if multiple reads align to the same genomic coordinate (minimizes amplification bias)"/>
+
+		<param name="avglen" type="integer" value="" optional="true" label="Average length of DNA frags (default: estimated)" help="average length of DNA fragments that were sequenced (default: estimated from reads)"/>
+
+		<param name="fdr" type="float" value="0.001" optional="true" label="False Discovery Rate" help="false discovery rate (default: 0.001) if random background model based on Poisson probabilities need to be used as control">
+			<validator type="in_range" min="0"></validator>
+		</param>
+
+		<conditional name="use_bg">
+			<param name="use_bg_check" type="boolean" truevalue="use_bg_check_true" falsevalue="use_bg_check_false" label="Use background file as control?"/>
+
+			<when value="use_bg_check_true">
+				<param name="background" type="data" format="bed" label="Background bed file to use as control" help="background file containing tags in BED format to be used as control; E-value and P-value can be set to desired values to control specificity and sensitivity, resp."/>
+				<param name="evalue" type="float" value="10" label="E-value for expected number of binding sites (only used with background file)" help="e-value (>=0); it is the number of binding sites one might expect to infer by chance">
+					<validator type="in_range" min="0" message="Minimum value is 0"/>
+				</param>
+				<param name="pvalue" type="float" value="0.001" label="P-value threshold for fold enrichment (only used with background file)" help="p-value threshold for fold enrichment of ChIP tags at a binding site location compared to that at the same location in the control data">
+					<validator type="in_range" min="0" message="Minimum value is 0"/>
+				</param>
+			</when>
+			<when value="use_bg_check_false"></when>
+		</conditional>
+
+		<param name="frac_map" type="float" value="0.8" optional="true" label="Fraction of genome mappable by reads" help="fraction of genome mappable by reads (default: 0.8 for hg18, assuming ELAND was used to map the reads; could be different for different organisms and other alignment algorithms)">
+			<validator type="expression" message="Fraction must be > 0">value > 0</validator>
+		</param>
+
+		<param name="winsize" type="integer" value="20" optional="true" label="Scanning Window Size (must be even)" help="scanning window size (even number > 1), which controls for noise">
+			<validator type="in_range" min="2" message="Window Size must be >= 2"/>
+			<validator type="expression" message="Window Size must be even">value % 2 == 0</validator>
+		</param>
+
+		<param name="min_dir_reads" type="integer" value="2" optional="true" label="Min number of 'directional' reads" help="min number of 'directional' reads required on each side of the inferred binding site (>0)">
+			<validator type="in_range" min="1" message="Minimum value is 1"/>
+		</param>
+
+		<param name="dna_frag_len" type="integer" value="500" optional="true" label="Upper-bound on DNA fragment length" help="upper-bound on the DNA fragment length">
+			<validator type="in_range" min="1" message="Minimum value is 1"/>
+		</param>
+
+		<param name="exclude" type="data" format="bed" optional="true" label="BED file containing regions to exclude" help="file containing genomic regions to exclude; reads mapped to these regions will be ignored; file format: 'chr startCoord endCoord'"/>
+
+		<param name="trans_report" type="boolean" truevalue="trans_report_true" falsevalue="trans_report_false" checked="false" label="Report each binding site as a single coordinate" help="reports each binding site as a single genomic coordinate"/>
+
+		<param name="region_report" type="boolean" truevalue="false" label="Report each site as a region" help="reports each binding site as an X-bp binding region centered on inferred binding coordinate; X denotes the distance from the start of the right-most red bar to the end of the left-most blue bar surrounding the actual binding site (from paper)"/>
+
+		<param name="cluster_report" type="boolean" truevalue="cluster_report_true" falsevalue="cluster_report_false" checked="true" label="Cluster reported sites (default)" help="same as the region option, except that it reports binding sites that are clustered within F bp of each other as a single binding region; this is the default option"/>
+
+		<param name="strand_report" type="boolean" truevalue="strand_report_true" falsevalue="strand_report_false" checked="false" label="Also report sites supported by only sense or only anti-sense strands" help="(also) reports binding sites supported only by reads mapped to either sense or anti-sense strand; this option will recover binding sites whose sense or anti-sense reads were not mapped for some reason (e.g., falls in unmappable/repetitive regions)"/>
+	</inputs>
+	<outputs>
+		<data format="input" name="output" metadata_source="input"/>
+	</outputs>
+
+	<help>
+This tool finds peaks in Chip-Seq data.
+
+Link_ to the SISSRs manual.
+
+.. _Link: http://dir.nhlbi.nih.gov/papers/lmi/epigenomes/sissrs/SISSRs-Manual.pdf
+	</help>
+
+</tool>
