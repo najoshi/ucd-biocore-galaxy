@@ -265,10 +265,6 @@
         <tool id="run_ca" />
     </section>
     <section id="solexa_tools" name="NGS: Mapping" version="">
-        <tool id="toolshed.g2.bx.psu.edu/repos/devteam/lastz_paired_reads/lastz_paired_reads_wrapper/1.1.1" />
-        <tool id="toolshed.g2.bx.psu.edu/repos/devteam/lastz/lastz_wrapper_2/1.2.2" />
-        <tool id="toolshed.g2.bx.psu.edu/repos/devteam/bowtie_color_wrappers/bowtie_color_wrapper/1.1.2" />
-        <tool id="toolshed.g2.bx.psu.edu/repos/devteam/bowtie_wrappers/bowtie_wrapper/1.1.2" />
         <tool id="bwa_wrapper" />
         <tool id="bwa_color_wrapper" />
         <tool id="bfast_wrapper" />
@@ -277,6 +273,10 @@
         <tool id="PerM" />
         <tool id="srma_wrapper" />
         <tool id="mosaik_wrapper" />
+        <tool id="toolshed.g2.bx.psu.edu/repos/devteam/lastz_paired_reads/lastz_paired_reads_wrapper/1.1.1" />
+        <tool id="toolshed.g2.bx.psu.edu/repos/devteam/lastz/lastz_wrapper_2/1.2.2" />
+        <tool id="toolshed.g2.bx.psu.edu/repos/devteam/bowtie_color_wrappers/bowtie_color_wrapper/1.1.2" />
+        <tool id="toolshed.g2.bx.psu.edu/repos/devteam/bowtie_wrappers/bowtie_wrapper/1.1.2" />
     </section>
     <section id="ngs-rna-tools" name="NGS: RNA Analysis" version="">
         <label id="rna_seq" text="RNA-seq" version="" />
@@ -321,15 +321,15 @@
         <label id="gatk2_annotation" text="Annotation" version="" />
         <tool id="gatk2_variant_annotator" />
         <label id="gatk2_filtration" text="Filtration" version="" />
-        <label id="gatk2_variant_quality_score_recalibration" text="Variant Quality Score Recalibration" version="" />
-        <tool id="gatk2_variant_apply_recalibration" />
         <tool id="gatk2_variant_filtration" />
-        <tool id="gatk2_variant_recalibrator" />
         <tool id="gatk2_variant_select" />
+        <label id="gatk2_variant_quality_score_recalibration" text="Variant Quality Score Recalibration" version="" />
+        <tool id="gatk2_variant_recalibrator" />
+        <tool id="gatk2_variant_apply_recalibration" />
         <label id="gatk2_variant_utilities" text="Variant Utilities" version="" />
+        <tool id="gatk2_validate_variants" />
         <tool id="gatk2_variant_eval" />
         <tool id="gatk2_variant_combine" />
-        <tool id="gatk2_validate_variants" />
     </section>
     <section id="variant_detection" name="NGS: Variant Detection" version="">
         <tool id="freebayes_wrapper" />
@@ -356,14 +356,6 @@
         <tool id="vcf_annotate" />
         <tool id="vcf_filter" />
         <tool id="vcf_extract" />
-    </section>
-    <section id="hybrid" name="PacBio/Illumina Assembly" version="">
-        <tool id="quake" />
-        <tool id="quake_pe" />
-        <tool id="soap_denovo" />
-        <tool id="myquake" />
-        <tool id="smrtpipe_hybrid" />
-        <tool id="assembly_stats" />
     </section>
     <section id="mirdeep2" name="Finding miRNAs" version="">
         <tool id="bowtiebuild" />

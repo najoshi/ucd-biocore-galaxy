@@ -576,18 +576,22 @@
     <tool file="vcf_tools/extract.xml" />
   </section>
 
+<!--
   <section name="PacBio/Illumina Assembly" id="hybrid">
     <tool file="ilmn_pacbio/quake.xml"/>
     <tool file="ilmn_pacbio/quake_pe.xml"/>
     <tool file="ilmn_pacbio/soap_denovo.xml"/>
     <tool file="ilmn_pacbio/myquake.xml"/>
+-->
 <!--
     Uncomment this tool when we support the HDF5 format
     <tool file="ilmn_pacbio/smrtpipe_filter.xml"/>
 -->
+<!--
     <tool file="ilmn_pacbio/smrtpipe_hybrid.xml"/>
     <tool file="ilmn_pacbio/assembly_stats.xml"/>
   </section>
+-->
 
 
 
