@@ -93,6 +93,7 @@
     </section>
     <section id="features" name="Extract Features" version="">
         <tool id="gene2exon1" />
+        <tool id="split_bam_file" />
     </section>
     <section id="fetchSeq" name="Fetch Sequences" version="">
         <tool id="Extract genomic DNA 1" />

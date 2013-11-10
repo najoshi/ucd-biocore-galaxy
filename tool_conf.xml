@@ -107,6 +107,7 @@
   </section>
   <section name="Extract Features" id="features">
     <tool file="filters/ucsc_gene_bed_to_exon_bed.xml" />
+    <tool file="filters/split_bam_file.xml" />
   </section>
   <section name="Fetch Sequences" id="fetchSeq">
     <tool file="extract/extract_genomic_dna.xml" />

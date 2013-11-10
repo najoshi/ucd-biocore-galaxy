@@ -1,0 +1,19 @@
+<tool id="split_bam_file" name="Split BAM file" force_history_refresh="True">
+	<description>Split a BAM file by chromosomes</description>
+
+	<command>
+		${GALAXY_DATA_INDEX_DIR}/split_bam_file.pl $input_bam ${input_bam.metadata.bam_index} $output_bam1 $output_bam1.id $__new_file_path__ "$output_bam1.files_path"
+	</command>
+
+	<inputs>
+		<param format="bam" name="input_bam" type="data" optional="false" label="BAM file (with headers)" />
+	</inputs>
+
+	<outputs>
+		<data format="txt" name="output_bam1" hidden="true" />
+	</outputs>
+
+	<help>
+	</help>
+
+</tool>
