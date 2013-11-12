@@ -11,6 +11,7 @@ $headers = `/share/apps/samtools/samtools view -H file.bam`;
 
 if ($headers eq "") {
 	print STDERR "Error: No headers detected in BAM file. Aborting.\n";
+    system ("rm -rf $tempfilepath");
 	exit(1);
 }
 
