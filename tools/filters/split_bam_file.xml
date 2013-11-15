@@ -10,10 +10,12 @@
 	</inputs>
 
 	<outputs>
-		<data format="txt" name="output_bam1" hidden="true" />
+		<data format="txt" name="output_bam1" label="Split BAM file on ${input_bam.name}"/>
 	</outputs>
 
 	<help>
+		May require multiple history refreshes after tool finishes to get all output files.
+		The first file will be the log file.  The subsequent files will be the result of the splitting.
 	</help>
 
 </tool>

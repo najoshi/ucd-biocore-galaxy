@@ -429,7 +429,7 @@
 <!--
     <tool file="gatk2/gatk2_haplotype_caller.xml" />
 -->
-    <tool file="gatk2/haplotype_caller.xml" />
+    <tool file="gatk2/haplotype_caller_biocore.xml" />
 
     <label text="Annotation" id="gatk2_annotation" />
     <tool file="gatk2/gatk2_variant_annotator.xml" />
