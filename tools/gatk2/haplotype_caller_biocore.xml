@@ -168,8 +168,8 @@
             --max_alternate_alleles $analysis_param_type.max_alternate_alleles
         #end if
         ## mode selections
-        #if $analysis_param_type.genotyping_mode.__str__ != "None" and len($analysis_param_type.genotyping_mode.__str__) > 0:
-          --genotyping_mode $analysis_param_type.genotyping_mode
+        #if $analysis_param_type.genotyping_mode_type.genotyping_mode.__str__ != "None" and len($analysis_param_type.genotyping_mode_type.genotyping_mode.__str__) > 0:
+          --genotyping_mode $analysis_param_type.genotyping_mode_type.genotyping_mode
         #end if
         #if $analysis_param_type.pair_hmm_implementation.__str__ != "None" and len($analysis_param_type.pair_hmm_implementation.__str__) > 0:
           --pair_hmm_implementation $analysis_param_type.pair_hmm_implementation
