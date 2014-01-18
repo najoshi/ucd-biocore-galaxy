@@ -111,9 +111,11 @@
         #if str( $analysis_param_type.genotyping_mode_type.genotyping_mode ) == 'GENOTYPE_GIVEN_ALLELES':
             --alleles "${analysis_param_type.genotyping_mode_type.input_alleles_rod}"
         #end if
-        #if $analysis_param_type.output_mode.__str__ != "None" and len($analysis_param_type.output_mode.__str__) > 0:
-          --output_mode $analysis_param_type.output_mode
-        #end if
+
+	##output_mode option obsolete
+        ##if $analysis_param_type.output_mode.__str__ != "None" and len($analysis_param_type.output_mode.__str__) > 0:
+          ##--output_mode $analysis_param_type.output_mode
+        ##end if
 
         ## files
         #if str($analysis_param_type.activeRegionIn) != 'None':
@@ -525,11 +527,13 @@
         <param name="minPruning" type="integer" value="1" optional="true" label="minPruning" help="--minPruning / -minPruning  The minimum allowed pruning factor in assembly graph. Paths with &gt;= X supporting kmers are pruned from the graph">
             <validator type="in_range" message="value between 0 and 127" min="0" max="127"/>
         </param>
-        <param name="output_mode" type="select" optional="true" label="output_mode" help="--output_mode / -out_mode  Specifies which type of calls we should output">
+<!--
+        <param name="output_mode" type="select" optional="true" label="output_mode" help="-output_mode / -out_mode  Specifies which type of calls we should output">
               <option value="EMIT_VARIANTS_ONLY" selected="True">EMIT_VARIANTS_ONLY</option>
               <option value="EMIT_ALL_CONFIDENT_SITES">EMIT_ALL_CONFIDENT_SITES</option>
               <option value="EMIT_ALL_SITES">EMIT_ALL_SITES</option>
         </param>
+-->
         <param name="pair_hmm_implementation" type="select" optional="true" label="pair_hmm_implementation" help="--pair_hmm_implementation / -pairHMM  The PairHMM implementation to use for genotype likelihood calculations">
               <option value="EXACT">EXACT</option>
               <option value="ORIGINAL">ORIGINAL</option>
