@@ -107,7 +107,8 @@
         #if $analysis_param_type.heterozygosity.__str__.strip() != '':
             --heterozygosity $analysis_param_type.heterozygosity
         #end if
-        --genotyping_mode "${analysis_param_type.genotyping_mode_type.genotyping_mode}"
+	##duplicate
+        ##--genotyping_mode "${analysis_param_type.genotyping_mode_type.genotyping_mode}"
         #if str( $analysis_param_type.genotyping_mode_type.genotyping_mode ) == 'GENOTYPE_GIVEN_ALLELES':
             --alleles "${analysis_param_type.genotyping_mode_type.input_alleles_rod}"
         #end if
