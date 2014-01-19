@@ -151,9 +151,11 @@
         #if $analysis_param_type.contamination_fraction_to_filter.__str__.strip() != '':
             --contamination_fraction_to_filter $analysis_param_type.contamination_fraction_to_filter
         #end if
-        #if $analysis_param_type.downsampleRegion.__str__.strip() != '':
-            --downsampleRegion $analysis_param_type.downsampleRegion
-        #end if
+
+	##downsampleRegion obsolete
+        ##if $analysis_param_type.downsampleRegion.__str__.strip() != '':
+            ##--downsampleRegion $analysis_param_type.downsampleRegion
+        ##end if
         #if $analysis_param_type.minPruning.__str__.strip() != '':
             --minPruning $analysis_param_type.minPruning
         #end if
@@ -506,8 +508,9 @@
         </param>
         <param name="dbsnp" type="data" format="vcf" optional="true" label="dbsnp" help="--dbsnp / -D  dbSNP file"/>
         <param name="debug" type="boolean" checked="False" truevalue="-debug" falsevalue="" label="debug" help="--debug / -debug  If specified, print out very verbose debug information about each triggering active region"/>
-        <param name="downsampleRegion" type="integer" value="1000" optional="true" label="downsampleRegion" help="--downsampleRegion / -dr  coverage, per-sample, to downsample each active region to"/>
-
+<!--
+        <param name="downsampleRegion" type="integer" value="1000" optional="true" label="downsampleRegion" help="-downsampleRegion / -dr  coverage, per-sample, to downsample each active region to"/>
+-->
         <conditional name="genotyping_mode_type">
           <param name="genotyping_mode" type="select" label="How to determine the alternate allele to use for genotyping" help="-gt_mode,--genotyping_mode &amp;lt;genotyping_mode&amp;gt;">
             <option value="DISCOVERY" selected="True">DISCOVERY</option>
