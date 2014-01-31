@@ -42,10 +42,12 @@ def __main__():
         assert None not in [ options.read_group_file_1, options.new_files_path, options.file_id_1 ], 'When using read group aware, you need to specify --read_group_file_1, --read_group_file_2 (when paired end), --new_files_path, and --file_id'
         cmd = '%s OUTPUT_DIR="%s"' % ( cmd,  tmp_dir)
     #set up stdout and stderr output options
-    stdout = open_file_from_option( options.stdout, mode = 'wb' )
+    # stdout = open_file_from_option( options.stdout, mode = 'wb' )
+    stdout = open("/tmp/sam2fastq.out", mode = 'rw' )
     if stdout is None:
         stdout = sys.stdout
-    stderr = open_file_from_option( options.stderr, mode = 'wb' )
+    # stderr = open_file_from_option( options.stderr, mode = 'wb' )
+    stderr = open("/tmp/sam2fastq2.out", mode = 'rw' )
     #if no stderr file is specified, we'll use our own
     if stderr is None:
         stderr = tempfile.NamedTemporaryFile( prefix="picard-stderr-", dir=tmp_dir )
