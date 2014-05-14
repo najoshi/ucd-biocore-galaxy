@@ -1,0 +1,105 @@
+<tool id="htseq-count" name="Count reads in features with htseq-count" version="1.0.0">
+  <requirements>
+      <requirement type="package" version="0.1.18">samtools</requirement>
+      <requirement type="python library" version="0.5.3p9">htseq</requirement>
+  </requirements>
+  <description> - Create a digital expression matrix by counting reads in features with htseq-count</description>
+  <command interpreter="perl">
+  	htseq.pl -m $MODE -s $STRANDED -a $MINAQUAL -t $FEATURETYPE -i $IDATTR -g $gff_file -o $output -r $report $REDUCE
+	## Inputs.
+        #for $group in $group_analysis
+ 		${group.group}::${group.sample_init}::${group.file_init}
+      		#for $input_files in $group.input_files:
+       			${group.group}::${input_files.sample}::${input_files.file}
+        	#end for
+        #end for
+  </command>
+
+  <inputs>
+  	<param name="matrix_name" type="text" label="Name Of Matrix" help="Name Of The Matrix" value="My_Matrix" />
+        <repeat name="group_analysis" title="Group">
+		<param name="group" title="Group name" type="text" label="Group name (no spaces or commas)"/>
+		<param name="sample_init" title="Sample name" type="text" label="Sample name (no spaces, commas or colons allowed)"/>
+		<param format="sam,bam" name="file_init" type="data" label="SAM/BAM File" help=""/>
+		<repeat name="input_files" title="Replicate">
+		    <param name="sample" title="Sample name" type="text" label="Sample name (no spaces, commas or colons allowed)"/>
+		    <param format="sam,bam" name="file" type="data" label="Add file" help=""/>
+		</repeat>
+	</repeat>
+  	<param format="gff, gtf" name="gff_file" type="data" label="The features file in the GFF/GTF format"/>
+	<param name="MODE" type="select" label="Mode to handle reads overlapping more than one feature">
+		<option value="union">Union</option>
+		<option value="intersection-strict">Intersection Strict</option>
+		<option value="intersection-nonempty" selected="true">Intersection Nonempty</option>
+	</param>
+ 	<param name="STRANDED" type="select" label="Is the data from a strand-specific assay?">
+		<option value="no" selected="true">No</option>
+		<option value="yes">Yes</option>
+		<option value="reverse">Yes but reverse</option>
+	</param>
+	<param name="MINAQUAL" type="integer" value="0" label="Minimum Alignment Quality" help="Skip all reads with alignment quality lower than the given minimum value." />
+	<param name="FEATURETYPE" value="exon" type="text" label="Feature type (3rd column in GFF file) to be used" help="All features of other type are ignored (default, suitable for RNA-Seq and Ensembl GTF files: exon)" size="80" />
+	<param name="IDATTR" value="gene_id" type="text" label="GFF attribute to be used as feature ID" help="Several GFF lines with the same feature ID will be considered as parts of the same feature. The feature ID is used to identity the counts in the output table. The default, suitable for RNA-SEq and Ensembl GTF files, is gene_id." size="80" />
+  	<param name="REDUCE" type="boolean" truevalue="-c" falsevalue="" checked="True" label="Reduce Matrix" help="Remove any rows for which all input Sam/Bam files have 0 counts."/> 
+  </inputs>
+  
+  <outputs>
+    	<data format="tabular" name="output" label="Digital Expression Matrix: $matrix_name"/>
+    	<data format="txt" name="report" label="Matrix Report: $matrix_name"/>
+  </outputs>
+  	
+  <help> 
+
+.. class:: infomark
+
+**What it does**
+
+Create a digital expression matrix by counting reads in features with htseq-count
+
+For each given file with aligned sequencing reads this tool counts how many reads map to each feature. It then constructs a matrix where the rows represent the features and the columns represent the files.
+
+A feature is here an interval (i.e., a range of positions) on a chromosome or a union of such intervals.
+
+In the case of RNA-Seq, the features are typically genes, where each gene is considered here as the union of all its exons. One may also consider each exon as a feature, e.g., in order to check for alternative splicing. For comparative ChIP-Seq, the features might be binding region from a pre-determined list.
+
+Special care must be taken to decide how to deal with reads that overlap more than one feature. The htseq-count script allows to choose between three modes.
+
+The three overlap resolution modes of htseq-count work as follows. For each position i in the read, a set S(i) is defined as the set of all features overlapping position i. Then, consider the set S, which is (with i running through all position within the read)
+
+    * the union of all the sets S(i) for mode union.
+    * the intersection of all the sets S(i) for mode intersection-strict.
+    * the intersection of all non-empty sets S(i) for mode intersection-nonempty.
+
+If S contains precisely one feature, the read is counted for this feature. If it contains more than one feature, the read is counted as ambiguous (and not counted for any features), and if S is empty, the read is counted as no_feature.
+
+The following figure illustrates the effect of these three modes:
+
+.. image:: http://www-huber.embl.de/users/anders/HTSeq/doc/_images/count_modes.png
+
+The strandedness of the assay may also be set. For stranded=no, a read is considered overlapping with a feature regardless of whether it is mapped to the same or the opposite strand as the feature. For stranded=yes and single-end reads, the read has to be mapped to the same strand as the feature. For paired-end reads, the first read has to be on the same strand and the second read on the opposite strand. For stranded=reverse, these rules are reversed.
+
+.. class:: warningmark 
+
+**Important:** The default for strandedness is no. If yes or reverse is selected and your RNA-Seq data has not been made with a strand-specific protocol, this will cause half of the reads to be lost. Hence, make sure to set the option --stranded=no unless you have strand-specific data!
+
+------
+
+**Output**
+
+The script outputs a digital expression matrix containing the counts for each feature by each input Sam/Bam file. It will also generate a report containing special counters, which count reads that were not counted for any feature for various reasons, namely:
+
+    * no_feature: reads which could not be assigned to any feature (set S as described above was empty).
+    * ambiguous: reads which could have been assigned to more than one feature and hence were not counted for any of these (set S had more than one element).
+    * too_low_aQual: reads which were not counted due to the -a option, see below
+    * not_aligned: reads in the Sam/Bam file without alignment
+    * alignment_not_unique: reads with more than one reported alignment. These reads are recognized from the NH optional SAM field tag. (If the aligner does not set this field, multiply aligned reads will be counted multiple times.)
+
+**Reference**
+
+http://www-huber.embl.de/users/anders/HTSeq/doc/overview.html
+
+
+
+  </help>  
+  
+</tool>

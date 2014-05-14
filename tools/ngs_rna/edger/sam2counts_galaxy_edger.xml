@@ -1,0 +1,58 @@
+<tool id="sam2counts_edger" name="SAM/BAM To Counts">
+  <requirements>
+      <requirement version="2.7">python</requirement>
+  </requirements>
+  <description> - Create a digital expression matrix by counting reads aligned to transcripts</description>
+  <command interpreter="python">
+	sam2counts_galaxy_edger.py 
+	## Inputs.
+	#set $gnum=1
+        #for $group in $group_analysis
+ 		--group G$gnum --treatment '${group.group}' --sample-name '${group.sample_init}' 
+		--bam-file ${group.file_init} --file-type ${group.file_init.ext}
+      		#for $input_files in $group.input_files:
+       			--group G$gnum --treatment '${group.group}' --sample-name '${input_files.sample}' 
+			    --bam-file ${input_files.file} --file-type ${group.file_init.ext}
+        	#end for
+		#set $gnum = $gnum + 1
+        #end for
+
+	$use_ref
+
+	-o $output
+  </command>
+
+  <inputs>
+	<param name="use_ref" type="boolean" label="Files have headers?" checked="true" truevalue="" falsevalue="-r" />
+
+        <repeat name="group_analysis" title="Group" min="1" default="1">
+		<param name="group" title="Group name" type="text" optional="false" label="Group name (no spaces, commas, or quotes)">
+			<validator type="empty_field" />
+			<validator type="regex" message="No spaces, commas, or quotes allowed">^[^\s,\'\"]+$</validator>
+		</param>
+		<param name="sample_init" title="Sample name" type="text" optional="false" label="Sample name (no spaces, commas, or quotes)">
+			<validator type="empty_field" />
+			<validator type="regex" message="No spaces, commas, or quotes allowed">^[^\s,\'\"]+$</validator>
+		</param>
+		<param format="sam,bam" name="file_init" type="data" label="SAM/BAM File" optional="false" help="">
+			<validator type="empty_field" />
+		</param>
+		<repeat name="input_files" title="Replicate" min="1" default="1">
+		    <param name="sample" title="Sample name" type="text" optional="false" label="Sample name (no spaces, commas, or quotes)">
+			<validator type="empty_field" />
+			<validator type="regex" message="No spaces, commas, or quotes allowed">^[^\s,\'\"]+$</validator>
+		    </param>
+		    <param format="sam,bam" name="file" type="data" label="Add file" help=""/>
+		</repeat>
+	</repeat>
+  </inputs>
+  
+  <outputs>
+    	<data format="tabular" name="output" label="Read Counts for ${tool.name} on ${on_string}"/>
+  </outputs>
+  	
+  <help>
+Sample names must be unique.
+  </help>  
+  
+</tool>

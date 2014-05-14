@@ -1,0 +1,214 @@
+<tool id="edgeR" name="edgeR" version="0.0.2">
+  <description> - Estimates differential gene expression for short read sequence count using methods appropriate for count data</description>
+  <requirements>
+        <requirement type="R-module">edgeR</requirement>
+        <requirement type="R-module">limma</requirement>
+  </requirements>
+  <command interpreter="perl">
+  	edgeR.pl -a $analysis_type.analysis -e $html_file.files_path -f $fdr -h $html_file -o $output
+  	## Pairwise comparisons
+  	#if $analysis_type.analysis == "pw":
+   		-r $analysis_type.rowsumfilter
+  		#if $analysis_type.tagwise_disp.twd == "TRUE":
+   			-u $analysis_type.tagwise_disp.twd_trend
+  			-t
+ 		#end if
+ 	## GLM
+  	#else if $analysis_type.analysis == "glm":
+		#if $analysis_type.exp.export_norm == "true":
+			-n $norm_exp
+		#end if
+ 		-d $analysis_type.disp
+		$analysis_type.cont_pw
+ 		#for $fct in $analysis_type.factors:
+  			factor::${$fct.fact_name}::${$fct.fact}
+  		#end for
+  		#for $c in $analysis_type.cont_pred:
+			cp::${c.cp_name}::${c.cp}
+		#end for
+		#for $cnt in $analysis_type.contrasts:
+			"cnt::${cnt.add_cont}"
+		#end for
+	## LIMMA
+	#else
+		#if $analysis_type.exp.export_norm == "true":
+			-n $norm_exp $analysis_type.exp.log
+		#end if
+		$analysis_type.cont_pw
+  		#for $fct in $analysis_type.factors:
+  			factor::${$fct.fact_name}::${$fct.fact}
+  		#end for
+  		#for $c in $analysis_type.cont_pred:
+			cp::${c.cp_name}::${c.cp}
+		#end for
+		#for $cnt in $analysis_type.contrasts:
+			"cnt::${cnt.add_cont}"
+		#end for
+	#end if
+	$matrix
+				
+  </command>
+
+  <inputs>
+  	<param name="matrix" type="data" format="tabular" label="Digital Expression Matrix"/>
+  	<conditional name="analysis_type">
+		<param name="analysis" type="select" label="Type Of Analysis">
+			<option value="pw">Pairwise comparisons (1 Factor Analysis)</option>
+			<option value="glm" selected="true">Generalized Linear Models (Multiple Factor Analysis using GLM)</option>
+			<option value="limma">Linear Models for RNA-Seq (Multiple Factor Analysis using LIMMA)</option>
+		</param>
+		<when value="pw">
+			<param name="rowsumfilter" type="integer" value="5" label="Common Dispersion Rowsum Filter" help="Numeric scalar giving a value for the filtering out of low abundance tags in the estimation of the common dispersion. Only tags with total sum of counts above this value are used in the estimation of the common dispersion. Low abundance tags can adversely affect the estimation of the common dispersion, so this argument allows the user to select an appropriate filter threshold for the tag abundance."/>
+			<conditional name="tagwise_disp">
+				<param name="twd" type="select" label="Maximize the Negative Binomial Weighted Conditional Likelihood" help="Calculate and use an estimate of the dispersion parameter for each tag">
+					<option value="TRUE" selected="true">True</option>
+					<option value="FALSE">False</option>
+				</param>
+				<when value="TRUE">
+					<param name="twd_trend" type="select" label="Method for allowing the prior distribution for the dispersion to be abundance-dependent">
+						<option value="movingave" selected="true">Movingave</option>
+						<option value="tricube">Tricube</option>
+						<option value="none">None</option>
+					</param>
+				</when>
+			</conditional>
+		</when>
+		<when value="glm">
+			<param name="disp" type="select" label="Select The Dispersion Estimate To Use:">
+				<option value="common">Common Dispersion</option>
+				<option value="trend">Trended Dispersion</option>
+				<option value="tag" selected="true">Tagwise Dispersion</option>
+			</param>
+			<repeat name="factors" title="Factor">
+				<param name="fact_name" title="Factor Name" type="text" label="Name Of Factor (no spaces or commas)"/>
+				<param name="fact" title="Factor" type="text" size="100" label="The Level Of Each Sample Seperated By A Colon (no spaces or commas)"/>
+			</repeat>	
+			<repeat name="cont_pred" title="Continuous Predictor">
+				<param name="cp_name" title="Continuous Predictor Name" type="text" label="Name Of Continuous Predictor (no spaces or commas)"/>
+				<param name="cp" title="Continuous Predictor" type="text" size="100" label="The Numerical Value For Each Sample Seperated By A Colon (no spaces or commas)"/>
+			</repeat>
+			<param name="cont_pw" type="boolean" truevalue="-m" falsevalue="" checked="True" label="Perform all pairwise comparisons" help="Include all pairwise comparisons in the contrast matrix."/>
+			<repeat name="contrasts" title="Contrast">
+				<param name="add_cont" title="Contrast" type="text" label="Enter the contrast of interest, e.g. (G1+G2)/2-G3 (no spaces or commas)"/>
+			</repeat>
+			<conditional name="exp">	
+				<param name="export_norm" type="select" label="Save Normalised DGE Matrix">
+					<option value="true">Yes</option>
+					<option value="false">No</option>
+				</param>
+			</conditional>
+		</when>
+		<when value="limma">
+			<repeat name="factors" title="Factor">
+				<param name="fact_name" title="Factor Name" type="text" label="Name Of Factor (no spaces or commas)"/>
+				<param name="fact" title="Factor" type="text" size="100" label="The Level Of Each Sample Seperated By A Colon (no spaces or commas)"/>
+			</repeat>	
+			<repeat name="cont_pred" title="Continuous Predictor">
+				<param name="cp_name" title="Continuous Predictor Name" type="text" label="Name Of Continuous Predictor (no spaces or commas)"/>
+				<param name="cp" title="Continuous Predictor" type="text" size="100" label="The Numerical Value For Each Sample Seperated By A Colon (no spaces or commas)"/>
+			</repeat>
+			<param name="cont_pw" type="boolean" truevalue="-m" falsevalue="" checked="True" label="Perform all pairwise comparisons" help="Include all pairwise comparisons in the contrast matrix."/>
+			<repeat name="contrasts" title="Contrast">
+				<param name="add_cont" title="Contrast" type="text" label="Enter the contrast of interest, e.g. (G1+G2)/2-G3 (no spaces or commas)"/>
+			</repeat>
+			<conditional name="exp">	
+				<param name="export_norm" type="select" label="Save Normalised DGE Matrix">
+					<option value="true">Yes</option>
+					<option value="false">No</option>
+				</param>
+				<when value="true">
+					<param name="log" type="boolean" truevalue="-l" falsevalue="" checked="True" label="Export Normalised DGE Matrix in Log2" help="Selecting this will log base 2 transform the Normalised Digital Gene Expression Matrix."/>
+				</when>
+			</conditional>
+		</when>
+	</conditional>
+	<param name="fdr" type="select" label="False discovery rate adjustment method">
+		<option value="BH">Benjamini and Hochberg (1995)</option>
+		<option value="holm">Holm (1979)</option>
+		<option value="hochberg">Hochberg (1988)</option>
+		<option value="hommel">Hommel (1988)</option>
+		<option value="BY">Benjamini and Yekutieli (2001)</option>
+		<option value="none">None</option>
+	</param>
+  </inputs>
+  
+  <outputs>
+    	<data format="tabular" name="output" label="EdgeR analysis on ${matrix.name}"/>
+    	<data name="html_file" format="html" label="EdgeR analysis plots for ${matrix.name}"/>
+    	<data name="norm_exp" format="tabular" label="EdgeR Norm Expr Matrix for ${matrix.name}">
+    		<filter>analysis_type[ "analysis" ] != "pw" and analysis_type[ "exp" ][ "export_norm" ] == "true"</filter>
+    	</data>
+  </outputs>
+  	
+	<help>
+
+.. class:: infomark
+    
+**What it does**
+
+Estimates differential gene expression for short read sequence count using methods appropriate for count data.
+If you have paired data you may also want to consider Tophat/Cufflinks. 
+Input must be raw count data for each sequence arranged in a rectangular matrix as a tabular file.
+Note - no scaling - please make sure you have untransformed raw counts of reads for each sequence.
+ 
+Performs digital differential gene expression analysis between groups (eg a treatment and control).
+Biological replicates provide information about experimental variability required for reliable inference.
+
+**What it does not do**
+edgeR_ requires biological replicates. 
+Without replicates you can't account for known important experimental sources of variability that the approach implemented here requires.
+
+
+**Input**
+A count matrix containing sequence names as rows and sample specific counts of reads from this sequence as columns.
+The matrix must have 2 header rows, the first indicating the group assignment and the second uniquely identifiying the samples. It must also contain a unique set of (eg Feature) names in the first column. 
+
+Example::
+
+	#	G1:Mut	G1:Mut	G1:Mut	G2:WT	G2:WT	G2:WT
+	#Feature	Spl1	Spl2	Spl3	Spl4	Spl5	Spl6
+	NM_001001130	97	43	61	34	73	26
+	NM_001001144	25	8	9	3	5	5
+	NM_001001152	72	45	29	20	31	13
+	NM_001001160	0	1	1	1	0	0
+	NM_001001177	0	1	0	4	3	3
+	NM_001001178	0	2	1	0	4	0
+	NM_001001179	0	0	0	0	0	2
+	NM_001001180	0	0	0	0	0	2
+	NM_001001181	415	319	462	185	391	155
+	NM_001001182	1293	945	987	297	938	496
+	NM_001001183	5	4	11	7	11	2
+	NM_001001184	135	198	178	110	205	64
+	NM_001001185	186	1	0	1	1	0
+	NM_001001186	75	90	91	34	63	54
+	NM_001001187	267	236	170	165	202	51
+	NM_001001295	5	2	6	1	7	0
+	NM_001001309	1	0	0	1	2	1
+	...
+	
+
+Please use the "Count reads in features with htseq-count" tool to generate the count matrix.
+
+**Output**
+
+A tabular file containing relative expression levels, statistical estimates of differential expression probability, R scripts, log, and some helpful diagnostic plots.
+
+.. class:: infomark
+
+**Attribution**
+This tool wraps the edgeR_ Bioconductor package so all calculations and plots are controlled by that code. See edgeR_ for all documentation and appropriate attribution. 
+Recommended reference is Mark D. Robinson, Davis J. McCarthy, Gordon K. Smyth, PMCID: PMC2796818
+
+.. class:: infomark
+
+**Attribution**
+When applying the LIMMA (Linear models for RNA-Seq) anlysis the tool also makes use of the limma_ Bioconductor package.
+Recommended reference is Smyth, G. K. (2005). Limma: linear models for microarray data. In: 'Bioinformatics and Computational Biology Solutions using R and Bioconductor'. R. Gentleman, V. Carey, S. Dudoit, R. Irizarry, W. Huber (eds), Springer, New York, pages 397--420.
+
+ .. _edgeR: http://www.bioconductor.org/packages/release/bioc/html/edgeR.html
+ .. _limma: http://www.bioconductor.org/packages/release/bioc/html/limma.html
+
+
+	</help>
+  
+</tool>
