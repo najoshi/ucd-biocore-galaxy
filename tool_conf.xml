@@ -386,9 +386,15 @@
     <tool file="ngs_rna/cuffcompare_wrapper.xml" />
     <tool file="ngs_rna/cuffmerge_wrapper.xml" />
     <tool file="ngs_rna/cuffdiff_wrapper.xml" />
+<!--
     <tool file="ngs_rna/sam2counts.xml" />
     <tool file="ngs_rna/deseq.xml" />
-    <label text="De novo Assembly" id="de_novo_assembly "/>
+-->
+
+    <tool file="ngs_rna/edger/sam2counts_galaxy_edger.xml" />
+    <tool file="ngs_rna/edger/htseq.xml" />
+    <tool file="ngs_rna/edger/edgeR.xml" />
+    <label text="De novo Assembly" id="de_novo_assembly"/>
     <tool file="ngs_rna/trinityrnaseq.xml" />
     
     <tool file="ngs_rna/filter_transcripts_via_tracking.xml" />

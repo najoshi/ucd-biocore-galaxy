@@ -286,9 +286,10 @@
         <tool id="cuffcompare" />
         <tool id="cuffmerge" />
         <tool id="cuffdiff" />
-        <tool id="sam2counts" />
-        <tool id="deseq" />
-        <label id="de_novo_assembly " text="De novo Assembly" version="" />
+        <tool id="sam2counts_edger" />
+        <tool id="htseq-count" />
+        <tool id="edgeR" />
+        <label id="de_novo_assembly" text="De novo Assembly" version="" />
         <tool id="trinityrnaseq" />
         <tool id="filter_combined_via_tracking" />
     </section>
