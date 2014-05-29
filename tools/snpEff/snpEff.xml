@@ -55,7 +55,7 @@ $motif
         <param name="generate_stats" type="boolean" truevalue="" falsevalue="-noStats" checked="true" label="Produce Summary Stats"/>
 	</inputs>
 	<outputs>
-		<data format="tabular" name="snpeff_output" >
+		<data format="tabular" name="snpeff_output" label="SnpEff output on ${on_string}">
 			<change_format>
 				<when input="outputFormat" value="txt" format="tabular" />
 				<when input="outputFormat" value="vcf" format="vcf" />
@@ -64,7 +64,7 @@ $motif
 			</change_format>
 		</data>
                 
-		<data format="html" name="statsFile">
+		<data format="html" name="statsFile" label="Stats of SnpEff on ${on_string}">
 			<filter>generate_stats == True</filter>
 		</data>
 	</outputs>
