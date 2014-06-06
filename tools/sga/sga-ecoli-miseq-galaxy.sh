@@ -25,11 +25,11 @@ IN2=`basename $2`
 #
 
 # Program paths
-SGA_BIN=/share/apps/sga/src/SGA/sga
+SGA_BIN=/share/apps/sga/bin/sga
 BWA_BIN=/share/apps/bwa/bwa
 SAMTOOLS_BIN=/share/apps/samtools/samtools
-BAM2DE_BIN=/share/apps/sga/src/bin/sga-bam2de.pl
-ASTAT_BIN=/share/apps/sga/src/bin/sga-astat.py
+BAM2DE_BIN=/share/apps/sga/bin/sga-bam2de.pl
+ASTAT_BIN=/share/apps/sga/bin/sga-astat.py
 # DISTANCE_EST=DistanceEst
 
 # The number of threads to use
