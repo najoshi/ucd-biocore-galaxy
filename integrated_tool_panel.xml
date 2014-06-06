@@ -287,6 +287,7 @@
         <tool id="cuffmerge" />
         <tool id="cuffdiff" />
         <tool id="sam2counts_edger" />
+        <tool id="rollup" />
         <tool id="htseq-count" />
         <tool id="edgeR" />
         <label id="de_novo_assembly" text="De novo Assembly" version="" />

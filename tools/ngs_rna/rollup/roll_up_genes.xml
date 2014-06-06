@@ -1,0 +1,24 @@
+<tool id="rollup" name="Roll up counts">
+	<description>Roll up transcript counts into gene counts</description>
+
+	<command interpreter="perl">
+		roll_up_genes.pl -c $counts_table -g $corr_table &gt; $output
+	</command>
+
+	<inputs>
+		<param format="tabular,interval" name="counts_table" type="data" optional="false" label="Transcript counts table" help="tabular or interval data"/>
+		<param format="tabular,interval" name="corr_table" type="data" optional="false" label="Transcript to Gene correspondence table" help="tabular or interval data"/>
+	</inputs>
+
+	<outputs>
+		<data format="tabular" name="output" label="Gene counts table for ${tool.name} on ${on_string}"/>
+	</outputs>
+
+	<help>
+Correspondence Table has 1 to N tab-delimited columns per row. The final Gene ID in the row is the one that will be used. This is to allow for transcripts that have multiple possible gene identifiers.
+
+Format:
+**Transcript_ID [Gene_ID_1] [Gene_ID_2] ...**
+	</help>
+
+</tool>

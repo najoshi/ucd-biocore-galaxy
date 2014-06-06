@@ -392,6 +392,7 @@
 -->
 
     <tool file="ngs_rna/edger/sam2counts_galaxy_edger.xml" />
+    <tool file="ngs_rna/rollup/roll_up_genes.xml" />
     <tool file="ngs_rna/edger/htseq.xml" />
     <tool file="ngs_rna/edger/edgeR.xml" />
     <label text="De novo Assembly" id="de_novo_assembly"/>
