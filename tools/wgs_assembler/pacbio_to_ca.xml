@@ -72,7 +72,12 @@
                 -maxGap $max_gap
                 #end if
 
-		-s ${GALAXY_DATA_INDEX_DIR}/pacbio.spec
+		#if $custom_spec.custom_spec_check:
+			-s $custom_spec.custom_spec_file
+		#else
+			-s ${GALAXY_DATA_INDEX_DIR}/pacbio.spec
+		#end if
+
 		-fastq $input_pacbio
 		readlib.frg
 
@@ -100,6 +105,14 @@
 
 
 		<param name="matepair" type="boolean" label="Are these Illumina Mate Pair reads? (Not to be confused with Paired-End reads)"/>
+
+		<conditional name="custom_spec">
+			<param name="custom_spec_check" type="boolean" label="Use custom spec file?"/>
+
+			<when value="true">
+				<param name="custom_spec_file" type="data" label="Choose a custom spec file"/>
+			</when>
+		</conditional>
 
 		<param name="insert_mean" type="integer" value="" optional="true" label="Insert size mean">
                         <validator type="in_range" min="1" message="Minimum value is 1"/>
@@ -137,7 +150,7 @@
                         		<validator type="in_range" min="1" message="Minimum value is 1"/>
                 		</param>
 
-                		<param name="max_cov" type="integer" value="" optional="false" label="Maximum coverage of PacBio sequences to correct" help="nly the longest sequences adding up to this coverage will be corrected.">
+                		<param name="max_cov" type="integer" value="" optional="false" label="Maximum coverage of PacBio sequences to correct" help="Only the longest sequences adding up to this coverage will be corrected.">
                         		<validator type="in_range" min="1" message="Minimum value is 1"/>
                 		</param>
                         </when>
@@ -158,6 +171,52 @@
 	</outputs>
 
 	<help>
+**Spec File Options**
+
+There are many options that can be changed in the spec file, it is a text file that can be edited in any text editor. These options can be used in both the pacbio read correction and wgs assembler spec files. Look at the `sourceforge documentation`__ to learn about the different options.
+
+.. __: http://sourceforge.net/apps/mediawiki/wgs-assembler/index.php?title=RunCA#Global_Options
+
+-----
+
+**Default Spec File**
+
+Below is the default spec file used to run the read correction::
+
+    # original asm settings
+    utgErrorRate = 0.25
+    utgErrorLimit = 4.5
+
+    cnsErrorRate = 0.25
+    cgwErrorRate = 0.25
+    ovlErrorRate = 0.25
+
+    ovlStoreMemory = 8000
+
+    # grid info
+    useGrid = 0
+    scriptOnGrid = 0
+    frgCorrOnGrid = 0
+    ovlCorrOnGrid = 0
+
+    ovlConcurrency = 2
+    ovlThreads = 1
+    ovlHashBits = 24
+    ovlHashBlockLength = 500000000
+    ovlRefBlockSize =  50000000
+
+    merSize=14
+    merylMemory = 4000
+    merylThreads = 2
+
+    frgCorrThreads = 2
+    frgCorrBatchSize = 100000
+    frgCorrConcurrency = 1
+    ovlCorrBatchSize = 200000
+    ovlCorrConcurrency = 2
+
+    cnsConcurrency = 2
+
 	</help>
 
 </tool>

@@ -9,7 +9,15 @@
 
 		ln -s $pacbio_frg pacbio.frg &amp;&amp;
 
-		runCA -p asm -d asm -s ${GALAXY_DATA_INDEX_DIR}/asm.spec pacbio.frg 2&gt; /dev/null
+		runCA -p asm -d asm 
+
+		#if $custom_spec.custom_spec_check:
+			-s $custom_spec.custom_spec_file
+		#else
+			-s ${GALAXY_DATA_INDEX_DIR}/asm.spec 
+		#end if
+
+		pacbio.frg 2&gt; /dev/null
 
 		&amp;&amp; mv asm/9-terminator/asm.scf.fasta $pacbio_scaffolds
 
@@ -19,6 +27,14 @@
 	<inputs>
 		<param format="fastq, fastqsanger" name="pacbio_fq" type="data" optional="false" label="PacBio FASTQ (corrected) file"/>
 		<param format="txt" name="pacbio_frg" type="data" optional="false" label="PacBio FRG file"/>
+
+                <conditional name="custom_spec">
+                        <param name="custom_spec_check" type="boolean" label="Use custom spec file?"/>
+
+                        <when value="true">
+                                <param name="custom_spec_file" type="data" label="Choose a custom spec file"/>
+                        </when>
+                </conditional>
 	</inputs>
 
 	<outputs>
@@ -26,6 +42,54 @@
 	</outputs>
 
 	<help>
+**Spec File Options**
+
+There are many options that can be changed in the spec file, it is a text file that can be edited in any text editor. These options can be used in both the pacbio read correction and wgs assembler spec files. Look at the `sourceforge documentation`__ to learn about the different options.
+
+.. __: http://sourceforge.net/apps/mediawiki/wgs-assembler/index.php?title=RunCA#Global_Options
+
+-----
+
+**Default Spec File**
+
+Below is the default spec file used to run the assembly::
+
+    overlapper = ovl
+    unitigger = bogart
+
+    merSize = 14
+    ovlErrorRate = 0.03
+    # obtErrorRate = 0.03  # wgs-8.0
+    # obtErrorLimit = 4.5  # wgs-8.0
+    utgErrorRate=0.015
+    utgGraphErrorRate=0.015
+    utgGraphErrorLimit=0
+    utgMergeErrorRate=0.03
+    utgMergeErrorLimit=0
+
+    merylMemory = 32000
+    merylThreads = 2
+
+    ovlStoreMemory = 1192
+
+    ovlHashBits=24
+    ovlThreads = 2
+    ovlHashBlockLength = 20000000
+    ovlRefBlockSize =  5000000
+
+    frgCorrThreads = 2
+    frgCorrBatchSize = 100000
+
+    ovlCorrBatchSize = 100000
+    ovlCorrConcurrency = 2
+
+    ovlConcurrency = 1
+    
+    frgCorrConcurrency = 1
+
+    ovlCorrConcurrency = 2
+    cnsConcurrency = 2
+
 	</help>
 
 </tool>

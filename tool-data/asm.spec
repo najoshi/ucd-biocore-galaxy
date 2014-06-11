@@ -1,42 +1,35 @@
 overlapper = ovl
 unitigger = bogart
-utgBubblePopping = 1
-
-kickOutNonOvlContigs = 1
-cgwDemoteRBP = 0
-cgwMergeMissingThreshold = 0.5
 
 merSize = 14
+ovlErrorRate = 0.03
+# obtErrorRate = 0.03  # wgs-8.0
+# obtErrorLimit = 4.5  # wgs-8.0
+utgErrorRate=0.015
+utgGraphErrorRate=0.015
+utgGraphErrorLimit=0
+utgMergeErrorRate=0.03
+utgMergeErrorLimit=0
 
-merylMemory = 128000
-merylThreads = 16
+merylMemory = 32000
+merylThreads = 2
 
-ovlStoreMemory = 8192
+ovlStoreMemory = 1192
 
-# grid info
-useGrid = 0
-scriptOnGrid = 0
-frgCorrOnGrid = 0
-ovlCorrOnGrid = 0
-
-ovlHashBits = 24
+ovlHashBits=24
 ovlThreads = 2
 ovlHashBlockLength = 20000000
-ovlRefBlockSize =  50000000
+ovlRefBlockSize =  5000000
 
-frgCorrThreads = 2 
-frgCorrBatchSize = 100000 
+frgCorrThreads = 2
+frgCorrBatchSize = 100000
 
 ovlCorrBatchSize = 100000
+ovlCorrConcurrency = 2
 
-ovlConcurrency = 8
-frgCorrConcurrency = 8
-ovlCorrConcurrency = 16
-cnsConcurrency = 16
+ovlConcurrency = 1
 
-doToggle=0
-toggleNumInstances = 0
-toggleUnitigLength = 2000
+frgCorrConcurrency = 1
 
-doOverlapBasedTrimming = 1
-doExtendClearRanges = 2 
+ovlCorrConcurrency = 2
+cnsConcurrency = 2
