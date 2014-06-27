@@ -18,11 +18,20 @@
   <inputs>
   	<param name="matrix_name" type="text" label="Name Of Matrix" help="Name Of The Matrix" value="My_Matrix" />
         <repeat name="group_analysis" title="Group">
-		<param name="group" title="Group name" type="text" label="Group name (no spaces or commas)"/>
-		<param name="sample_init" title="Sample name" type="text" label="Sample name (no spaces, commas or colons allowed)"/>
+		<param name="group" title="Group name" type="text" label="Group name" help="Use only alphanumerics, dashes, underscores and periods. NO spaces.">
+			<validator type="empty_field" />
+			<validator type="regex" message="Use only alphanumerics, dashes, underscores and periods. NO spaces.">^[A-Za-z0-9\-_\.]+$</validator>
+		</param>
+		<param name="sample_init" title="Sample name" type="text" label="Sample name" help="Use only alphanumerics, dashes, underscores and periods. NO spaces.">
+			<validator type="empty_field" />
+			<validator type="regex" message="Use only alphanumerics, dashes, underscores and periods. NO spaces.">^[A-Za-z0-9\-_\.]+$</validator>
+		</param>
 		<param format="sam,bam" name="file_init" type="data" label="SAM/BAM File" help=""/>
 		<repeat name="input_files" title="Replicate">
-		    <param name="sample" title="Sample name" type="text" label="Sample name (no spaces, commas or colons allowed)"/>
+		    <param name="sample" title="Sample name" type="text" label="Sample name" help="Use only alphanumerics, dashes, underscores and periods. NO spaces.">
+			<validator type="empty_field" />
+			<validator type="regex" message="Use only alphanumerics, dashes, underscores and periods. NO spaces.">^[A-Za-z0-9\-_\.]+$</validator>
+		    </param>
 		    <param format="sam,bam" name="file" type="data" label="Add file" help=""/>
 		</repeat>
 	</repeat>
