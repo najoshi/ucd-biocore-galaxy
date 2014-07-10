@@ -274,10 +274,9 @@
         <tool id="PerM" />
         <tool id="srma_wrapper" />
         <tool id="mosaik_wrapper" />
-        <tool id="toolshed.g2.bx.psu.edu/repos/devteam/lastz_paired_reads/lastz_paired_reads_wrapper/1.1.1" />
-        <tool id="toolshed.g2.bx.psu.edu/repos/devteam/lastz/lastz_wrapper_2/1.2.2" />
-        <tool id="toolshed.g2.bx.psu.edu/repos/devteam/bowtie_color_wrappers/bowtie_color_wrapper/1.1.2" />
-        <tool id="toolshed.g2.bx.psu.edu/repos/devteam/bowtie_wrappers/bowtie_wrapper/1.1.2" />
+        <tool id="bowtie2" />
+        <tool id="lastz_wrapper_2" />
+        <tool id="lastz_paired_reads_wrapper" />
     </section>
     <section id="ngs-rna-tools" name="NGS: RNA Analysis" version="">
         <label id="rna_seq" text="RNA-seq" version="" />

@@ -366,6 +366,9 @@
     <tool file="sr_mapping/PerM.xml" />
     <tool file="sr_mapping/srma_wrapper.xml" />
     <tool file="sr_mapping/mosaik.xml"/>
+    <tool file="sr_mapping/bowtie2_wrapper.xml"/>
+    <tool file="sr_mapping/lastz_wrapper.xml"/>
+    <tool file="sr_mapping/lastz_paired_reads_wrapper.xml"/>
   </section>
 <!--
   <section name="NGS: Indel Analysis" id="indel_analysis">
