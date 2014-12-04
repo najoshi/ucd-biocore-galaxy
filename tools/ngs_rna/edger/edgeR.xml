@@ -1,46 +1,36 @@
-<tool id="edgeR" name="edgeR" version="0.0.2">
+<tool id="edgeR" name="edgeR" version="0.0.3">
   <description> - Estimates differential gene expression for short read sequence count using methods appropriate for count data</description>
   <requirements>
         <requirement type="R-module">edgeR</requirement>
         <requirement type="R-module">limma</requirement>
   </requirements>
   <command interpreter="perl">
-  	edgeR.pl -a $analysis_type.analysis -e $html_file.files_path -f $fdr -h $html_file -o $output
-  	## Pairwise comparisons
+  	edgeR.pl -a $analysis_type.analysis -e $html_file.files_path -f BH -h $html_file -o $output
+
+  	<!--Pairwise comparisons 1 Factor Analysis-->
   	#if $analysis_type.analysis == "pw":
    		-r $analysis_type.rowsumfilter
-  		#if $analysis_type.tagwise_disp.twd == "TRUE":
-   			-u $analysis_type.tagwise_disp.twd_trend
-  			-t
- 		#end if
- 	## GLM
+		#if $analysis_type.tagwise_disp.twd == "TRUE":
+      			-u movingave
+      			-t 
+     		#end if
+ 	<!--GLM Generalized Linear Models (Multiple Factors)-->
   	#else if $analysis_type.analysis == "glm":
 		#if $analysis_type.exp.export_norm == "true":
 			-n $norm_exp
 		#end if
- 		-d $analysis_type.disp
+ 		-d tag
 		$analysis_type.cont_pw
- 		#for $fct in $analysis_type.factors:
-  			factor::${$fct.fact_name}::${$fct.fact}
-  		#end for
-  		#for $c in $analysis_type.cont_pred:
-			cp::${c.cp_name}::${c.cp}
-		#end for
 		#for $cnt in $analysis_type.contrasts:
 			"cnt::${cnt.add_cont}"
 		#end for
-	## LIMMA
+
+	<!--LIMMA Linearized Models (Multiple Factors)-->
 	#else
 		#if $analysis_type.exp.export_norm == "true":
 			-n $norm_exp $analysis_type.exp.log
 		#end if
 		$analysis_type.cont_pw
-  		#for $fct in $analysis_type.factors:
-  			factor::${$fct.fact_name}::${$fct.fact}
-  		#end for
-  		#for $c in $analysis_type.cont_pred:
-			cp::${c.cp_name}::${c.cp}
-		#end for
 		#for $cnt in $analysis_type.contrasts:
 			"cnt::${cnt.add_cont}"
 		#end for
@@ -59,34 +49,14 @@
 		</param>
 		<when value="pw">
 			<param name="rowsumfilter" type="integer" value="5" label="Common Dispersion Rowsum Filter" help="Numeric scalar giving a value for the filtering out of low abundance tags in the estimation of the common dispersion. Only tags with total sum of counts above this value are used in the estimation of the common dispersion. Low abundance tags can adversely affect the estimation of the common dispersion, so this argument allows the user to select an appropriate filter threshold for the tag abundance."/>
-			<conditional name="tagwise_disp">
-				<param name="twd" type="select" label="Maximize the Negative Binomial Weighted Conditional Likelihood" help="Calculate and use an estimate of the dispersion parameter for each tag">
-					<option value="TRUE" selected="true">True</option>
-					<option value="FALSE">False</option>
-				</param>
-				<when value="TRUE">
-					<param name="twd_trend" type="select" label="Method for allowing the prior distribution for the dispersion to be abundance-dependent">
-						<option value="movingave" selected="true">Movingave</option>
-						<option value="tricube">Tricube</option>
-						<option value="none">None</option>
-					</param>
-				</when>
-			</conditional>
+ 		<conditional name="tagwise_disp">
+    				<param name="twd" type="select" label="Maximize the Negative Binomial Weighted Conditional Likelihood" help="Calculate and use an estimate of the dispersion parameter for each tag">
+    					<option value="TRUE" selected="true">True</option>
+    					<option value="FALSE">False</option>
+   				</param>
+    			</conditional>         
 		</when>
 		<when value="glm">
-			<param name="disp" type="select" label="Select The Dispersion Estimate To Use:">
-				<option value="common">Common Dispersion</option>
-				<option value="trend">Trended Dispersion</option>
-				<option value="tag" selected="true">Tagwise Dispersion</option>
-			</param>
-			<repeat name="factors" title="Factor">
-				<param name="fact_name" title="Factor Name" type="text" label="Name Of Factor (no spaces or commas)"/>
-				<param name="fact" title="Factor" type="text" size="100" label="The Level Of Each Sample Seperated By A Colon (no spaces or commas)"/>
-			</repeat>	
-			<repeat name="cont_pred" title="Continuous Predictor">
-				<param name="cp_name" title="Continuous Predictor Name" type="text" label="Name Of Continuous Predictor (no spaces or commas)"/>
-				<param name="cp" title="Continuous Predictor" type="text" size="100" label="The Numerical Value For Each Sample Seperated By A Colon (no spaces or commas)"/>
-			</repeat>
 			<param name="cont_pw" type="boolean" truevalue="-m" falsevalue="" checked="True" label="Perform all pairwise comparisons" help="Include all pairwise comparisons in the contrast matrix."/>
 			<repeat name="contrasts" title="Contrast">
 				<param name="add_cont" title="Contrast" type="text" label="Enter the contrast of interest, e.g. (G1+G2)/2-G3 (no spaces or commas)"/>
@@ -99,14 +69,6 @@
 			</conditional>
 		</when>
 		<when value="limma">
-			<repeat name="factors" title="Factor">
-				<param name="fact_name" title="Factor Name" type="text" label="Name Of Factor (no spaces or commas)"/>
-				<param name="fact" title="Factor" type="text" size="100" label="The Level Of Each Sample Seperated By A Colon (no spaces or commas)"/>
-			</repeat>	
-			<repeat name="cont_pred" title="Continuous Predictor">
-				<param name="cp_name" title="Continuous Predictor Name" type="text" label="Name Of Continuous Predictor (no spaces or commas)"/>
-				<param name="cp" title="Continuous Predictor" type="text" size="100" label="The Numerical Value For Each Sample Seperated By A Colon (no spaces or commas)"/>
-			</repeat>
 			<param name="cont_pw" type="boolean" truevalue="-m" falsevalue="" checked="True" label="Perform all pairwise comparisons" help="Include all pairwise comparisons in the contrast matrix."/>
 			<repeat name="contrasts" title="Contrast">
 				<param name="add_cont" title="Contrast" type="text" label="Enter the contrast of interest, e.g. (G1+G2)/2-G3 (no spaces or commas)"/>
@@ -122,14 +84,6 @@
 			</conditional>
 		</when>
 	</conditional>
-	<param name="fdr" type="select" label="False discovery rate adjustment method">
-		<option value="BH">Benjamini and Hochberg (1995)</option>
-		<option value="holm">Holm (1979)</option>
-		<option value="hochberg">Hochberg (1988)</option>
-		<option value="hommel">Hommel (1988)</option>
-		<option value="BY">Benjamini and Yekutieli (2001)</option>
-		<option value="none">None</option>
-	</param>
   </inputs>
   
   <outputs>
@@ -193,6 +147,16 @@ Please use the "Count reads in features with htseq-count" tool to generate the c
 
 A tabular file containing relative expression levels, statistical estimates of differential expression probability, R scripts, log, and some helpful diagnostic plots.
 
+**Fixed Parameters**
+ 
+Method for allowing the prior distribution for the dispersion to be abundance-dependent used: movingave
+
+False discovery rate adjustment method used: Benjamini and Hochberg (1995)
+
+GLM dispersion estimate used: Tagwise Dispersion
+
+Gene filter used: less than 1 count per million reads
+ 
 .. class:: infomark
 
 **Attribution**

@@ -503,10 +503,12 @@
     <tool file="snpEff/snpSift_int.xml" />
   </section>
   <section name="NGS: Peak Calling" id="peak_calling">
-    <tool file="peak_calling/macs_wrapper.xml" />
+    <tool file="peak_calling/macs2/macs2_wrapper.xml" />
     <tool file="peak_calling/sissrs.xml" />
     <tool file="peak_calling/sicer_wrapper.xml" />
     <tool file="peak_calling/ccat_wrapper.xml" />
+    <tool file="peak_calling/idr_package/idrToolDef.xml" />
+    <tool file="peak_calling/idr_package/idrPlotDef.xml" />
 <!--
     <tool file="genetrack/genetrack_indexer.xml" />
     <tool file="genetrack/genetrack_peak_prediction.xml" />

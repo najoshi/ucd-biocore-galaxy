@@ -1,24 +1,28 @@
-#/bin/perl
+#!/bin/perl
+
+#EdgeR.pl Version 0.0.3
+#Contributors: Monica Britton, Blythe Durbin-Johnson, Joseph Fass, Nikhil Joshi, Alex Mawla
 
 use strict;
 use warnings;
 use Getopt::Std;
 use File::Basename;
 use File::Path qw(make_path remove_tree);
+
 $| = 1;
 
-# Grab and set all options
-my %OPTIONS = (a => "glm", d => "tag", f => "BH", r => 5, u => "movingave");
+my %OPTIONS = (a => "glm",  d => "tag", f => "BH", r => 5, u => "movingave");
 
 getopts('a:d:e:f:h:lmn:o:r:tu:', \%OPTIONS);
 
+ 
 die qq(
 Usage:   edgeR.pl [OPTIONS] factor::factor1::levels [factor::factor2::levels ...] cp::cont_pred1::values [cp::cont_pred2::values ...] cnt::contrast1 [cnt::contrast2] matrix
 
 OPTIONS:	-a	STR	Type Of Analysis [glm, pw, limma] (default: $OPTIONS{a})
-			-d	STR	The dispersion estimate to use for GLM analysis [tag, trend, common] (default: $OPTIONS{d})
+			-d	STR	The dispersion estimate to use for GLM analysis [tag] (default: $OPTIONS{d})
 			-e	STR	Path to place additional output files
-			-f	STR	False discovery rate adjustment method [BH, holm, hochberg, hommel, BY, none] (default: $OPTIONS{f})
+			-f	STR	False discovery rate adjustment method [BH] (default: $OPTIONS{f})
 			-h	STR	Name of html file for additional files
 			-l		Output the normalised digital gene expression matrix in log2 format (only applicable when using limma and -n is also specified)
 			-m		Perform all pairwise comparisons
@@ -26,8 +30,8 @@ OPTIONS:	-a	STR	Type Of Analysis [glm, pw, limma] (default: $OPTIONS{a})
 			-o	STR	File name to output csv file with results
 			-r	INT	Common Dispersion Rowsum Filter, ony applicable when 1 factor analysis selected (default: $OPTIONS{r})
 			-t		Estimate Tagwise Disp when performing 1 factor analysis
-			-u	STR	Method for allowing the prior distribution for the dispersion to be abundance- dependent ["movingave", "tricube", "none"] (default: $OPTIONS{u})
-
+			-u	STR	Method for allowing the prior distribution for the dispersion to be abundance- dependent ["movingave"] (default: $OPTIONS{u})
+ 
 ) if(!@ARGV);
 
 my $matrix = pop @ARGV;
@@ -42,7 +46,6 @@ sink(zz, type=\"message\")
 library(edgeR)
 library(limma)
 
-# read in matrix and groups
 toc <- read.table(\"$matrix\", sep=\"\\t\", comment=\"\", as.is=T)
 groups <- sapply(toc[1, -1], strsplit, \":\")
 for(i in 1:length(groups)) { g <- make.names(groups[[i]][2]); names(groups)[i] <- g; groups[[i]] <- groups[[i]][-2] }
@@ -109,6 +112,7 @@ disp <- estimateCommonDisp(DGE, rowsum.filter=$OPTIONS{r})
 ";
 	if(defined $OPTIONS{t}) {
 		print Rcmd "
+disp <- estimateTrendedDisp (disp)
 disp <- estimateTagwiseDisp(disp, trend=\"$OPTIONS{u}\")
 pdf(file=\"$OPTIONS{e}/Tagwise_Dispersion_vs_Abundance.pdf\")
 plotBCV(disp, cex=0.4)
@@ -142,17 +146,18 @@ for(i in 1:length(pw_tests)) {
 	legend(\"topright\", c(\"2 Fold Change\", ttl) , lty=c(1, NA), pch=c(NA, 19), pt.cex=0.5, col=c(\"blue\", \"red\"), bty=\"n\")
 }
 dev.off()
-";
-} elsif($OPTIONS{a} eq "glm") {
+"; 
+} 
+elsif($OPTIONS{a} eq "glm") {
 	for(my $fct = 0; $fct <= $#fact_names; $fct++) {
 		print Rcmd "
-$fact_names[$fct] <- c($fact[$fct])
-";
+			$fact_names[$fct] <- c($fact[$fct])
+		";
 	}
 	for(my $fct = 0; $fct <= $#cp_names; $fct++) {
 		print Rcmd "
-$cp_names[$fct] <- c($cp[$fct])
-";
+			$cp_names[$fct] <- c($cp[$fct])
+		";
 	}
 	my $all_fact = "";
 	if(@fact_names) {
@@ -165,38 +170,32 @@ $cp_names[$fct] <- c($cp[$fct])
 		$all_cp = " + ".join(" + ", @cp_names);
 	}
 	print Rcmd "
-group_fact <- factor(names(groups))
-design <- model.matrix(~ -1 + group_fact${all_fact}${all_cp})
-colnames(design) <- sub(\"group_fact\", \"\", colnames(design))
-";
+		group_fact <- factor(names(groups))
+		design <- model.matrix(~ -1 + group_fact${all_fact}${all_cp})
+		colnames(design) <- sub(\"group_fact\", \"\", colnames(design))
+	";
 	foreach my $fct (@fact_names) {
 		print Rcmd "
-colnames(design) <- make.names(sub(\"factor.$fct.\", \"\", colnames(design)))
-";
-	}
-	print Rcmd "
-disp <- estimateGLMCommonDisp(DGE, design)
-";
-	if($OPTIONS{d} eq "tag" || $OPTIONS{d} eq "trend") {
-		print Rcmd "
-disp <- estimateGLMTrendedDisp(disp, design)
-";
+			colnames(design) <- make.names(sub(\"factor.$fct.\", \"\", colnames(design)))
+		";
 	}
 	if($OPTIONS{d} eq "tag") {
 		print Rcmd "
-disp <- estimateGLMTagwiseDisp(disp, design)
-fit <- glmFit(disp, design)
-pdf(file=\"$OPTIONS{e}/Tagwise_Dispersion_vs_Abundance.pdf\")
-plotBCV(disp, cex=0.4)
-dev.off()
-";
+			disp <- estimateGLMCommonDisp(DGE, design)
+			disp <- estimateGLMTrendedDisp(disp, design)
+			disp <- estimateGLMTagwiseDisp(disp, design)
+			fit <- glmFit(disp, design)
+			pdf(file=\"$OPTIONS{e}/Tagwise_Dispersion_vs_Abundance.pdf\")
+			plotBCV(disp, cex=0.4)
+			dev.off()
+		";
 	}
 	if(@add_cont) {
 		$all_cont = "\"".join("\", \"", @add_cont)."\"";
 		print Rcmd "
-cont <- c(${all_cont})
-for(i in uniq_groups)  cont <- gsub(paste(groups[[i]], \"([^0-9])\", sep=\"\"), paste(i, \"\\\\1\", sep=\"\"), cont)
-for(i in uniq_groups)  cont <- gsub(paste(groups[[i]], \"\$\", sep=\"\"), i, cont)
+			cont <- c(${all_cont})
+			for(i in uniq_groups)  cont <- gsub(paste(groups[[i]], \"([^0-9])\", sep=\"\"), paste(i, \"\\\\1\", sep=\"\"), cont)
+			for(i in uniq_groups)  cont <- gsub(paste(groups[[i]], \"\$\", sep=\"\"), i, cont)
 ";
 	} else {
 		print Rcmd "
@@ -217,31 +216,32 @@ cont <- makeContrasts(contrasts=cont, levels=design)
 for(i in colnames(cont)) tested[[i]] <- glmLRT(fit, contrast=cont[,i])
 pdf(file=\"$OPTIONS{e}/Smear_Plots.pdf\")
 for(i in colnames(cont)) {
-	dt <- decideTestsDGE(tested[[i]], p.value=0.05, adjust.method=\"$OPTIONS{f}\")
-	if(sum(dt) > 0) {
-		de_tags <- rownames(disp)[which(dt != 0)]
-		ttl <- \"Diff. Exp. Genes With adj. Pvalue < 0.05\"
-	} else {
-		de_tags <- rownames(topTags(tested[[i]], n=100)\$table)
-		ttl <- \"Top 100 tags\"
-	}
+        dt <- decideTestsDGE(tested[[i]], p.value=0.05, adjust.method=\"$OPTIONS{f}\")
+        if(sum(dt) > 0) {
+                de_tags <- rownames(disp)[which(dt != 0)]
+                ttl <- \"Diff. Exp. Genes With adj. Pvalue < 0.05\"
+        } else {
+                de_tags <- rownames(topTags(tested[[i]], n=100)\$table)
+                ttl <- \"Top 100 tags\"
+        }
 
-	if(length(dt) < 5000) {
-		pointcex = 0.5
-	} else {
-		pointcex = 0.2
-	}
-	plotSmear(disp, de.tags = de_tags, main = paste(\"Smear Plot\", i), cex=pointcex)
-	abline(h = c(-1, 1), col = \"blue\")
-	legend(\"topright\", c(\"2 Fold Change\", ttl) , lty=c(1, NA), pch=c(NA, 19), pt.cex=0.5, col=c(\"blue\", \"red\"), bty=\"n\")
+        if(length(dt) < 5000) {
+                pointcex = 0.5
+        } else {
+                pointcex = 0.2
+        }
+        plotSmear(disp, de.tags = de_tags, main = paste(\"Smear Plot\", i), cex=pointcex)
+        abline(h = c(-1, 1), col = \"blue\")
+        legend(\"topright\", c(\"2 Fold Change\", ttl) , lty=c(1, NA), pch=c(NA, 19), pt.cex=0.5, col=c(\"blue\", \"red\"), bty=\"n\")
 }
 dev.off()
-";
+
+	";
 	if(defined $OPTIONS{n}) {
 		print Rcmd "
-tab <- data.frame(ID=rownames(fit\$fitted.values), fit\$fitted.values, stringsAsFactors=F)
-write.table(tab, \"$OPTIONS{n}\", quote=F, sep=\"\\t\", row.names=F)
-";
+			tab <- data.frame(ID=rownames(fit\$fitted.values), fit\$fitted.values, stringsAsFactors=F)
+			write.table(tab, \"$OPTIONS{n}\", quote=F, sep=\"\\t\", row.names=F)
+		";
 	}
 } elsif($OPTIONS{a} eq "limma") {
 	for(my $fct = 0; $fct <= $#fact_names; $fct++) {
@@ -265,6 +265,7 @@ $cp_names[$fct] <- c($cp[$fct])
 		$all_cp = " + ".join(" + ", @cp_names);
 	}
 	print Rcmd "
+
 group_fact <- factor(names(groups))
 design <- model.matrix(~ -1 + group_fact${all_fact}${all_cp})
 colnames(design) <- sub(\"group_fact\", \"\", colnames(design))
@@ -275,7 +276,7 @@ colnames(design) <- make.names(sub(\"factor.$fct.\", \"\", colnames(design)))
 ";
 	}
 	print Rcmd "
-isexpr <- rowSums(cpm(toc)>1) >= 2
+isexpr <- rowSums(cpm(toc)>1) >= 1
 toc <- toc[isexpr, ]
 pdf(file=\"$OPTIONS{e}/LIMMA_voom.pdf\")
 y <- voom(toc, design, plot=TRUE, lib.size=colSums(toc)*norm_factors)
@@ -329,7 +330,6 @@ fit2 <- eBayes(fit2)
 	die("Anaysis type $OPTIONS{a} not found\n");
 
 }
-
 if($OPTIONS{a} ne "limma") {
 	print Rcmd "
 options(digits = 6)
@@ -376,8 +376,6 @@ if($OPTIONS{a} eq "pw") {
 	print HTML "<li><a href=Smear_Plots.pdf>Smear_Plots.pdf</a></li>\n";
 } elsif($OPTIONS{a} eq "glm" && $OPTIONS{d} eq "tag") {
 	print HTML "<li><a href=Tagwise_Dispersion_vs_Abundance.pdf>Tagwise_Dispersion_vs_Abundance.pdf</a></li>\n";
-	print HTML "<li><a href=Smear_Plots.pdf>Smear_Plots.pdf</a></li>\n";
-} elsif($OPTIONS{a} eq "glm" && ($OPTIONS{d} eq "trend" || $OPTIONS{d} eq "common")) {
 	print HTML "<li><a href=Smear_Plots.pdf>Smear_Plots.pdf</a></li>\n";
 } elsif($OPTIONS{a} eq "limma") {
 	print HTML "<li><a href=LIMMA_MDS_plot.pdf>LIMMA_MDS_plot.pdf</a></li>\n";
