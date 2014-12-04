@@ -1,0 +1,107 @@
+# <db_root>,<is_prot>,<is_nucl>,<is_short>,<db_name>,<db_desc>
+# Note: Do not use single quotes or commas within fields!!!
+# db_root: a pattern or space separated list of files
+# is_prot: is the motif a protein motif (currently unused)
+# is_nucl: is the motif a nucleotide motif (currently unused)
+# is_short: is the motif short (field exists to match up with the fasta_db.csv) always yes
+# db_name: the name used in menus
+# db_desc: the description of the motif
+ 
+
+,,,,-----Motif Databases-----
+
+JASPAR_CORE_2014_vertebrates.meme uniprobe_mouse.meme,no,yes,yes,JASPAR Vertebrates and UniPROBE Mouse,Searches JASPAR CORE vertebrates and Mouse (UniPROBE).
+
+JASPAR_CORE_2014.meme uniprobe_mouse.meme,no,yes,yes,JASPAR CORE and UniPROBE Mouse,Searches JASPAR CORE and Mouse (UniPROBE).
+
+JASPAR_CORE_2014_vertebrates.meme uniprobe_mouse.meme jolma2013.meme,no,yes,yes,All Vertebrates,Searches JASPAR CORE vertebrates + UniProbe Mouse + Jolma2013 Human and Mouse
+
+jolma2013.meme,no,yes,yes,Human and Mouse (Jolma2013),Human and Mouse high-throughput SELEX motifs from <a href="http://dx.doi.org/10.1016/j.cell.2012.12.009"> Cell 2013. 152(1-2):327-339</a>.
+
+ray2013_rbp.meme,no,yes,yes,RNA-binding motifs (Ray2013),A compendium of 244 RNA-binding motifs from <a href="http://www.nature.com/nature/journal/v499/n7457/full/nature12311.html">Nature 2013. 11;499(7457):172-7</a>.  The are from in vitro experiments using the RNAcompete method for the rapid and systematic analysis of the RNA sequence preferences of RBPs.  The motifs are converted from the data in this <a href="http://hugheslab.ccbr.utoronto.ca/supplementary-data/RNAcompete_eukarya/top10align_motifs.tar.gz">archive file</a> titled &quot;Top10align PFMs learned from all data&quot; that is supplied by the Ray et al. at their <a href="http://hugheslab.ccbr.utoronto.ca/supplementary-data/RNAcompete_eukarya">website</a>.
+
+OnTheFly_2014_Drosophila.meme fly_factor_survey.meme flyreg.v2.meme idmmpmm2009.meme dmmpmm2009.meme,no,yes,yes,All Drosophila,Searches OnTheFly_2014&#44; Fly Factor Survey&#44; FLYREG&#44; iDMMPMM and DMMPMM.
+
+scpd_matrix.meme macisaac_yeast.v1.meme,no,yes,yes,All Yeast,Searches SCPD and MacIsaac v1.
+
+JASPAR_CORE_2014.meme,no,yes,yes,JASPAR CORE (2014),The 5th major release (2014) of the <a href="http://jaspar.genereg.net">JASPAR CORE</a> database contains a curated non-redundant set of 593 profiles derived from published collections of experimentally defined transcription factor binding sites for multicellular eukaryotes. This release includes 135 new curated profiles (74 in vertebrates&#44; 8 in Drosophila melanogaster&#44; 10 in Caenorhabditis elegans and 43 in Arabidopsis thaliana; a 30% increase in total) and 43 older updated profiles (36 in vertebrates&#44; 3 in D. melanogaster and 4 in A. thaliana; a 9% update in total). The new and updated profiles are mainly derived from published chromatin immunoprecipitation-seq experimental datasets. The prime difference to similar resources (TRANSFAC; TESS etc) consist of the open data access; non-redundancy and quality: JASPAR CORE is a smaller set that is non-redundant and curated.  <br><b>When should it be used?</b> When seeking models for specific factors or structural classes or if experimental evidence is paramount.
+
+JASPAR_CORE_2014_vertebrates.meme,no,yes,yes,JASPAR CORE (2014) vertebrates,The 5th major release (2014) of the <a href="http://jaspar.genereg.net">JASPAR CORE</a> database contains a curated non-redundant set of 205 profiles derived from published collections of experimentally defined transcription factor binding sites for vertebrates. This release includes 74 new curated profiles and 36 older updated profiles. The new and updated profiles are mainly derived from published chromatin immunoprecipitation-seq experimental datasets. <br><b>When should it be used?</b> When seeking models for specific factors or structural classes or if experimental evidence is paramount.
+
+JASPAR_CORE_2014_fungi.meme,no,yes,yes,JASPAR CORE (2014) fungi,The 5th major release (2014) of the <a href="http://jaspar.genereg.net">JASPAR CORE</a> database contains a curated non-redundant set of 177 profiles derived from published collections of experimentally defined transcription factor binding sites for fungi. <br><b>When should it be used?</b> When seeking models for specific factors or structural classes or if experimental evidence is paramount.
+
+JASPAR_CORE_2014_insects.meme,no,yes,yes,JASPAR CORE (2014) insects,The 5th major release of the <a href="http://jaspar.genereg.net">JASPAR CORE</a> database contains a curated non-redundant set of 131 profiles derived from published collections of experimentally defined transcription factor binding sites for insects. This release included 8 new curated profiles and 3 older updated profiles for Drosophila melanogaster. The new and updated profiles are mainly derived from published chromatin immunoprecipitation-seq experimental datasets. <br><b>When should it be used?</b> When seeking models for specific factors or structural classes or if experimental evidence is paramount.
+
+JASPAR_CORE_2014_nematodes.meme,no,yes,yes,JASPAR CORE (2014) nematodes,The 5th major release of the <a href="http://jaspar.genereg.net">JASPAR CORE</a> database contains a curated non-redundant set of 15 profiles derived from published collections of experimentally defined transcription factor binding sites for nematodes. This release included 10 new curated profiles for Caenorhabditis elegans. The new and updated profiles are mainly derived from published chromatin immunoprecipitation-seq experimental datasets. <br><b>When should it be used?</b> When seeking models for specific factors or structural classes or if experimental evidence is paramount.
+
+JASPAR_CORE_2014_plants.meme,no,yes,yes,JASPAR CORE (2014) plants,The 5th major release of the <a href="http://jaspar.genereg.net">JASPAR CORE</a> database contains a curated non-redundant set of 64 profiles derived from published collections of experimentally defined transcription factor binding sites for plants. This release included 43 new curated profiles and 4 older updated profiles for Arabidopsis thaliana. The new and updated profiles are mainly derived from published chromatin immunoprecipitation-seq experimental datasets. <br><b>When should it be used?</b> When seeking models for specific factors or structural classes or if experimental evidence is paramount.
+
+JASPAR_CORE_2014_urochordates.meme,no,yes,yes,JASPAR CORE (2014) urochordates,The 5th major release of the <a href="http://jaspar.genereg.net">JASPAR CORE</a> database contains a curated non-redundant set with 1 profile derived from published collections of experimentally defined transcription factor binding sites for urochordates. <br><b>When should it be used?</b> When seeking models for specific factors or structural classes or if experimental evidence is paramount.
+
+JASPAR_PHYLOFACTS_2008.meme,no,yes,yes,JASPAR PHYLOFACTS,The <a href="http://jaspar.genereg.net/">JASPAR PHYLOFACTS motifs</a> database consists of 174 profiles that were extracted from phylogenetically conserved gene upstream elements.See Xie et al. Systematic discovery of regulatory motifs in human promoters and 3-prime UTRs by comparison of several mammals. Nature 434 338-345 (2005) and supplementary material for details.  <br><b>When should it be used?</b> The JASPAR PHYLOFACTS matrices are a mix of known and as of yet undefined motifs. They are useful when one expects that other factors might determine promoter characteristics such as structural aspects and tissue specificity. They are highly complementary to the JASPAR CORE matrices so are best used in combination with this matrix set.
+
+JASPAR_FAM_2008.meme,no,yes,yes,JASPAR FAM,The <a href="http://jaspar.genereg.net/">JASPAR FAM motifs</a> database consist of models describing shared binding properties of structural classes of transcription factors. These types of models can be called familial profiles or consensus matrices or metamodels. The models have two prime benefits: 1) Since many factors have similar tagrget sequences we often experience multiple predictions at the same locations that correspond to the same site. This type of models reduce the complexity of the results. 2) The models can be used to classify newly derived profiles (or project what type of structural class its cognate transcription factor belongs to).  <br><b>When should it be used?</b>  When searching large genomic sequences with no prior knowledge. For classification of new user-supplied profiles.
+
+JASPAR_POLII_2008.meme,no,yes,yes,JASPAR POLII,The <a href="http://jaspar.genereg.net/">JASPAR POLII motifs</a> database consist of models describing patterns found in RNA Polymerase II (Pol II) promoters. Some of these correposnd to a known protein (like the TATA box) while some have no specific interactor (like DPE). Models are taken from published literature or public databases.  <br><b>When should it be used?</b> When investigating core promoters from multicellular eukaryotes.
+
+JASPAR_CNE_2008.meme,no,yes,yes,JASPAR CNE,The <a href="http://jaspar.genereg.net/">JASPAR CNE motifs</a> database is a collection of 233 matrix profiles derived by clustering of overrepresented motifs from human conserved non-coding elements. While the biochemical and biological role of most of these patterns is still unknown Xie et al. have shown that the most abundant ones correspond to known DNA-binding proteins--most notably insulator-binding protein CTCF.  <br><b>When should it be used?</b>  Characterization of regulatory inputs in long-range developmental gene regulation in vertebrates.
+
+JASPAR_SPLICE_2008.meme,no,yes,yes,JASPAR SPLICE,The <a href="http://jaspar.genereg.net/">JASPAR SPLICE motifs</a> database contains matrix profiles of human canonical and non-canonical splice sites as matching donor:acceptor pairs. It currently contains only 6 highly reliable profiles obtained from human genome.  <br><b>When should it be used?</b>  When investigating splice sites.
+
+zhao2011.meme,no,yes,yes,UniPROBE/BEEML-PBM (Zhao and Stormo 2011),From <a href="http://dx.doi.org/10.1038/nbt.1893">Nature Biotechnology 29:480-483; 2011.</a> New motifs derived from UniPROBE PBM data by the BEEML-PBM algorithm.  Motifs are for Mouse, Worm, Homeobox and ETS. Motif ID is paper_version_protein_UniPROBEclone. <br /><b>Note: These motifs are not the same as the other UniPROBE motifs available here.</b> 
+
+jolma2010.meme,no,yes,yes,Human and Mouse (Jolma2010),Human and Mouse high-throughput SELEX motifs from <a href="http://dx.doi.org/10.1101/gr.100552.109">Genome Research 20(6):861-873&#44; 2010</a>.
+
+macisaac_theme.v1.meme,no,yes,yes,Human and Mouse (MacIsaac THEME),Human and mouse motifs from ChIP-chip (restricted profiles downloaded from <a href="http://fraenkel.mit.edu/THEME">http://fraenkel.mit.edu/THEME</a>).
+
+prodoric.meme,no,yes,yes,Prokaryotes (Prodoric Release 8.9),Prokaryotic motifs from <a href="http://prodoric.tu-bs.de">PRODORIC</a> downloaded from <a href="http://prodoric.tu-bs.de/msearch.php">http://prodoric.tu-bs.de/msearch.php</a>.
+
+regtransbase.meme,no,yes,yes,Prokaryotes (RegTransBase v4),Manually curated prokaryotic motifs from <a href="http://regtransbase.lbl.gov/cgi-bin/regtransbase">RegTransBase</a>; downloaded from <a href="http://regtransbase.lbl.gov/cgi-bin/regtransbase?page=downloads">http://regtransbase.lbl.gov/cgi-bin/regtransbase?page=downloads</a>
+
+#transfac_matrix.meme,no,yes,yes,TRANSFAC,The <a href="http://biobase-international.com/pages/index.php?id=transfacdatabases">TRANSFAC</a> transcription factor motifs; contains redundant motifs.
+
+OnTheFly_2014_Drosophila.meme,no,yes,yes,Drosophila (OnTheFly_2014),The <a href="http://bhapp.c2b2.columbia.edu/OnTheFly/index.php">OnTheFly</a> database is a systematic collection of Drosophila melanogaster transcription factors and their DNA-binding sites. We annotated and classified all Transcription Factors (TFs) predicted in the Drosophila melanogaster genome and collected the known preferred DNA binding sites of the TFs based on the B1H&#44; DNaseI and SELEX experimental methods. OnTheFly houses DNA recognition motifs for 387 different genes encoding TFs (>50% of the Drosophila melanogaster genes encoding TFs).  Reference: "OnTheFly: a database of Drosophila melanogaster transcription factors and their binding sites" (NAR <b>42</b>:D167-171).
+
+fly_factor_survey.meme,no,yes,yes,Drosophila (Fly Factor Survey),The FlyFactorSurvey database summarizes a project using the bacterial one-hybrid method to systematically describe the binding site preferences of transcription factors in Drosophila melanogaster. This effort is a collaboration between the laboratories of Michael Brodsky and Scott Wolfe at the University of Massachusetts Medical School and has been funded by the National Human Genome Research Institute. <a href="http://pgfe.umassmed.edu/TFDBS">http://pgfe.umassmed.edu/TFDBS</a>.
+
+flyreg.v2.meme,no,yes,yes,Drosophila (FLYREG; Bergman & Pollard v2),Based on <a href="http://www.flyreg.org">FlyReg Drosophila DNase I Footprint Database (v2.0)</a>; downloaded from <a href="http://www.danielpollard.com/matrices.html">http://www.danielpollard.com/matrices.html</a>.
+
+dmmpmm2009.meme,no,yes,yes,Drosophila (DMMPMM; Kulakovskiy et al. 2009),The collection &quot;Drosophila Melanogaster Major Position Matrix Motifs&quot; was created through realignment of genome-mapped DNAse footprint data. <br ><a href="http://www.ncbi.nlm.nih.gov/pubmed/19605419">Kulakovskiy I.V.&#44; Favorov A.F.&#44; Makeev V.J. <br >(2009) Motif discovery and motif finding from genome-mapped DNase footprint data.<br >Bioinformatics 25(18): 2318-2325.</a><br ><b>When should it be used?</b> Typically DMMPMM is more useful for motifs without known experimental datasources except footprinting (so the corresponding motif in the iDMMPMM is absent).<br >Additional information is avaliable from the <a href="http://autosome.ru/DMMPMM">official website</a>.
+
+idmmpmm2009.meme,no,yes,yes,Drosophila (iDMMPMM; Kulakovskiy et al. 2009),The collection &quot;improved Drosophila Melanogaster Major Position Matrix Motifs&quot; was created through data integration of different experimental sources.<br ><a href="http://www.springerlink.com/content/q86n48151u25278w/">Kulakovskiy I.V.&#44; Makeev V.J. <br >(2009) Discovery of DNA motifs recognized by transcription factors through integration of different experimental sources.<br >Biophysics 54(6): 667-674.</a><br >Additional information is avaliable from the <a href="http://autosome.ru/iDMMPMM">official website</a>.
+
+homeodomain.meme,no,yes,yes,Homeodomains (Berger et al.),Eukaryotic homeodomain motifs from <a href="http://www.cell.com/retrieve/pii/S0092867408006831">Berger et al. Cell 133:7 2008</a> downloaded from <a href="http://hugheslab.ccbr.utoronto.ca/supplementary-data/homeodomains1/pwm_all_102107.txt">http://hugheslab.ccbr.utoronto.ca/supplementary-data/homeodomains1/pwm_all_102107.txt</a>
+
+# Need a conversion program for XMS to MEME 
+#bergman_fly,,Drosophila (Bergman; v1.1),,,
+
+uniprobe_mouse.meme,no,yes,yes,Mouse (UniPROBE),Mouse TF motifs downloaded from <a href="http://the_brain.bwh.harvard.edu/uniprobe/downloads.php">UniPROBE</a>
+
+chen2008.meme,no,yes,yes,Mouse (Chen2008),Mouse ES Cell TF motifs downloaded from <a href="http://dx.doi.org/10.1016/j.cell.2008.04.043">Cell 2008. Jun 13;133(6):1106-17</a>.
+
+wei2010*.meme,no,yes,yes,ETS factors (Wei et al. 2010),From <a href="http://dx.doi.org/10.1038/emboj.2010.106">Embro J 2010. Jun 1;29:2147-2160</a>.<br/>Combination of 3 datasets:<br /> <b>wei2010_human_mws.meme</b> - human microwell SELEX<br /><b>wei2010_mouse_mws.meme</b> - mouse microwell SELEX<br /><b>wei2010_mouse_pbm.meme</b> - mouse protein-binding microarrays
+
+dpinteract.meme,no,yes,yes,E. coli (DPINTERACT),Footprinting databases based on <a href="http://arep.med.harvard.edu/dpinteract">DPINTERACT</a>; downloaded from <a href="http://arep.med.harvard.edu/ecoli_matrices">http://arep.med.harvard.edu/ecoli_matrices</a>.
+
+hallikas2006.meme,no,yes,yes,GLIs and TCF7L2/TCF4 (Hallikas et al. 2006),From <a href="http://dx.doi.org/10.1016/j.cell.2005.10.042">Cell 2006. Jan 13;124(1):47-59</a>.
+
+uniprobe_worm.meme,no,yes,yes,Worm (UniPROBE), C. Elegans homeodomain proteins from <a href="http://dx.doi.org/10.1016/j.cell.2009.04.058">Grove et al. Cell 138:314-327; 2009</a>.
+
+campbell2010_malaria_pbm.meme,no,yes,yes,Malaria (Campbell et al. 2010), Plasmodia falciparum ApiAP2 protein family DNA binding motifs from <a href="http://dx.doi.org/10.1371/journal.ppat.1001165">Campbell et al. PLoS Pathog 6 e1001165; 2010</a>.
+
+macisaac_yeast.v1.meme,no,yes,yes,Yeast (MacIsaac v1),Yeast motifs from computationally derived map (v1.tamo downloaded from <a href="http://fraenkel.mit.edu/improved_map">http://fraenkel.mit.edu/improved_map</a>).
+
+scpd_matrix.meme,no,yes,yes,Yeast (SCPD),Yeast motifs from the <a href="http://rulai.cshl.edu/SCPD/">Sacharomyces Cerevisiae Promoter Database</a> downloaded from <a href="http://rulai.cshl.edu/cgi-bin/SCPD/getfactorlist">http://rulai.cshl.edu</a>.
+
+#temporally disabled until we can ensure they can run without crashing due to their large size
+
+#miRbase-hsa.meme,no,yes,yes,miRBase: Human, Motifs derived from mature miRNA sequences from <a "http://nar.oxfordjournals.org/content/42/D1/D68">&quot;miRBase: annotating high confidence microRNAs using deep sequencing data&quot;&#44; Nucleic Acids Research&#44; <b>42</b>:D68-D73&#44; 2014.</a>  Each motif is created from a mature miRNA sequence using the MEME Suite tool 'rna2meme'.
+
+#miRbase-mmu.meme,no,yes,yes,miRBase: Mouse,Motifs derived from mature miRNA sequences from <a "http://nar.oxfordjournals.org/content/42/D1/D68">&quot;miRBase: annotating high confidence microRNAs using deep sequencing data&quot;&#44; Nucleic Acids Research&#44; <b>42</b>:D68-D73&#44; 2014.</a>  Each motif is created from a mature miRNA sequence using the MEME Suite tool 'rna2meme'.
+
+#miRbase-cel.meme,no,yes,yes,miRBase: D.melanogaster,Motifs derived from mature miRNA sequences from <a "http://nar.oxfordjournals.org/content/42/D1/D68">&quot;miRBase: annotating high confidence microRNAs using deep sequencing data&quot;&#44; Nucleic Acids Research&#44; <b>42</b>:D68-D73&#44; 2014.</a>  Each motif is created from a mature miRNA sequence using the MEME Suite tool 'rna2meme'.
+
+#miRbase-dme.meme,no,yes,yes,miRBase: C.elegans,Motifs derived from mature miRNA sequences from <a "http://nar.oxfordjournals.org/content/42/D1/D68">&quot;miRBase: annotating high confidence microRNAs using deep sequencing data&quot;&#44; Nucleic Acids Research&#44; <b>42</b>:D68-D73&#44; 2014.</a>  Each motif is created from a mature miRNA sequence using the MEME Suite tool 'rna2meme'.
+
+#miRbase-ath.meme,no,yes,yes,miRBase: A.thaliana,Motifs derived from mature miRNA sequences from <a "http://nar.oxfordjournals.org/content/42/D1/D68">&quot;miRBase: annotating high confidence microRNAs using deep sequencing data&quot;&#44; Nucleic Acids Research&#44; <b>42</b>:D68-D73&#44; 2014.</a>  Each motif is created from a mature miRNA sequence using the MEME Suite tool 'rna2meme'.
+

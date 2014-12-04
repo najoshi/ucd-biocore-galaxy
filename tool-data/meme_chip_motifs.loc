@@ -1,0 +1,40 @@
+Human and Mouse (Jolma2013)	Human and Mouse (Jolma2013)	/opt/galaxy/tool-data/motif_databases/jolma2013.meme
+RNA-binding motifs (Ray2013)	RNA-binding motifs (Ray2013)	/opt/galaxy/tool-data/motif_databases/ray2013_rbp.meme
+JASPAR CORE (2014)	JASPAR CORE (2014)	/opt/galaxy/tool-data/motif_databases/JASPAR_CORE_2014.meme
+JASPAR CORE (2014) vertebrates	JASPAR CORE (2014) vertebrates	/opt/galaxy/tool-data/motif_databases/JASPAR_CORE_2014_vertebrates.meme
+JASPAR CORE (2014) fungi	JASPAR CORE (2014) fungi	/opt/galaxy/tool-data/motif_databases/JASPAR_CORE_2014_fungi.meme
+JASPAR CORE (2014) insects	JASPAR CORE (2014) insects	/opt/galaxy/tool-data/motif_databases/JASPAR_CORE_2014_insects.meme
+JASPAR CORE (2014) nematodes	JASPAR CORE (2014) nematodes	/opt/galaxy/tool-data/motif_databases/JASPAR_CORE_2014_nematodes.meme
+JASPAR CORE (2014) plants	JASPAR CORE (2014) plants	/opt/galaxy/tool-data/motif_databases/JASPAR_CORE_2014_plants.meme
+JASPAR CORE (2014) urochordates	JASPAR CORE (2014) urochordates	/opt/galaxy/tool-data/motif_databases/JASPAR_CORE_2014_urochordates.meme
+JASPAR PHYLOFACTS	JASPAR PHYLOFACTS	/opt/galaxy/tool-data/motif_databases/JASPAR_PHYLOFACTS_2008.meme
+JASPAR FAM	JASPAR FAM	/opt/galaxy/tool-data/motif_databases/JASPAR_FAM_2008.meme
+JASPAR POLII	JASPAR POLII	/opt/galaxy/tool-data/motif_databases/JASPAR_POLII_2008.meme
+JASPAR CNE	JASPAR CNE	/opt/galaxy/tool-data/motif_databases/JASPAR_CNE_2008.meme
+JASPAR SPLICE	JASPAR SPLICE	/opt/galaxy/tool-data/motif_databases/JASPAR_SPLICE_2008.meme
+UniPROBE/BEEML-PBM (Zhao and Stormo 2011)	UniPROBE/BEEML-PBM (Zhao and Stormo 2011)	/opt/galaxy/tool-data/motif_databases/zhao2011.meme
+Human and Mouse (Jolma2010)	Human and Mouse (Jolma2010)	/opt/galaxy/tool-data/motif_databases/jolma2010.meme
+Human and Mouse (MacIsaac THEME)	Human and Mouse (MacIsaac THEME)	/opt/galaxy/tool-data/motif_databases/macisaac_theme.v1.meme
+Prokaryotes (Prodoric Release 8.9)	Prokaryotes (Prodoric Release 8.9)	/opt/galaxy/tool-data/motif_databases/prodoric.meme
+Prokaryotes (RegTransBase v4)	Prokaryotes (RegTransBase v4)	/opt/galaxy/tool-data/motif_databases/regtransbase.meme
+Drosophila (OnTheFly_2014)	Drosophila (OnTheFly_2014)	/opt/galaxy/tool-data/motif_databases/OnTheFly_2014_Drosophila.meme
+Drosophila (FLYREG; Bergman & Pollard v2)	Drosophila (FLYREG; Bergman & Pollard v2)	/opt/galaxy/tool-data/motif_databases/flyreg.v2.meme
+Drosophila (DMMPMM; Kulakovskiy et al. 2009)	Drosophila (DMMPMM; Kulakovskiy et al. 2009)	/opt/galaxy/tool-data/motif_databases/dmmpmm2009.meme
+Drosophila (iDMMPMM; Kulakovskiy et al. 2009)	Drosophila (iDMMPMM; Kulakovskiy et al. 2009)	/opt/galaxy/tool-data/motif_databases/idmmpmm2009.meme
+Homeodomains (Berger et al.)	Homeodomains (Berger et al.)	/opt/galaxy/tool-data/motif_databases/homeodomain.meme
+Mouse (UniPROBE)	Mouse (UniPROBE)	/opt/galaxy/tool-data/motif_databases/uniprobe_mouse.meme
+Mouse (Chen2008)	Mouse (Chen2008)	/opt/galaxy/tool-data/motif_databases/chen2008.meme
+ETS factors human microwell SELEX (Wei et al. 2010)	ETS factors human microwell SELEX (Wei et al. 2010)	/opt/galaxy/tool-data/motif_databases/wei2010_human_mws.meme
+ETS factors mouse microwell SELEX (Wei et al. 2010)	ETS factors mouse microwell SELEX (Wei et al. 2010)	/opt/galaxy/tool-data/motif_databases/wei2010_mouse_mws.meme
+ETS factors mouse protein-binding microarrays (Wei et al. 2010)	ETS factors mouse protein-binding microarrays (Wei et al. 2010)	/opt/galaxy/tool-data/motif_databases/wei2010_mouse_pbm.meme
+E. coli (DPINTERACT)	E. coli (DPINTERACT)	/opt/galaxy/tool-data/motif_databases/dpinteract.meme
+GLIs and TCF7L2/TCF4 (Hallikas et al. 2006)	GLIs and TCF7L2/TCF4 (Hallikas et al. 2006)	/opt/galaxy/tool-data/motif_databases/hallikas2006.meme
+Worm (UniPROBE)	Worm (UniPROBE)	/opt/galaxy/tool-data/motif_databases/uniprobe_worm.meme
+Malaria (Campbell et al. 2010)	Malaria (Campbell et al. 2010)	/opt/galaxy/tool-data/motif_databases/campbell2010_malaria_pbm.meme
+Yeast (MacIsaac v1)	Yeast (MacIsaac v1)	/opt/galaxy/tool-data/motif_databases/macisaac_yeast.v1.meme
+Yeast (SCPD)	Yeast (SCPD)	/opt/galaxy/tool-data/motif_databases/scpd_matrix.meme
+miRBase: Human	miRBase: Human	/opt/galaxy/tool-data/motif_databases/miRbase-hsa.meme
+miRBase: Mouse	miRBase: Mouse	/opt/galaxy/tool-data/motif_databases/miRbase-mmu.meme
+miRBase: D.melanogaster	miRBase: D.melanogaster	/opt/galaxy/tool-data/motif_databases/miRbase-cel.meme
+miRBase: C.elegans	miRBase: C.elegans	/opt/galaxy/tool-data/motif_databases/miRbase-dme.meme
+miRBase: A.thaliana	miRBase: A.thaliana	/opt/galaxy/tool-data/motif_databases/miRbase-ath.meme

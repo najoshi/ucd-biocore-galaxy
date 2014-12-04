@@ -1,0 +1,194 @@
+<tool id="meme_chip_wrapper" name="MEME-ChIP" version="1.2.4">
+    <requirements>
+        <requirement type="package" version="4.9.0">meme</requirement>
+    </requirements>
+    <description>Discover motifs in ChIP-seq data</description>
+    <version_command>echo "MEME version r4.9.0"</version_command>
+    <command> meme-chip $input_file -o ${memechip_out.files_path} 
+        #for p in str.split($motif_dbs.fields.path,","):
+            -db $p
+        #end for
+
+        #if str( $options_type.options_type_selector ) == 'advanced':
+            #if str( $options_type.bg_type.bg_type_selector) == 'bg_user':
+                -bfile "${ str( $options_type.bg_type.bfile ) }"
+            #end if
+            
+            #if str( $options_type.nmeme) != '-1':
+                -nmeme "${ str( $options_type.nmeme ) }"
+            #end if
+
+            #if str( $options_type.ccut ) != '-1':
+                -ccut "${ str( $options_type.ccut ) }"
+            #end if
+
+            #if str( $options_type.time ) != '-1':
+                -time "${ str( $options_type.time ) }"
+            #end if
+
+            -desc "${ str( $options_type.desc ) }"
+            
+            #if str( $options_type.meme_mod ) != '':
+                -meme-mod "${ str($options_type.meme_mod) }"
+            #end if
+
+            #if str( $options_type.meme_minw ) != '-1':
+                -meme-minw "${ str($options_type.meme_minw) }"
+            #end if
+
+            #if str( $options_type.meme_maxw ) != '-1':
+                -meme-maxw "${ str($options_type.meme_maxw) }"
+            #end if
+
+            #if str( $options_type.meme_nmotifs ) != '-1':
+                -meme-nmotifs "${ str($options_type.meme_nmotifs) }"
+            #end if
+
+            #if str( $options_type.meme_minsites ) != '-1':
+                -meme-minsites "${ str($options_type.meme_minsites) }"
+            #end if
+
+            #if str( $options_type.meme_maxsites ) != '-1':
+                -meme-maxsites "${ str($options_type.meme_maxsites) }"
+            #end if
+
+            #if $options_type.meme_pal:
+                -meme-pal "${ str($options_type.meme_pal) }"
+            #end if
+            
+            #if str( $options_type.dreme_e ) != '-1.0':
+                -dreme-e "${ str($options_type.dreme_e) }"
+            #end if
+
+            #if str( $options_type.dreme_m ) != '-1':
+                -dreme-m "${ str($options_type.dreme_m) }"
+            #end if
+
+            #if str($options_type.centrimo_score) != '-1.0':
+                -centrimo-score "${ str($options_type.centrimo_score) }"
+            #end if
+
+            #if str( $options_type.centrimo_maxreg ) != '-1':
+                -centrimo-maxreg "${ str($options_type.centrimo_maxreg) }"
+            #end if
+
+            #if str( $options_type.centrimo_ethresh ) != '-1.0':
+                -centrimo-ethresh "${ str($options_type.centrimo_ethresh) }"
+            #end if
+
+            #if $options_type.centrimo_noseq:
+                -centrimo-noseq 
+            #end if
+
+        #end if
+        <!--pipe stderr to stdout because of annoying log4perl warnings. Error when exit status-->
+        2&gt;&amp;1 || echo "Error running MEME."
+        <!--&amp;&amp; mv ${html_outfile.files_path}/index.html ${html_outfile}-->
+        <!--&amp;&amp; zip -r result $html_outfile.files_path-->
+        &amp;&amp; cd ${memechip_out.files_path} 
+        &amp;&amp; zip -rp memechip_out ./
+        &amp;&amp; mv memechip_out.zip ${memechip_out}
+    </command>
+    <inputs>
+        <param format="fasta" name="input_file" type="data" label="Sequences in fasta format" />
+        <param name="motif_dbs" label="MEME Motif databases" type="select" multiple="true" display="checkboxes" help="Use CTRL to select multiple databases">
+            <options from_data_table="meme_chip_motifs">
+                <filter type="sort_by" column="1"/>
+                <validator type="no_options" message="No indexes are available for the selected dataset"/>
+            </options>
+          
+        </param>
+        <param name="non_commercial_use" label="I certify that I am not using this tool for commercial purposes." type="boolean" truevalue="NON_COMMERCIAL_USE" falsevalue="COMMERCIAL_USE" checked="True">
+            <validator type="expression" message="This tool is only available for non-commercial use.">value == True</validator>
+        </param>
+        <conditional name="options_type">
+            <param name="options_type_selector" type="select" label="Options Configuration">
+                <option value="basic" selected="true">Basic</option>
+                <option value="advanced">Advanced</option>
+            </param>
+            <when value="basic">
+            <!-- do nothing here -->
+            </when>
+            <when value="advanced">
+                <!--bfile-->
+                <conditional name="bg_type">
+                    <param name="bg_type_selector" type="select" label="Custom background">
+                        <option value="bg_default" selected="True">Default Background</option>
+                        <option value="bg_user">Background in your History</option>
+                    </param>
+                    <when value="bg_default">
+                        <!--do nothing here-->
+                    </when>
+                    <when value="bg_user">
+                        <param name="bfile" type="data" label="-bfile: Background File" />
+                    </when>
+                </conditional>
+                <!--nmeme-->
+                <param name="nmeme" type="integer" value="-1" label="-nmeme: limit of sequences to pass to MEME; -1: Default behaviour" />
+                <!--ccut-->
+                <param name="ccut" type="integer" value="-1" label="-ccut: Max size of a seq before it is cut down; 0: do not cut; -1: Default behaviour" />
+                <!--tine-->
+                <param name="time" type="integer" value="-1" label="-time: Maximum time (minutes) that this program has to run and create output in; -1: no limit" />
+                <!--desc-->
+                <param name="desc" type="text" value="Galaxy MEME-Chip" label="-desc: Description of the analysis" >
+                    <sanitizer>
+                      <valid initial="string.printable">
+                        <remove value="&apos;"/>
+                      </valid>
+                      <mapping initial="none">
+                        <add source="&apos;" target=""/>
+                      </mapping>
+                    </sanitizer>
+                </param>
+                <!--MEME options-->
+                <param name="meme_mod" type="select" label="-meme-mod: Sites used in a single sequence" >
+                    <option value="" selected="True"/>
+                    <option value="oops" />
+                    <option value="zoops" />
+                    <option value="anr" />
+                </param>
+                <param name="meme_minw" type="integer" value="-1" label="-meme-minw: minimum motif width; -1: Default behaviour" />
+                <param name="meme_maxw" type="integer" value="-1" label="-meme-maxw: maximum motif width; -1: Default behaviour" />
+                <param name="meme_nmotifs" type="integer" value="-1" label="-meme-nmotifs: maximum number of motifs to find; -1: Default behaviour" />
+                <param name="meme_minsites" type="integer" value="-1" label="-meme-minsites: minimum number of sites per motif; -1: Default behaviour" />
+                <param name="meme_maxsites" type="integer" value="-1" label="-meme-maxsites: maximum number of sites per motif; -1: Default behaviour" />
+                <param name="meme_pal" type="boolean" label="-meme-pal: look for palindromes only" />
+                <!--DREME options-->
+                <param name="dreme_e" type="float" value="-1" label="-dreme-e: stop searching after reaching this E-value threshold; -1: Default behaviour" />
+                <param name="dreme_m" type="integer" value="-1" label="-dreme-e: stop searching after finding this many motifs; -1: Default behaviour" />
+                <!--CentriMo options-->
+                <param name="centrimo_score" type="float" value="-1" label="-centrimo-score: set the minimum allowed match score; -1: Default behaviour" />
+                <param name="centrimo_maxreg" type="integer" value="-1" label="-centrimo-maxreg: set the maximum region size to be considered; -1: Default behaviour" />
+                <param name="centrimo_ethresh" type="float" value="-1" label="-centrimo-ethresh: set the E-value threshold for reporting; -1: Default behaviour" />
+                <param name="centrimo_noseq" type="boolean" label="-centrimo-noseq: don't store sequence IDs in the output" />
+
+            </when>
+        </conditional>
+    </inputs>
+    <outputs>
+        <!--<data format="html" name="html_outfile" label="index" />-->
+        <!--<data format="html" hidden="True" name="html_outfile" label="index.html" />-->
+        <data format="zip" name="memechip_out" label="SAVE ME ${tool.name} on #echo os.path.splitext(str($input_file.name))[0]#.zip" />
+    </outputs>
+
+
+    <tests>
+        <test>
+            <param name="input_file" value="extract_genomic_dna.fa" />
+            <output name="html_file" file="sample_output.html" ftype="html" />
+        </test>
+    </tests>
+
+    <help>
+
+        .. class:: infomark
+
+        After the job finishes, save the zip file, unzip and open "index.html"
+
+        The actual meme-chip command is displayed under "Command line summary"
+
+        Defaults:
+        http://meme.nbcr.net/meme/doc/meme-chip.html
+
+    </help>
+</tool>

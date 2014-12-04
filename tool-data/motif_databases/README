@@ -1,0 +1,120 @@
+#!/bin/csh -v
+
+# the following commands are written for csh. If you use bash then turn the >! redirect into >| (or just leave off the ! unless you have noclobber set).
+
+# make the jaspar 2014 files
+  jaspar2meme -bundle -url "http://jaspar.genereg.net?ID=MOTIF_NAME&rm=present&collection=CORE" ../jaspar_2014/JASPAR_CORE/pfm/nonredundant/pfm_fungi.txt >! JASPAR_CORE_2014_fungi.meme
+  jaspar2meme -bundle -url "http://jaspar.genereg.net?ID=MOTIF_NAME&rm=present&collection=CORE" ../jaspar_2014/JASPAR_CORE/pfm/nonredundant/pfm_insects.txt >! JASPAR_CORE_2014_insects.meme
+  jaspar2meme -bundle -url "http://jaspar.genereg.net?ID=MOTIF_NAME&rm=present&collection=CORE" ../jaspar_2014/JASPAR_CORE/pfm/nonredundant/pfm_nematodes.txt >! JASPAR_CORE_2014_nematodes.meme
+  jaspar2meme -bundle -url "http://jaspar.genereg.net?ID=MOTIF_NAME&rm=present&collection=CORE" ../jaspar_2014/JASPAR_CORE/pfm/nonredundant/pfm_plants.txt >! JASPAR_CORE_2014_plants.meme
+  jaspar2meme -bundle -url "http://jaspar.genereg.net?ID=MOTIF_NAME&rm=present&collection=CORE" ../jaspar_2014/JASPAR_CORE/pfm/nonredundant/pfm_urochordates.txt >! JASPAR_CORE_2014_urochordates.meme
+  jaspar2meme -bundle -url "http://jaspar.genereg.net?ID=MOTIF_NAME&rm=present&collection=CORE" ../jaspar_2014/JASPAR_CORE/pfm/nonredundant/pfm_vertebrates.txt >! JASPAR_CORE_2014_vertebrates.meme
+  jaspar2meme -bundle -url "http://jaspar.genereg.net?ID=MOTIF_NAME&rm=present&collection=CORE" ../jaspar_2014/JASPAR_CORE/pfm/nonredundant/pfm_all.txt >! JASPAR_CORE_2014.meme
+
+# make the jaspar 2009 files:
+  jaspar2meme -pfm -logodds -url "http://jaspar.genereg.net?ID=MOTIF_NAME&rm=present&collection=CORE" ../jaspar_2009/jaspar_CORE/redundant/by_tax_group/fungi/FlatFileDir >! JASPAR_CORE_2009_fungi.meme
+  jaspar2meme -pfm -logodds -url "http://jaspar.genereg.net?ID=MOTIF_NAME&rm=present&collection=CORE" ../jaspar_2009/jaspar_CORE/redundant/by_tax_group/insects/FlatFileDir >! JASPAR_CORE_2009_insects.meme
+  jaspar2meme -pfm -logodds -url "http://jaspar.genereg.net?ID=MOTIF_NAME&rm=present&collection=CORE" ../jaspar_2009/jaspar_CORE/redundant/by_tax_group/nematodes/FlatFileDir >! JASPAR_CORE_2009_nematodes.meme
+  jaspar2meme -pfm -logodds -url "http://jaspar.genereg.net?ID=MOTIF_NAME&rm=present&collection=CORE" ../jaspar_2009/jaspar_CORE/redundant/by_tax_group/plants/FlatFileDir >! JASPAR_CORE_2009_plants.meme
+  jaspar2meme -pfm -logodds -url "http://jaspar.genereg.net?ID=MOTIF_NAME&rm=present&collection=CORE" ../jaspar_2009/jaspar_CORE/redundant/by_tax_group/urochordates/FlatFileDir >! JASPAR_CORE_2009_urochordates.meme
+  jaspar2meme -pfm -logodds -url "http://jaspar.genereg.net?ID=MOTIF_NAME&rm=present&collection=CORE" ../jaspar_2009/jaspar_CORE/redundant/by_tax_group/vertebrates/FlatFileDir >! JASPAR_CORE_2009_vertebrates.meme
+  jaspar2meme -pfm -logodds -url "http://jaspar.genereg.net?ID=MOTIF_NAME&rm=present&collection=CORE" ../jaspar_2009/jaspar_CORE/redundant/all_species/FlatFileDir >! JASPAR_CORE_2009.meme
+
+# make the jaspar 2008 files:
+  jaspar2meme -pfm -logodds -url "http://jaspar.genereg.net?ID=MOTIF_NAME&rm=present&collection=CNE" ../jaspar/JASPAR_CNE_2008 >! JASPAR_CNE_2008.meme
+  jaspar2meme -pfm -logodds -url "http://jaspar.genereg.net?ID=MOTIF_NAME&rm=present&collection=PHYLOFACTS" ../jaspar/JASPAR_PHYLOFACTS_2008 >! JASPAR_PHYLOFACTS_2008.meme
+  jaspar2meme -pfm -logodds -url "http://jaspar.genereg.net?ID=MOTIF_NAME&rm=present&collection=POLII" ../jaspar/JASPAR_POLII_2008 >! JASPAR_POLII_2008.meme
+  jaspar2meme -pfm -logodds -url "http://jaspar.genereg.net?ID=MOTIF_NAME&rm=present&collection=SPLICE" ../jaspar/JASPAR_SPLICE_2008 >! JASPAR_SPLICE_2008.meme
+  jaspar2meme -pfm -logodds -url "http://jaspar.genereg.net?ID=MOTIF_NAME&rm=present&collection=FAM" ../jaspar/JASPAR_FAM_2008 >! JASPAR_FAM_2008.meme
+# make the transfac file:
+#  transfac2meme -use_acc -pseudo 0 ../transfac-commercial/cgi-bin/data/matrix.dat > ! transfac_matrix.meme
+  transfac2meme -use_acc -logodds -url "https://portal.biobase-international.com/cgi-bin/build_t/idb/1.0/pageview.cgi?view=MatrixReport&matrix_acc=MOTIF_NAME" ../TRANSFAC_2009.4/dat/matrix.dat > ! ../transfac_matrix.meme
+# make the scpd file:
+  scpd2meme -logodds -url "http://rulai.cshl.edu/cgi-bin/SCPD/getfactor?MOTIF_NAME" ../scpd/scpd.txt >! scpd_matrix.meme
+# make MacIsaac yeast file (note url is same for all):
+  tamo2meme -logodds -url "http://fraenkel.mit.edu/improved_map/v1.tamo" ../macisaac_yeast/v1.tamo >! macisaac_yeast.v1.meme
+# make dros_pollard file (Flyreg motifs; Casey Bergman, built by Dan Pollard):
+  jaspar2meme -cm -url "http://www.danielpollard.com/bergman2004_matrices.html" ../flyreg_motifs/matrices >! flyreg.v2.meme
+# make dpinteract database (see README in ../ecoli_dpinteract)
+  meme2meme -logodds -url "http://arep.med.harvard.edu/ecoli_matrices/MOTIF_NAME.html" ../ecoli_dpinteract/meme/*.meme >! dpinteract.meme
+# make RegTransBase database (see README in ../RegTransBase)
+  meme2meme -logodds -url "http://regtransbase.lbl.gov/cgi-bin/regtransbase?page=alignment_browse" ../RegTransBase/regtransbase_alignments_download/*.meme >! regtransbase.meme
+# make prodoric database (see README in ../prodoric)
+  jaspar2meme -pfm -logodds -url "http://prodoric.tu-bs.de/matrix.php?matrix_acc=MOTIF_NAME" ../prodoric/prodoric_pfms >! prodoric.meme
+# make homeodomain database (see README in ../homeodomain)
+  uniprobe2meme -logodds -sg ../uniprobe/uniprobe_screen_grab -url "http://the_brain.bwh.harvard.edu/uniprobe/details2.php?id=MOTIF_NAME" < ../homeodomain/Berger2008_pwm_all_102107.txt >! homeodomain.meme
+# make mouse database (see README in ../uniprobe)
+# need a url for this db
+  cat ../uniprobe/104_pwms_all_concat.txt ../uniprobe/homeo_pwm_all.txt | uniprobe2meme -logodds -sg ../uniprobe/uniprobe_screen_grab -url "http://the_brain.bwh.harvard.edu/uniprobe/details2.php?id=MOTIF_NAME" >! uniprobe_mouse.meme 
+# make worm database
+  awk '{if($1=="Protein:"){print $2;}else{print}}' ../uniprobe/worm_pwm_all.txt | uniprobe2meme -logodds -sg ../uniprobe/uniprobe_screen_grab -url "http://the_brain.bwh.harvard.edu/uniprobe/details2.php?id=MOTIF_NAME" >! uniprobe_worm.meme 
+# make Chen Cell 2008 motifs
+ chen2meme -logodds < ../Chen2008/chen2008_motifs.txt >! chen2008.meme
+# make Taipale GR 2010 Selex motifs
+ perl -e 'chdir "../Taipale/Jolma2010/"; foreach (glob("*_SELEX-profile.pfm")) {/^(\w*)(_SELEX-profile).pfm/; print "$1$2 X $1\n";}'> ! ../Taipale/Jolma2010/matrix_list.txt
+ jaspar2meme -pfm -logodds ../Taipale/Jolma2010 >! jolma2010.meme
+# Make MacIsaac THEME motifs
+  tamo2meme -logodds -url "http://fraenkel.mit.edu/THEME/logo_tables/restricted_profiles.html" ../macisaac_theme/v1.tamo >! macisaac_theme.v1.meme
+# make Taipale Hallikas2006 motifs from the xls file
+# 1) Open ../Taipale/Hallikas2006/mmc2.xls file in OpenOffice (presumably Excel will work the same)
+# 2) Make sure sheet 1 is active and select "Save As" from the File menu
+# 3) Change the output type as "Text CSV (.csv)" press save
+# 4) Leave the character set as UTF-8, change the field delimiter to {Tab} and leave the text delimeter as "
+# 5) You should now have a file called ../Taipale/Hallikas2006/mmc2.csv 
+# 6) Close OpenOffice and run the command below
+taipale2meme -logodds -url "http://dx.doi.org/10.1016/j.cell.2005.10.042" < ../Taipale/Hallikas2006/mmc2.csv >! hallikas2006.meme
+
+# make Taipale Wei2010 motifs from the xls file
+# For sheets 1 to 3:
+# 1) Open ../Taipale/Wei2010/emboj2010106s4.xls file in OpenOffice (presumably Excell will work the same)
+# 2) Select "Save As" from the File menu
+# 3) Change the file name to "sheetX" where X is the number of the sheet, set the output type as "Text CSV (.csv)", press save
+# 4) Leave the character set as UTF-8, change the field delimiter to {Tab} and leave the text delimeter as "
+# 5) You should now have a file called ../Taipale/Wei/sheetX.csv 
+# 6) Close OpenOffice
+# If you have done all the sheets continue, otherwise go back to step 1.
+# 7) Run the commands:
+taipale2meme -logodds -url "http://dx.doi.org/10.1038/emboj.2010.106" < ../Taipale/Wei2010/sheet1.csv >! wei2010_human_mws.meme
+taipale2meme -logodds -url "http://dx.doi.org/10.1038/emboj.2010.106" < ../Taipale/Wei2010/sheet2.csv >! wei2010_mouse_mws.meme
+taipale2meme -logodds -url "http://dx.doi.org/10.1038/emboj.2010.106" < ../Taipale/Wei2010/sheet3.csv >! wei2010_mouse_pbm.meme
+
+# make Taipale Jolma2013 motifs from the xls file
+# 1) Open ../Taipale/Jolma2013/mmc3.xls in Excel on Mac
+# 2) File:Save As:Format:Tab Delimited Text --> mmc3.txt
+# 3) rm-cntrlm mmc3.txt (removes ^M)
+taipale2meme -nc 1 -nc 3 -oc 10 -url "http://dx.doi.org/10.1016/j.cell.2012.12.009" < ../Taipale/Jolma2013/mmc3.txt >! jolma2013.meme
+
+# make Kulakovskiy motifs
+cp ../Kulakovskiy/dmmpmm.txt dmmpmm2009.meme
+cp ../Kulakovskiy/idmmpmm.txt idmmpmm2009.meme
+
+# make Zhao2011 motifs
+beeml2meme -logodds -sg ../uniprobe/uniprobe_screen_grab -url "http://the_brain.bwh.harvard.edu/uniprobe/details2.php?id=MOTIF_NAME" ../Zhao2011/*.txt >! zhao2011.meme
+
+# make Campbell2010 PBM malaria motifs
+uniprobe2meme -logodds ../Campbell2010/journal.ppat.1001165.s019.csv >! campbell2010_malaria_pbm.meme
+
+# make Ray2013 RNA-binding motifs
+# MEME format is: MOTIF <uniqueID> <protein_name>
+../Ray2013_RBP/ray2uniprobe ../Ray2013_RBP | uniprobe2meme -sg ../Ray2013_RBP/id_name.txt -url 'http://hugheslab.ccbr.utoronto.ca/supplementary-data/RNAcompete_eukarya' | awk '{if ($1=="MOTIF"){sub(/_[0-9]+$/, "", $2); print $1, $3, $2}else{print}}'>! ray2013_rbp.meme
+
+# make miRBase motifs
+# Human
+awk '$1 ~ "hsa-"{print; getline; print;}' ../miRBase/mature.fa | rna2meme -url 'http://www.mirbase.org/index.shtml' - >! miRbase-hsa.meme
+# Mouse
+awk '$1 ~ "mmu-"{print; getline; print;}' ../miRBase/mature.fa | rna2meme -url 'http://www.mirbase.org/index.shtml' - >! miRbase-mmu.meme
+# C.elegans
+awk '$1 ~ "cel-"{print; getline; print;}' ../miRBase/mature.fa | rna2meme -url 'http://www.mirbase.org/index.shtml' - >! miRbase-cel.meme
+# D.melanogaster
+awk '$1 ~ "dme-"{print; getline; print;}' ../miRBase/mature.fa | rna2meme -url 'http://www.mirbase.org/index.shtml' - >! miRbase-dme.meme
+# A.thaliana
+awk '$1 ~ "ath-"{print; getline; print;}' ../miRBase/mature.fa | rna2meme -url 'http://www.mirbase.org/index.shtml' - >! miRbase-ath.meme
+
+# make the OnTheFly motifs
+# Note that the file "../OnTheFly/motifs/OTF0232.1.txt" had a A added to the start of the second line due to being one character shor (as advised by author)
+sites2meme -map ../OnTheFly/idmap.txt -url "https://bhapp.c2b2.columbia.edu/OnTheFly/cgi-bin/motif_entry.php?protein_ID=MOTIF_NAME" ../OnTheFly/motifs >! OnTheFly_2014_Drosophila.meme
+
+# to tar this directory:
+  cd ..
+  tar czvf motif_databases.tgz --exclude .svn motif_databases
+

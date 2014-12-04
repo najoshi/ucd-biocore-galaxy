@@ -233,6 +233,7 @@
 -->
   <section name="Motif Tools" id="motifs">
     <tool file="meme/meme.xml"/>
+    <tool file="meme/meme_chip/meme_chip_wrapper.xml" />
     <tool file="meme/fimo.xml"/>
     <tool file="rgenetics/rgWebLogo3.xml" />
   </section>
