@@ -513,6 +513,7 @@
     <tool file="peak_calling/ccat_wrapper.xml" />
     <tool file="peak_calling/idr_package/idrToolDef.xml" />
     <tool file="peak_calling/idr_package/idrPlotDef.xml" />
+    <tool file="peak_calling/ceas/ceas.xml" />
 <!--
     <tool file="genetrack/genetrack_indexer.xml" />
     <tool file="genetrack/genetrack_peak_prediction.xml" />

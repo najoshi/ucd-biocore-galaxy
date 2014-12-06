@@ -1,0 +1,8 @@
+ce4	C. elegans ce4	/opt/galaxy/tool-data/ceas_tables/ce4.refGene
+ce6	C. elegans ce6	/opt/galaxy/tool-data/ceas_tables/ce6.refGene
+dm2	D. melanogaster dm2	/opt/galaxy/tool-data/ceas_tables/dm2.refGene
+dm3	D. melanogaster dm3	/opt/galaxy/tool-data/ceas_tables/dm3.refGene
+mm8	M. musculus mm8	/opt/galaxy/tool-data/ceas_tables/mm8.refGene
+mm9	M. musculus mm9	/opt/galaxy/tool-data/ceas_tables/mm9.refGene
+hg18	H. sapiens hg18	/opt/galaxy/tool-data/ceas_tables/hg18.refGene
+hg19	H. sapiens hg19	/opt/galaxy/tool-data/ceas_tables/hg19.refGene

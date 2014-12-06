@@ -1,0 +1,82 @@
+<tool id="ceas" name="CEAS" version="1.0.2">
+	<description>Get stats on ChIP enrichment and infer genes regulated by binding factors</description>
+
+	<command>
+	mkdir -p "$annot_out.files_path" &amp;&amp;
+	cd "$annot_out.files_path" &amp;&amp;
+
+	ceas
+
+	-g "$refgene_table.fields.path"
+	-b $chip_bed
+	--name=ceas_out
+
+	2&gt; /dev/null
+
+	&amp;&amp;
+
+	mv $annot_out.files_path/ceas_out.xls $annot_out &amp;&amp;
+	mv $annot_out.files_path/ceas_out.R $r_out &amp;&amp;
+	mv $annot_out.files_path/ceas_out.pdf $pdf_out &amp;&amp;
+
+	rm -r "$annot_out.files_path"
+	</command>
+
+	<inputs>
+        <param name="refgene_table" label="Gene annotation table" type="select">
+            <options from_data_table="ceas_refgene_tables">
+                <filter type="sort_by" column="1"/>
+                <validator type="no_options" message="No indexes are available for the selected dataset"/>
+            </options>
+        </param>
+
+	<param format="bed" name="chip_bed" type="data" label="BED file of ChIP regions"/>
+
+
+<!--
+
+		<conditional name="readtype">
+			<param name="single_or_paired" type="select" optional="false" label="Single-End or Paired-End reads?" help="Note: Sickle will infer the quality type of the file from its datatype.  I.e., if the datatype is fastqsanger, then the quality type is sanger.  The default is fastqsanger.">
+				<option value="se" selected="true">Single-End</option>
+				<option value="pe_combo">Paired-End (one interleaved input file)</option>
+                <option value="pe_sep">Paired-End (two separate input files)</option>
+			</param>
+
+			<when value="se">
+				<param format="fastq, fastqsanger, fastqillumina, fastqsolexa" name="input_single" type="data" optional="false" label="Single-End FastQ Reads"/>
+			</when>
+
+            <when value="pe_combo">
+                <param format="fastq, fastqsanger, fastqillumina, fastqsolexa" name="input_combo" type="data" optional="false" label="Paired-End Interleaved FastQ Reads"/>
+                <param name="output_n" type="boolean" label="Output only one file with all reads" help="This will output only one file with all the reads, where the reads that did not pass filter will be replaced with a single 'N', rather than discarded."/>
+            </when>
+
+			<when value="pe_sep">
+				<param format="fastq, fastqsanger, fastqillumina, fastqsolexa" name="input_paired1" type="data" optional="false" label="Paired-End Forward Strand FastQ Reads"/>
+				<param format="fastq, fastqsanger, fastqillumina, fastqsolexa" name="input_paired2" type="data" optional="false" label="Paired-End Reverse Strand FastQ Reads"/>
+			</when>
+		</conditional>
+
+		<param name="qual_threshold" value="20" type="integer" optional="true" label="Quality Threshold">
+			<validator type="in_range" min="0" message="Minimum value is 0"/>
+		</param>
+
+		<param name="length_threshold" value="20" type="integer" optional="true" label="Length Threshold">
+			<validator type="in_range" min="0" message="Minimum value is 0"/>
+		</param>
+
+		<param name="no_five_prime" type="boolean" label="Don't do 5' trimming"/>
+		<param name="trunc_n" type="boolean" label="Truncate sequences with Ns at first N position"/>
+-->
+	</inputs>
+
+	<outputs>
+		<data format="tabular" name="annot_out" label="Gene-centered annotation from ${tool.name} on ${on_string} (XLS)" />
+		<data format="txt" name="r_out" label="R script for graph results from ${tool.name} on ${on_string}" />
+		<data format="pdf" name="pdf_out" label="Graph results from ${tool.name} on ${on_string} (PDF)" />
+	</outputs>
+
+	<help>
+	</help>
+
+</tool>

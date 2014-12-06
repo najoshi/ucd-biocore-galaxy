@@ -2,7 +2,7 @@
 
 export GATK2_PATH=/opt/galaxy/tool-data/shared/jars/gatk
 export TRINITY_BASE_DIR=/share/apps/trinity
-export PYTHONPATH=/share/apps/khmer/python:$PYTHONPATH
+export PYTHONPATH=/share/apps/ceas/lib/python2.7/site-packages:/share/apps/khmer/python:$PYTHONPATH
 export PATH=$PATH:/share/apps/amos/bin
 export _JAVA_OPTIONS=-Djava.io.tmpdir=/data/galaxy/tmp
 
