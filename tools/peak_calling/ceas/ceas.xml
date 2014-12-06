@@ -8,7 +8,42 @@
 	ceas
 
 	-g "$refgene_table.fields.path"
+	#if $analysis_files.wig_or_bed == "bed" or $analysis_files.wig_or_bed == "both1" or $analysis_files.wig_or_bed == "both2":
 	-b $chip_bed
+	#end if
+
+	#if $analysis_files.wig_or_bed == "wig" or $analysis_files.wig_or_bed == "both1" or $analysis_files.wig_or_bed == "both2":
+	-w $chip_wig
+	#end if
+
+	#if $analysis_files.wig_or_bed == "both2":
+	--bg
+	#end if
+
+	#if str($extra_bed) != 'None':
+	-e $extra_bed
+	#end if
+
+	#if str($sizes) != "":
+	--sizes=$sizes
+	#end if
+
+	#if str($bisizes) != "":
+        --bisizes=$bisizes
+        #end if
+
+	#if str($span) != "":
+        --span=$span
+        #end if
+
+        #if str($pfres) != "":
+        --pf-res=$pfres
+        #end if
+
+        #if str($reldist) != "":
+        --rel-dist=$reldist
+        #end if
+
 	--name=ceas_out
 
 	2&gt; /dev/null
@@ -23,6 +58,33 @@
 	</command>
 
 	<inputs>
+	<conditional name="analysis_files">
+		<param name="wig_or_bed" type="select" optional="false" label="Select the type of analysis">
+			<option value="bed" selected="true">Run only ChIP region and gene-centered annotation</option>
+			<option value="wig">Run only average signal profiling</option>
+			<option value="both1">Run both annotation and profiling</option>
+			<option value="both2">Run genome background annotation</option>
+		</param>
+
+		<when value="bed">
+			<param format="bed" name="chip_bed" type="data" label="BED file of ChIP regions"/>
+		</when>
+
+		<when value="wig">
+                        <param format="wig" name="chip_wig" type="data" label="WIG file with ChiP enrichment signal"/>
+                </when>
+
+		<when value="both1">
+			<param format="bed" name="chip_bed" type="data" label="BED file of ChIP regions"/>
+			<param format="wig" name="chip_wig" type="data" label="WIG file with ChiP enrichment signal"/>
+		</when>
+
+		<when value="both2">
+			<param format="bed" name="chip_bed" type="data" label="BED file of ChIP regions"/>
+			<param format="wig" name="chip_wig" type="data" label="WIG file for genome background annotation"/>
+		</when>
+	</conditional>
+
         <param name="refgene_table" label="Gene annotation table" type="select">
             <options from_data_table="ceas_refgene_tables">
                 <filter type="sort_by" column="1"/>
@@ -30,44 +92,16 @@
             </options>
         </param>
 
-	<param format="bed" name="chip_bed" type="data" label="BED file of ChIP regions"/>
+	<param format="bed" name="extra_bed" type="data" optional="true" label="BED file of extra regions of interest (e.g. non-coding regions)"/>
 
+	<param name="sizes" type="integer" optional="true" label="Promoter (also downstream) sizes for ChIP region annotation" help="Three comma-separated integers or a single integer. Leave blank for default."/>
 
-<!--
+	<param name="bisizes" type="integer" optional="true" label="Bidirectional promoter sizes for ChIP region annotation" help="Two comma-separated integers or a single integer. Leave blank for default."/>
 
-		<conditional name="readtype">
-			<param name="single_or_paired" type="select" optional="false" label="Single-End or Paired-End reads?" help="Note: Sickle will infer the quality type of the file from its datatype.  I.e., if the datatype is fastqsanger, then the quality type is sanger.  The default is fastqsanger.">
-				<option value="se" selected="true">Single-End</option>
-				<option value="pe_combo">Paired-End (one interleaved input file)</option>
-                <option value="pe_sep">Paired-End (two separate input files)</option>
-			</param>
+	<param name="span" type="integer" optional="true" label="Span from TSS and TTS in the gene-centered annotation" help="Leave blank for default."/>
+	<param name="pfres" type="integer" optional="true" label="WIG profiling resolution" help="Leave blank for default."/>
+	<param name="reldist" type="integer" optional="true" label="Relative distance to TSS/TTS in wig profiling" help="Leave blank for default."/>
 
-			<when value="se">
-				<param format="fastq, fastqsanger, fastqillumina, fastqsolexa" name="input_single" type="data" optional="false" label="Single-End FastQ Reads"/>
-			</when>
-
-            <when value="pe_combo">
-                <param format="fastq, fastqsanger, fastqillumina, fastqsolexa" name="input_combo" type="data" optional="false" label="Paired-End Interleaved FastQ Reads"/>
-                <param name="output_n" type="boolean" label="Output only one file with all reads" help="This will output only one file with all the reads, where the reads that did not pass filter will be replaced with a single 'N', rather than discarded."/>
-            </when>
-
-			<when value="pe_sep">
-				<param format="fastq, fastqsanger, fastqillumina, fastqsolexa" name="input_paired1" type="data" optional="false" label="Paired-End Forward Strand FastQ Reads"/>
-				<param format="fastq, fastqsanger, fastqillumina, fastqsolexa" name="input_paired2" type="data" optional="false" label="Paired-End Reverse Strand FastQ Reads"/>
-			</when>
-		</conditional>
-
-		<param name="qual_threshold" value="20" type="integer" optional="true" label="Quality Threshold">
-			<validator type="in_range" min="0" message="Minimum value is 0"/>
-		</param>
-
-		<param name="length_threshold" value="20" type="integer" optional="true" label="Length Threshold">
-			<validator type="in_range" min="0" message="Minimum value is 0"/>
-		</param>
-
-		<param name="no_five_prime" type="boolean" label="Don't do 5' trimming"/>
-		<param name="trunc_n" type="boolean" label="Truncate sequences with Ns at first N position"/>
--->
 	</inputs>
 
 	<outputs>
@@ -77,6 +111,42 @@
 	</outputs>
 
 	<help>
+Options:
+  -b BED, --bed=BED     BED file of ChIP regions.
+  -w WIG, --wig=WIG     WIG file for either wig profiling or genome background
+                        annotation. WARNING: --bg flag must be set for genome
+                        background re-annotation.
+  -e EBED, --ebed=EBED  BED file of extra regions of interest (eg, non-coding
+                        regions)
+  -g GDB, --gt=GDB      Gene annotation table (eg, a refGene table in sqlite3
+                        db format provided through the CEAS web,
+                        http://liulab.dfci.harvard.edu/CEAS/download.html).
+  --sizes=SIZES         Promoter (also dowsntream) sizes for ChIP region
+                        annotation. Comma-separated three values or a single
+                        value can be given. If a single value is given, it
+                        will be segmented into three equal fractions (ie, 3000
+                        is equivalent to 1000,2000,3000), DEFAULT:
+                        1000,2000,3000. WARNING: Values > 10000bp are
+                        automatically set to 10000bp.
+  --bisizes=BISIZES     Bidirectional-promoter sizes for ChIP region
+                        annotation Comma-separated two values or a single
+                        value can be given. If a single value is given, it
+                        will be segmented into two equal fractions (ie, 5000
+                        is equivalent to 2500,5000) DEFAULT: 2500,5000bp.
+                        WARNING: Values > 20000bp are automatically set to
+                        20000bp.
+  --bg                  Run genome BG annotation again. WARNING: This flag is
+                        effective only if a WIG file is given through -w
+                        (--wig). Otherwise, ignored.
+  --span=SPAN           Span from TSS and TTS in the gene-centered annotation.
+                        ChIP regions within this range from TSS and TTS are
+                        considered when calculating the coverage rates in
+                        promoter and downstream, DEFAULT=3000bp
+  --pf-res=PF_RES       Wig profiling resolution, DEFAULT: 50bp. WARNING:
+                        Value smaller than the wig interval (resolution) may
+                        cause aliasing error.
+  --rel-dist=REL_DIST   Relative distance to TSS/TTS in wig profiling,
+                        DEFAULT: 3000bp
 	</help>
 
 </tool>
