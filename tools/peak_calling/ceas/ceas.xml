@@ -2,8 +2,8 @@
 	<description>Get stats on ChIP enrichment and infer genes regulated by binding factors</description>
 
 	<command>
-	mkdir -p "$annot_out.files_path" &amp;&amp;
-	cd "$annot_out.files_path" &amp;&amp;
+	mkdir -p "$pdf_out.files_path" &amp;&amp;
+	cd "$pdf_out.files_path" &amp;&amp;
 
 	ceas
 
@@ -50,11 +50,13 @@
 
 	&amp;&amp;
 
-	mv $annot_out.files_path/ceas_out.xls $annot_out &amp;&amp;
-	mv $annot_out.files_path/ceas_out.R $r_out &amp;&amp;
-	mv $annot_out.files_path/ceas_out.pdf $pdf_out &amp;&amp;
+	#if $analysis_files.wig_or_bed != "wig":
+	mv $pdf_out.files_path/ceas_out.xls $annot_out &amp;&amp;
+	#end if
+	mv $pdf_out.files_path/ceas_out.R $r_out &amp;&amp;
+	mv $pdf_out.files_path/ceas_out.pdf $pdf_out &amp;&amp;
 
-	rm -r "$annot_out.files_path"
+	rm -r "$pdf_out.files_path"
 	</command>
 
 	<inputs>
@@ -105,7 +107,9 @@
 	</inputs>
 
 	<outputs>
-		<data format="tabular" name="annot_out" label="Gene-centered annotation from ${tool.name} on ${on_string} (XLS)" />
+		<data format="tabular" name="annot_out" label="Gene-centered annotation from ${tool.name} on ${on_string} (XLS)">
+		<filter>(analysis_files['wig_or_bed'] != 'wig')</filter>
+		</data>
 		<data format="txt" name="r_out" label="R script for graph results from ${tool.name} on ${on_string}" />
 		<data format="pdf" name="pdf_out" label="Graph results from ${tool.name} on ${on_string} (PDF)" />
 	</outputs>
