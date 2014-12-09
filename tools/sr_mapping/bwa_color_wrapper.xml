@@ -1,4 +1,4 @@
-<tool id="bwa_color_wrapper" name="Map with BWA for SOLiD" version="1.0.2">
+<tool id="bwa_color_wrapper" name="Map with BWA for SOLiD" version="0.7.8">
   <description></description>
   <parallelism method="basic"></parallelism>
   <command interpreter="python">

@@ -1,4 +1,4 @@
-<tool id="strip_split_assembly" name="Strip and Split for Assembly">
+<tool id="strip_split_assembly" name="Strip and Split for Assembly" version="0.8.3">
 	<description>Split a FastQ file into paired and orphan reads</description>
 
 	<command>

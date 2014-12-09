@@ -1,4 +1,4 @@
-<tool id="mapper" name="Mapping to reference">
+<tool id="mapper" name="Mapping to reference" version="0.0.5">
         <description>Mapping using a bowtie index</description>
 
         <requirements>

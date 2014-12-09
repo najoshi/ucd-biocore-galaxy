@@ -1,4 +1,4 @@
-<tool id="scythe" name="Scythe">
+<tool id="scythe" name="Scythe" version="0.991">
 	<description>Trimming adapters/contaminants using a Naive Bayesian classifier</description>
 
 	<command>

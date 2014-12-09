@@ -1,4 +1,4 @@
-<tool id="cshl_fastq_quality_filter" name="Filter by quality">
+<tool id="cshl_fastq_quality_filter" name="Filter by quality" version="0.0.14">
 	<description></description>
 	<requirements><requirement type="package">fastx_toolkit</requirement></requirements>
 

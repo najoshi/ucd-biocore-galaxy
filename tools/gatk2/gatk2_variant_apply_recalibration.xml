@@ -1,4 +1,4 @@
-<tool id="gatk2_variant_apply_recalibration" name="Apply Variant Recalibration" version="0.0.7">
+<tool id="gatk2_variant_apply_recalibration" name="Apply Variant Recalibration" version="2.8">
   <description></description>
   <requirements>
       <requirement type="package">gatk2</requirement>

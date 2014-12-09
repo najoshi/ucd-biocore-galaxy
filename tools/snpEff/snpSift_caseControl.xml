@@ -1,4 +1,4 @@
-<tool id="snpSift_caseControl" name="SnpSift CaseControl" version="3.1">
+<tool id="snpSift_caseControl" name="SnpSift CaseControl" version="3.6">
 	<description>Count samples are in 'case' and 'control' groups.</description>
 	<!-- 
 	    You will need to change the path to wherever your installation is.

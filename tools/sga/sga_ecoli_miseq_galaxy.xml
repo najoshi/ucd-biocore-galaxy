@@ -1,4 +1,4 @@
-<tool id="sga" name="SGA">
+<tool id="sga" name="SGA" version="0.10.13">
 	<description>String Graph Assembler for Bacterial data</description>
 
 	<command interpreter="bash">

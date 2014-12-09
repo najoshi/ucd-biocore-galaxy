@@ -1,4 +1,4 @@
-<tool id="velveth" name="velveth" version="1.0.0">
+<tool id="velveth" name="velveth" version="1.2.10">
   <description>Prepare a dataset for the Velvet velvetg Assembler</description>
   <command interpreter="python">
     velveth_wrapper.py 

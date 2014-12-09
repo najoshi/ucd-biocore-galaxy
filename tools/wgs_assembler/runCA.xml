@@ -1,4 +1,4 @@
-<tool id="run_ca" name="WGS-assembler for PacBio">
+<tool id="run_ca" name="WGS-assembler for PacBio" version="7.0">
 	<description>Run wgs-assembler on PacBio corrected reads</description>
 
 	<command>

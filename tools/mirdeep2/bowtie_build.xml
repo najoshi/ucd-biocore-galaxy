@@ -1,4 +1,4 @@
-<tool id="bowtiebuild" name="Bowtie Indexing">
+<tool id="bowtiebuild" name="Bowtie Indexing" version="0.0.5">
 	<description>Build index for Bowtie alignment</description>
 
 	<requirements>

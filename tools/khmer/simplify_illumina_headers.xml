@@ -1,4 +1,4 @@
-<tool id="simplify_illumina_headers" name="Simplify Illumina headers">
+<tool id="simplify_illumina_headers" name="Simplify Illumina headers" version="0.8.3">
 	<description>Simplifying Illumina headers for downstream applications</description>
 
 	<command>

@@ -1,4 +1,4 @@
-<tool id="samtools_flagstat" name="flagstat" version="1.0.0">
+<tool id="samtools_flagstat" name="flagstat" version="0.1.19">
   <requirements>
     <requirement type="package">samtools</requirement>
   </requirements>

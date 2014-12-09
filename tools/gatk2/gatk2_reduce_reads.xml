@@ -1,4 +1,4 @@
-<tool id="gatk2_reduce_reads" name="Reduce Reads" version="0.0.7">
+<tool id="gatk2_reduce_reads" name="Reduce Reads" version="2.8">
   <description>in BAM files</description>
   <requirements>
       <requirement type="package">gatk</requirement>

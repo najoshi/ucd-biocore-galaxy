@@ -1,4 +1,4 @@
-<tool id="cshl_fasta_formatter" name="FASTA Width">
+<tool id="cshl_fasta_formatter" name="FASTA Width" version="0.0.14">
 	<description>formatter</description>
 	<requirements><requirement type="package">fastx_toolkit</requirement></requirements>
 	<!--

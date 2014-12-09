@@ -1,4 +1,4 @@
-<tool id="gatk2_unified_genotyper" name="Unified Genotyper" version="0.0.7">
+<tool id="gatk2_unified_genotyper" name="Unified Genotyper" version="2.8">
   <description>SNP and indel caller</description>
   <requirements>
       <requirement type="package">gatk2</requirement>

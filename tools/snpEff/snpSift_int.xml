@@ -1,4 +1,4 @@
-<tool id="snpSift_int" name="SnpSift Intervals" version="3.1">
+<tool id="snpSift_int" name="SnpSift Intervals" version="3.6">
 	<description>Filter variants using intervals </description>
 	<!-- 
 	    You will need to change the path to wherever your installation is.

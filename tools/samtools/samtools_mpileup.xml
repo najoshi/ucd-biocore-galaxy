@@ -1,4 +1,4 @@
-<tool id="samtools_mpileup" name="MPileup" version="0.0.1">
+<tool id="samtools_mpileup" name="MPileup" version="0.1.19">
   <description>SNP and indel caller</description>
   <requirements>
       <requirement type="package">samtools</requirement>

@@ -1,4 +1,4 @@
-<tool id="lastz_wrapper_2" name="Lastz" version="1.2.2">
+<tool id="lastz_wrapper_2" name="Lastz" version="1.02">
     <requirements>
         <requirement type="package" version="1.02.00">lastz</requirement>
     </requirements>

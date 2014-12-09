@@ -1,4 +1,4 @@
-<tool id="snpSift_annotate" name="SnpSift Annotate" version="3.1">
+<tool id="snpSift_annotate" name="SnpSift Annotate" version="3.6">
 	<description>Annotate SNPs from dbSnp</description>
 	<!-- 
 	    You will need to change the path to wherever your installation is.

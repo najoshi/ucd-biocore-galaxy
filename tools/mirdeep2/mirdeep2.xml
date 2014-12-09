@@ -1,4 +1,4 @@
-<tool id="mirdeep2" name="miRDeep2">
+<tool id="mirdeep2" name="miRDeep2" version="0.0.5">
 	<description>Find miRNA candidates using output from mapping step</description>
 
 	<requirements>

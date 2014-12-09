@@ -1,4 +1,4 @@
-<tool id="edgeR" name="edgeR" version="0.0.3">
+<tool id="edgeR" name="edgeR" version="3.4.2">
   <description> - Estimates differential gene expression for short read sequence count using methods appropriate for count data</description>
   <requirements>
         <requirement type="R-module">edgeR</requirement>

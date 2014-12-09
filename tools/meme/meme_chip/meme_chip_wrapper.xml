@@ -1,4 +1,4 @@
-<tool id="meme_chip_wrapper" name="MEME-ChIP" version="1.2.4">
+<tool id="meme_chip_wrapper" name="MEME-ChIP" version="4.9.1-1">
     <requirements>
         <requirement type="package" version="4.9.0">meme</requirement>
     </requirements>

@@ -28,3 +28,4 @@
 #index	hg19	/depot/data2/galaxy/sam/hg19.fa
 
 index	hg19_chr12	/data/refs/hg19/chr12.fa
+index	hg19_chr20	/data/refs/hg19/chr20.fa

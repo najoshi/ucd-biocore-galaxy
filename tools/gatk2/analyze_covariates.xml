@@ -1,4 +1,4 @@
-<tool id="gatk_analyze_covariates" name="Analyze Covariates" version="0.0.5">
+<tool id="gatk_analyze_covariates" name="Analyze Covariates" version="2.8">
   <description>- draw plots</description>
   <requirements>
       <requirement type="package" version="1.4">gatk</requirement>

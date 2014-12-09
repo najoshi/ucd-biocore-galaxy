@@ -1,4 +1,4 @@
-<tool id="gatk2_validate_variants" name="Validate Variants" version="0.0.7">
+<tool id="gatk2_validate_variants" name="Validate Variants" version="2.8">
   <description></description>
   <requirements>
       <requirement type="package">gatk2</requirement>

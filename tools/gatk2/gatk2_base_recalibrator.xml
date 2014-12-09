@@ -1,4 +1,4 @@
-<tool id="gatk2_base_recalibrator" name="Base Recalibrator" version="0.0.7">
+<tool id="gatk2_base_recalibrator" name="Base Recalibrator" version="2.8">
   <description>on BAM files</description>
   <requirements>
       <requirement type="package">gatk2</requirement>

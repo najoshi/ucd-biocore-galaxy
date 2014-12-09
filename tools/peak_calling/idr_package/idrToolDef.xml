@@ -12,7 +12,7 @@ p.value
 genome_table.txt [ drop down to select ]
 -->
 
-<tool id="batch_consistency_analysis_2" name="IDR">
+<tool id="batch_consistency_analysis_2" name="IDR" version="2012">
   <requirements>
     <requirement type="set_environment">SCRIPT_PATH</requirement>
   </requirements>

@@ -1,4 +1,4 @@
-<tool id="trinityrnaseq" name="Trinity" version="0.0.1">
+<tool id="trinityrnaseq" name="Trinity" version="r20140413">
 
     <!-- Written by Jeremy Goecks, now maintained here by bhaas -->
     <description>De novo assembly of RNA-Seq data Using Trinity</description>

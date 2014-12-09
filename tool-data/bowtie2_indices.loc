@@ -37,6 +37,7 @@
 #
 
 hg19_chr12	hg19_chr12	hg19_chr12	/data/refs/hg19/chr12.fa
+hg19_chr20	hg19_chr20	hg19_chr20	/data/refs/hg19/chr20.fa
 mm10_chr12	mm10_chr12	mm10_chr12	/data/refs/mm10/chr12.fa
 rn4_chr12	rn4_chr12	rn4_chr12	/data/refs/rn4/chr12.fa
 os7_chr12	os7_chr12	os7_chr12	/data/refs/os7/chr12.fa

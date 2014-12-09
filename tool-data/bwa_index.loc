@@ -36,3 +36,6 @@
 #is the value stored in the workflow for that parameter. That is why the
 #hg19 entry above looks odd. New genomes can be better-looking.
 #
+
+hg19_chr12	hg19_chr12	hg19_chr12	/data/refs/hg19/chr12.fa
+hg19_chr20	hg19_chr20	hg19_chr20	/data/refs/hg19/chr20.fa

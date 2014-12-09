@@ -2,7 +2,7 @@
 Usage of THIS SCRIPT: ./idrPlotWrapper.sh em uri outputfile 
 -->
 
-<tool id="batch_consistency_plot" name="IDR-Plot">
+<tool id="batch_consistency_plot" name="IDR-Plot" version="2012">
   <requirements>
     <requirement type="set_environment">SCRIPT_PATH</requirement>
   </requirements>

@@ -1,4 +1,4 @@
-<tool id="velvetg" name="velvetg" version="1.0.0">
+<tool id="velvetg" name="velvetg" version="1.2.10">
   <description>Velvet sequence assembler for very short reads</description>
   <command interpreter="python">
     velvetg_wrapper.py 

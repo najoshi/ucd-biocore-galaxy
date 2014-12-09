@@ -1,4 +1,4 @@
-<tool id="cufflinks" name="Cufflinks" version="0.0.5">
+<tool id="cufflinks" name="Cufflinks" version="2.2.2">
     <!-- Wrapper supports Cufflinks versions v1.3.0 and newer -->
     <description>transcript assembly and FPKM (RPKM) estimates for RNA-Seq data</description>
     <requirements>

@@ -1,4 +1,4 @@
-<tool id="sissrs" name="Sissrs">
+<tool id="sissrs" name="Sissrs" version="1.4">
 	<description>Find Peaks in Chip-Seq data</description>
 
 	<requirements>

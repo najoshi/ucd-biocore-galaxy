@@ -1,4 +1,4 @@
-<tool id="filter_abundance" name="Filter abundance of kmer data from normalize by median">
+<tool id="filter_abundance" name="Filter abundance of kmer data from normalize by median" version="0.8.3">
 	<description>Filtering abundance of FastQ/A data using median Kmer depth</description>
 
 	<command>

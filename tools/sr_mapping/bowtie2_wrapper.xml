@@ -1,4 +1,4 @@
-<tool id="bowtie2" name="Bowtie2" version="0.1">
+<tool id="bowtie2" name="Bowtie2" version="2.2.2">
     <!-- Wrapper compatible with Bowtie version 2.0.0 -->
     <description>is a short-read aligner</description>
     <version_command>bowtie2 --version</version_command>

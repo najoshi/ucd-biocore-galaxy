@@ -1,4 +1,4 @@
-<tool id="bam_to_sam" name="BAM-to-SAM" version="1.0.3">
+<tool id="bam_to_sam" name="BAM-to-SAM" version="0.1.19">
   <requirements>
     <requirement type="package">samtools</requirement>
   </requirements>

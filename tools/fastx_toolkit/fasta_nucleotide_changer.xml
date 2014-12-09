@@ -1,4 +1,4 @@
-<tool id="cshl_fasta_nucleotides_changer" name="RNA/DNA" >
+<tool id="cshl_fasta_nucleotides_changer" name="RNA/DNA"  version="0.0.14">
 	<description>converter</description>
 	<requirements><requirement type="package">fastx_toolkit</requirement></requirements>
 	<command>zcat -f '$input' | fasta_nucleotide_changer $mode -v -o $output</command>

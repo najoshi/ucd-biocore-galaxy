@@ -1,4 +1,4 @@
-<tool id="normalize_by_median" name="Normalize Data by Median Kmer depth">
+<tool id="normalize_by_median" name="Normalize Data by Median Kmer depth" version="0.8.3">
 	<description>Digital Normalization of FastQ/A data using median Kmer depth</description>
 
 	<command>

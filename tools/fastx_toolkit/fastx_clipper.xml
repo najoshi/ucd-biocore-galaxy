@@ -1,4 +1,4 @@
-<tool id="cshl_fastx_clipper" name="Clip" version="1.0.1" >
+<tool id="cshl_fastx_clipper" name="Clip" version="0.0.11" >
   <description>adapter sequences</description>
 	<requirements><requirement type="package">fastx_toolkit</requirement></requirements>
   <command>

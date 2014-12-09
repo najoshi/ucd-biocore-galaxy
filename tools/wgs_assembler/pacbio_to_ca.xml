@@ -1,4 +1,4 @@
-<tool id="pacbio_to_ca" name="PacBio read correction">
+<tool id="pacbio_to_ca" name="PacBio read correction" version="7.0">
 	<description>Run PacBio read correction using Illumina data</description>
 
 	<command>

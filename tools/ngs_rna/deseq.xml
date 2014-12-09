@@ -1,4 +1,4 @@
-<tool id="deseq" name="DE Seq">
+<tool id="deseq" name="DE Seq" version="1.12.1">
 	<description>Run Differential Expression analysis from SAM To Count data</description>
 
 	<command interpreter="python">

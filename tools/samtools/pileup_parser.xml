@@ -1,4 +1,4 @@
-<tool id="pileup_parser" name="Filter pileup" version="1.0.2">>
+<tool id="pileup_parser" name="Filter pileup" version="0.1.19">
   <description>on coverage and SNPs</description>
   <command interpreter="perl">
     #if   $pileup_type.type_select == "six"    #pileup_parser.pl $input "3" "5" "6" "4" $qv_cutoff $cvrg_cutoff $snps_only $interval "2" $out_file1 $diff $qc_base
