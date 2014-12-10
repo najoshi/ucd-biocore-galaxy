@@ -2,7 +2,7 @@
 	<description>Trimming adapters/contaminants using a Naive Bayesian classifier</description>
 
 	<command>
-		scythe --quiet -a $adapter_file
+		scythe -a $adapter_file
 
                 #if $input_fastq.ext == "fastq":
                 -q sanger
@@ -34,7 +34,7 @@
 		-m $output_matches
 		#end if
 
-		-o $output_trimmed $input_fastq 2> /dev/null
+		-o $output_trimmed $input_fastq 2>&amp;1
 	</command>
 
 	<inputs>
