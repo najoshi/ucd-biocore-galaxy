@@ -150,7 +150,8 @@ falciparum	P. falciparum Plasmodium falciparum (?/falciparum) (falciparum)
 sacCer2	S. cerevisiae June 2008 (SGD/sacCer2) (sacCer2)
 sacCer1	S. cerevisiae Oct. 2003 (SGD/sacCer1) (sacCer1)
 sc1	SARS coronavirus Apr. 2003 (GenBank Apr. 14 '03/sc1) (sc1)
-hg19_chr12	 H. sapiens chromosome 12
-mm10_chr12	 M. musculus chromosome 12
-rn4_chr12	 R. norvegicus chromosome 12
-os7_chr12	 O. sativa chromosome 12
+hg19_chr12	H. sapiens chromosome 12
+mm10_chr12	M. musculus chromosome 12
+rn4_chr12	R. norvegicus chromosome 12
+os7_chr12	O. sativa chromosome 12
+hg19_chr20	H. sapiens chromosome 20
