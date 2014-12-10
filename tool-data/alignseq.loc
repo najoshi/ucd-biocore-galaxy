@@ -55,3 +55,5 @@
 #seq bosTau2 /depot/data2/galaxy/bosTau2/seq
 #seq bosTau3 /depot/data2/galaxy/bosTau3/seq
 #...etc...
+
+seq	hg19_chr20	/data/refs/hg19
