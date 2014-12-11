@@ -6,7 +6,7 @@
         <requirement type="package">trinity</requirement>
     </requirements>
     <command interpreter="python">
-        trinityToolWrapper.py Trinity.pl --JM $JM --CPU $CPU
+        trinityToolWrapper.py Trinity --JM $JM --CPU $CPU
         
         ## Inputs.
         #if str($inputs.paired_or_single) == "paired":
@@ -42,7 +42,7 @@
 	
                 
         ## direct to output
-        > $trinity_log 
+        &gt; $trinity_log 
  
     </command>
     <inputs>

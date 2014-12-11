@@ -397,12 +397,14 @@
 
     <tool file="ngs_rna/edger/sam2counts_galaxy_edger.xml" />
     <tool file="ngs_rna/rollup/roll_up_genes.xml" />
-    <tool file="ngs_rna/edger/htseq.xml" />
+    <tool file="ngs_rna/edger/htseq_count/htseq_count.xml" />
     <tool file="ngs_rna/edger/edgeR.xml" />
+<!--
     <label text="De novo Assembly" id="de_novo_assembly"/>
     <tool file="ngs_rna/trinityrnaseq.xml" />
     
     <tool file="ngs_rna/filter_transcripts_via_tracking.xml" />
+-->
   </section>
   <section name="NGS: SAM Tools" id="samtools">
     <tool file="samtools/sam_bitwise_flag_filter.xml" />
