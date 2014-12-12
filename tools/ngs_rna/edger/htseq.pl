@@ -56,10 +56,10 @@ for(my $index = 0; $index <= $#files; $index++) {
 	my $COMM;
 	my $file_type = `file $input_file`;
 	if(grep /text$/, $file_type ) {
-		$COMM = "htseq-count -q -m $OPTIONS{m} -s $OPTIONS{s} -a $OPTIONS{a} -t $OPTIONS{t} -i $OPTIONS{i} $input_file $OPTIONS{g}";
+		$COMM = "htseq-count -q -r pos -m $OPTIONS{m} -s $OPTIONS{s} -a $OPTIONS{a} -t $OPTIONS{t} -i $OPTIONS{i} $input_file $OPTIONS{g}";
 		@htseq = `$COMM`;
 	} else {
-		$COMM = "samtools view $input_file | htseq-count -q -m $OPTIONS{m} -s $OPTIONS{s} -a $OPTIONS{a} -t $OPTIONS{t} -i $OPTIONS{i} - $OPTIONS{g}";
+		$COMM = "samtools view $input_file | htseq-count -q -r pos -m $OPTIONS{m} -s $OPTIONS{s} -a $OPTIONS{a} -t $OPTIONS{t} -i $OPTIONS{i} - $OPTIONS{g}";
 		@htseq = `$COMM`;
 	}
 	
