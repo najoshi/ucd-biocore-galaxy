@@ -24,8 +24,8 @@
       <!--callpeak option of macs2-->
       <when value="callpeak">
 	<!--may need to add a few more formats at later time-->
-        <param name="input_chipseq_file1" type="data" format="bam" label="ChIP-Seq Tag File" />
-        <param name="input_control_file1" type="data" format="bam" optional="True" label="ChIP-Seq Control File" />
+        <param name="input_chipseq_file1" type="data" format="bam,bed" label="ChIP-Seq Tag File" />
+        <param name="input_control_file1" type="data" format="bam,bed" optional="True" label="ChIP-Seq Control File" />
 	<param name="gsize" type="float" label="Effective genome size" value="2.7e+9" help="Human: 3.3e+9, Mouse: 3.0e+9, Fly: 1.9e+8, Worm: 1.3e+8 (--gsize)"/>
 	<param name="bw" type="integer" label="Band width" value="300" help="(--bw)"/>
 	<param name="xls_to_interval" label="Parse xls files into into distinct interval files" type="boolean" truevalue="True" falsevalue="False" checked="False"/>

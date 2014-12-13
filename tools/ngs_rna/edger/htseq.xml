@@ -13,6 +13,8 @@
        			${group.group}::${input_files.sample}::${input_files.file}
         	#end for
         #end for
+
+	2>&amp;1
   </command>
 
   <inputs>
